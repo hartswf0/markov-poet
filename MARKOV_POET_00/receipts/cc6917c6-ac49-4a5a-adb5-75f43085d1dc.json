@@ -1,0 +1,24 @@
+{
+  "id": "cc6917c6-ac49-4a5a-adb5-75f43085d1dc",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T08:31:33.319000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "here in inky abyss",
+  "audio_prompt": "",
+  "compound_prompt": "here in inky abyss",
+  "parent_generation_id": "eb298ed7-27f0-453c-b743-5ec0f252157d",
+  "start_keyframe_id": "eb298ed7-27f0-453c-b743-5ec0f252157d",
+  "end_keyframe_id": "6f45f640-f847-4ed9-8b02-2f10eff850a3",
+  "filename_stem": "20250719_083133_cc6917c6_720p_17s_silent_here_in_inky_abyss_a_new_chapter_begins",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_083133_cc6917c6_720p_17s_silent_here_in_inky_abyss_a_new_chapter_begins.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_083133_cc6917c6_720p_17s_silent_here_in_inky_abyss_a_new_chapter_begins.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/8f727229-d79f-452e-fe02-63a82b6d2500/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/848d66e1-3a06-487b-bbd0-eb7d1950ce22/cc469efd-de9e-40dd-84ef-e2c3c8dc3e53/2025-07-19T08-31-33_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/848d66e1-3a06-487b-bbd0-eb7d1950ce22/39042dce-ecbe-44f6-8afa-8bb2427ce422/2025-07-19T08-31-33_generation.mp4"
+}

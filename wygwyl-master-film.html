@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WYGWYL 135-Shot Complete Master Film Player</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --dim: #666;
+    --line: #000;
+    --blue: #0066cc;
+    --soft: #f6f6f6;
+    --red: #cf222e;
+    --green: #1a7f37;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--paper); color: var(--ink); }
+  header { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 2px solid var(--line); padding: 10px 16px; display: grid; grid-template-columns: auto auto 1fr auto; gap: 12px; align-items: center; }
+  .brand { font-size: 14px; font-weight: 900; letter-spacing: 0.08em; white-space: nowrap; }
+  .btn { border: 1px solid var(--line); background: #fff; padding: 5px 10px; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; }
+  .btn:hover { background: var(--ink); color: #fff; }
+  .btn.active { background: var(--ink); color: #fff; }
+
+  main { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(420px, 1fr); min-height: calc(100vh - 54px); }
+  #screenCol { border-right: 2px solid var(--line); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  #reelCol { padding: 16px; background: var(--soft); overflow-y: auto; max-height: calc(100vh - 54px); }
+
+  .player-box { width: 100%; aspect-ratio: 16/9; background: #000; border: 2px solid var(--line); overflow: hidden; }
+  video { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .meta-bar { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--dim); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  .meta-bar b { color: var(--ink); }
+
+  #timeline { height: 28px; border: 1px solid var(--line); background: #eee; position: relative; cursor: crosshair; overflow: hidden; }
+  .tl-seg { position: absolute; top: 0; bottom: 0; border-right: 1px solid #aaa; }
+  .tl-seg:hover { background: rgba(0,102,204,0.3); }
+  .tl-seg.active { background: rgba(0,0,0,0.85); color: #fff; }
+  #head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--red); z-index: 10; }
+
+  .verse-box { background: #fff; border: 1px solid var(--line); padding: 10px; font-style: italic; font-size: 12.5px; line-height: 1.4; border-left: 4px solid var(--ink); }
+
+  .legos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 11px; }
+  .lego-cell { border: 1px solid var(--line); background: #fff; padding: 6px 8px; }
+  .lego-cell b { display: block; font-size: 10px; color: var(--dim); text-transform: uppercase; margin-bottom: 2px; }
+
+  .contact-preview { border: 1px solid var(--line); background: #000; margin-top: 6px; }
+  .contact-preview img { width: 100%; display: block; object-fit: contain; }
+
+  /* Reel Shots */
+  .suite-section { margin-bottom: 16px; border: 1px solid var(--line); background: #fff; }
+  .suite-head { background: var(--ink); color: #fff; padding: 6px 10px; font-weight: 800; display: flex; justify-content: space-between; cursor: pointer; }
+  .shots-list { display: flex; flex-direction: column; }
+  .shot-row { padding: 6px 8px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: center; cursor: pointer; }
+  .shot-row:hover { background: #eef6ff; }
+  .shot-row.current-shot { background: #e0efff; border-left: 4px solid var(--blue); font-weight: 700; }
+  .shot-num { font-weight: 800; color: var(--dim); font-size: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">🎬 WYGWYL 135-SHOT COMPLETE ZERO-REPEAT MASTER CUT</div>
+  <button class="btn" id="playBtn" onclick="togglePlay()">PLAY ENTIRE SUITE</button>
+  <div style="font-weight:700; font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" id="headerTitle">01 OUT OF LIFE</div>
+  <div style="display:flex; gap:6px; align-items:center;">
+    <a href="wygwyl-suite-player.html" class="btn" target="_blank">SUITE PLAYER</a>
+    <a href="wygwyl-coverage-matrix.html" class="btn" target="_blank">COVERAGE MAP</a>
+    <div style="font-weight:700; font-size:11px; white-space:nowrap;"><span id="clock">00:00.0</span> / <span id="totalDur">24:26.0</span></div>
+  </div>
+</header>
+
+<main>
+  <section id="screenCol">
+    <div class="player-box">
+      <video id="player" controls playsinline></video>
+    </div>
+
+    <div class="meta-bar">
+      <span>SHOT <b id="shotNum">1</b> OF <b>135</b> (ZERO REPEATS)</span>
+      <span>SMPTE: <b id="smpteTime">01:00:00:00</b></span>
+      <span id="shotDur">5.0s</span>
+    </div>
+
+    <div id="timeline" onclick="seekTimeline(event)">
+      <div id="head"></div>
+    </div>
+
+    <div class="verse-box" id="verseText">Loading poem verse...</div>
+
+    <div class="legos-grid">
+      <div class="lego-cell"><b>Location (L)</b><span id="lgL">-</span></div>
+      <div class="lego-cell"><b>Entity (E)</b><span id="lgE">-</span></div>
+      <div class="lego-cell"><b>Goal (G)</b><span id="lgG">-</span></div>
+      <div class="lego-cell"><b>Obstacle (O)</b><span id="lgO">-</span></div>
+      <div class="lego-cell" style="grid-column: span 2;"><b>Shift & Solution (S/U)</b><span id="lgS">-</span></div>
+    </div>
+
+    <div class="contact-preview">
+      <div style="background:#111; color:#aaa; font-size:9px; padding:2px 6px; font-weight:700;">TEMPORAL 8-FRAME CONTACT SHEET (4X2)</div>
+      <img id="contactImg" src="" alt="Contact Sheet" />
+    </div>
+  </section>
+
+  <aside id="reelCol">
+    <div style="font-weight:800; text-transform:uppercase; font-size:11px; margin-bottom:8px; border-bottom:1px solid var(--line); padding-bottom:4px;">
+      14 Suites · 135 Non-Repeating Shots
+    </div>
+    <div id="suitesContainer"></div>
+  </aside>
+</main>
+
+<script>
+let DATA = null;
+let flatShots = [];
+let currentGlobalIdx = 0;
+let isPlaying = false;
+const player = document.getElementById("player");
+
+async function init() {
+  const res = await fetch("WYGWYL_MASTER_COMPLETE_CUT.json");
+  DATA = await res.json();
+  
+  flatShots = [];
+  DATA.suites.forEach(s => {
+    s.shots.forEach(sh => {
+      sh.parentSuite = s;
+      flatShots.push(sh);
+    });
+  });
+
+  document.getElementById("totalDur").textContent = DATA.total_runtime_formatted;
+  buildTimeline();
+  buildReel();
+  loadShot(0);
+}
+
+function buildTimeline() {
+  const tl = document.getElementById("timeline");
+  const tot = DATA.total_runtime_seconds;
+  
+  DATA.suites.forEach((s, idx) => {
+    const seg = document.createElement("div");
+    seg.className = "tl-seg" + (idx === 0 ? " active" : "");
+    seg.style.left = (s.container_window[0] / 1440.07 * 100) + "%";
+    seg.style.width = ((s.container_window[1] - s.container_window[0]) / 1440.07 * 100) + "%";
+    seg.title = s.suite_number + " " + s.title;
+    tl.appendChild(seg);
+  });
+}
+
+function buildReel() {
+  const box = document.getElementById("suitesContainer");
+  box.innerHTML = "";
+
+  DATA.suites.forEach((s, sIdx) => {
+    const block = document.createElement("div");
+    block.className = "suite-section";
+
+    const head = document.createElement("div");
+    head.className = "suite-head";
+    head.innerHTML = `<span>${s.suite_number} ${s.title}</span> <span>${s.shots.length} shots</span>`;
+    block.appendChild(head);
+
+    const list = document.createElement("div");
+    list.className = "shots-list";
+
+    s.shots.forEach(sh => {
+      const gIdx = sh.global_shot_number - 1;
+      const row = document.createElement("div");
+      row.className = "shot-row" + (gIdx === 0 ? " current-shot" : "");
+      row.id = "shotRow_" + gIdx;
+      
+      const soundTag = (sh.has_audio_bool || sh.has_audio) ? "[SOUND]" : "[SILENT]";
+
+      row.innerHTML = `
+        <span class="shot-num">#${sh.global_shot_number}</span>
+        <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          <b>${sh.visual_category || 'SHOT'}</b> <span style="font-size:10px; color:var(--dim);">${sh.id.substring(0,8)}</span>
+        </div>
+        <span style="font-size:10px; color:var(--blue);">${sh.duration_seconds || 5}s</span>
+      `;
+
+      row.onclick = () => loadShot(gIdx);
+      list.appendChild(row);
+    });
+
+    block.appendChild(list);
+    box.appendChild(block);
+  });
+}
+
+function loadShot(gIdx) {
+  if (gIdx < 0 || gIdx >= flatShots.length) return;
+  currentGlobalIdx = gIdx;
+  const sh = flatShots[gIdx];
+  const s = sh.parentSuite;
+
+  document.querySelectorAll(".shot-row").forEach(r => r.classList.remove("current-shot"));
+  const activeRow = document.getElementById("shotRow_" + gIdx);
+  if (activeRow) {
+    activeRow.classList.add("current-shot");
+    activeRow.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
+  document.getElementById("headerTitle").textContent = `${s.suite_number} ${s.title} · ${sh.visual_category}`;
+  document.getElementById("shotNum").textContent = sh.global_shot_number;
+  document.getElementById("smpteTime").textContent = `${sh.smpte_in} - ${sh.smpte_out}`;
+  document.getElementById("shotDur").textContent = `${sh.duration_seconds || 5}s`;
+  document.getElementById("verseText").textContent = `“${s.full_verse}”`;
+
+  document.getElementById("lgL").textContent = sh.location_L || s.poem_legos.location_L || "-";
+  document.getElementById("lgE").textContent = sh.entity_E || s.poem_legos.entity_E || "-";
+  document.getElementById("lgG").textContent = sh.goal_G || s.poem_legos.goal_G || "-";
+  document.getElementById("lgO").textContent = sh.obstacle_O || s.poem_legos.obstacle_O || "-";
+  document.getElementById("lgS").textContent = `${sh.shift_S || '-'} ➔ ${sh.solution_U || '-'}`;
+
+  const vidSrc = `MARKOV_POET/videos/${sh.filename_stem}.mp4`;
+  const contactSrc = `contact_sheets/${sh.filename_stem}_contact.jpg`;
+
+  player.src = vidSrc;
+  document.getElementById("contactImg").src = contactSrc;
+
+  // Head position
+  const headPos = (gIdx / flatShots.length * 100);
+  document.getElementById("head").style.left = headPos + "%";
+
+  if (isPlaying) {
+    player.play().catch(()=>{});
+  }
+}
+
+player.onended = () => {
+  if (currentGlobalIdx + 1 < flatShots.length) {
+    loadShot(currentGlobalIdx + 1);
+  } else {
+    isPlaying = false;
+    document.getElementById("playBtn").textContent = "REPLAY SUITE";
+  }
+};
+
+function togglePlay() {
+  if (player.paused) {
+    player.play().catch(()=>{});
+    isPlaying = true;
+    document.getElementById("playBtn").textContent = "PAUSE SUITE";
+  } else {
+    player.pause();
+    isPlaying = false;
+    document.getElementById("playBtn").textContent = "RESUME SUITE";
+  }
+}
+
+function seekTimeline(e) {
+  const tl = document.getElementById("timeline");
+  const r = tl.getBoundingClientRect();
+  const ratio = (e.clientX - r.left) / r.width;
+  const targetIdx = Math.floor(ratio * flatShots.length);
+  loadShot(targetIdx);
+}
+
+init();
+</script>
+</body>
+</html>

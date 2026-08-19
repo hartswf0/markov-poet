@@ -1,0 +1,24 @@
+{
+  "id": "37235c7f-1334-4953-9398-2a9b747fb48a",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T01:31:40.539000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the woman on the",
+  "audio_prompt": "",
+  "compound_prompt": "the woman on the",
+  "parent_generation_id": "d3031d62-9c14-4057-8cb4-7d19ddc3b3fe",
+  "start_keyframe_id": "d3031d62-9c14-4057-8cb4-7d19ddc3b3fe",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_013140_37235c7f_draft_5s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_013140_37235c7f_draft_5s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_013140_37235c7f_draft_5s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/633cba5e-ea36-45ac-6076-8a4b0bfc7b00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/76aab10f-0537-45ce-a5ee-c32bd32d48b3/f1722cff-d2ea-4aa0-aca3-f4f2e9ea54df/2025-10-20T01-27-59_the_woman_on_the_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/76aab10f-0537-45ce-a5ee-c32bd32d48b3/37ee331c-dcd8-4f9f-b766-a94ef967bab5/2025-10-20T01-27-59_the_woman_on_the.mp4"
+}

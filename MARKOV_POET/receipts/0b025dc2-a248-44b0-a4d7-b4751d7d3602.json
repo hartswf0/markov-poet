@@ -1,0 +1,24 @@
+{
+  "id": "0b025dc2-a248-44b0-a4d7-b4751d7d3602",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:07:06.739000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the man s head",
+  "audio_prompt": "drowning in red light fluid, bubbling, textured, mood atmospheric",
+  "compound_prompt": "the man s head [Audio: drowning in red light fluid, bubbling, textured, mood atmospheric]",
+  "parent_generation_id": "c9d310d4-c4b0-4f91-985e-8b9417b83f06",
+  "start_keyframe_id": "c9d310d4-c4b0-4f91-985e-8b9417b83f06",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_230706_0b025dc2_draft_5s_audio_sound_drowning_in_red_light_fluid_bubbli",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_230706_0b025dc2_draft_5s_audio_sound_drowning_in_red_light_fluid_bubbli.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_230706_0b025dc2_draft_5s_audio_sound_drowning_in_red_light_fluid_bubbli.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/d0e897a1-6da1-4fc1-5a9e-4180b2d31d00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/7b7b50eb-989c-47a3-95d0-936bd7e25493/f20509b7-5abd-4fe0-ba4c-28cdcf969548/2025-10-19T22-59-26_the_man_s_head_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/7b7b50eb-989c-47a3-95d0-936bd7e25493/7361f47d-6f83-4df2-9e5b-cf4a57a331fd/2025-10-19T22-59-26_the_man_s_head.mp4"
+}

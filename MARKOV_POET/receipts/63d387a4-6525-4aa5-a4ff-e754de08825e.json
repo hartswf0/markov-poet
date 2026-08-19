@@ -1,0 +1,24 @@
+{
+  "id": "63d387a4-6525-4aa5-a4ff-e754de08825e",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T03:28:28.038000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the two blurred",
+  "audio_prompt": "drone, sound of morph vocoder, light, gold",
+  "compound_prompt": "the two blurred [Audio: drone, sound of morph vocoder, light, gold]",
+  "parent_generation_id": "73f87428-daa1-4784-ae42-b7aacdf6fa17",
+  "start_keyframe_id": "73f87428-daa1-4784-ae42-b7aacdf6fa17",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/fa0157f7-df8a-4f34-dae7-86fa6a18e000/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/be5eddce-94ab-4635-af54-ff519030764f/83c3f3db-0401-40ab-aaef-1f5182814c0b/2025-10-20T03-23-27_the_two_blurred_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/be5eddce-94ab-4635-af54-ff519030764f/43a25a7d-7485-4ed4-9682-968331db277c/2025-10-20T03-23-27_the_two_blurred.mp4"
+}

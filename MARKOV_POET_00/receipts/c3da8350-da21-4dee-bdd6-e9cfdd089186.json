@@ -1,0 +1,24 @@
+{
+  "id": "c3da8350-da21-4dee-bdd6-e9cfdd089186",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:37:13.936000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "\"timestamp\": \"00:01:03\",\n          \"image_path\": \"/Users/gaia/resurrecting atlantis/CAT/WHISKER/WGY004_PI__Subjective_Frame_Recalibration__A_televi_c6143380-89c4-4c46-b3b0-cf6ee0b53735_0.png\",\n          \"id\": \"WGY004\",\n          \"poem\": \"WHERE YOU GO WHEN YOU LEAVE PART 2\",\n          \"imageType\": \"Perception-Image\",\n          \"syntagmaType\": \"Descriptive Syntagma (DS)\",\n          \"content\": \"TV displays images of world's chaos.\",\n          \"cineosisFunction\": \"Subjective Frame Recalibration\",\n          \"operativeEkphrasis\": \"A television screen cycles through rapid, chaotic world events.\",\n          \"styleConditioning\": \"Photo-realistic, close-up on TV screen, montage of war, protests, natural disasters, flickering chaotic imagery, desaturated tones.\",\n          \"full_prompt\": \"PI · Subjective Frame Recalibration · A television screen cycles through rapid, chaotic world events · Photo-realistic, close-up on TV screen, montage of war, protests, natural disasters, flickering chaotic imagery, desaturated tones.\"\n        },",
+  "audio_prompt": "",
+  "compound_prompt": "\"timestamp\": \"00:01:03\",\n          \"image_path\": \"/Users/gaia/resurrecting atlantis/CAT/WHISKER/WGY004_PI__Subjective_Frame_Recalibration__A_televi_c6143380-89c4-4c46-b3b0-cf6ee0b53735_0.png\",\n          \"id\": \"WGY004\",\n          \"poem\": \"WHERE YOU GO WHEN YOU LEAVE PART 2\",\n          \"imageType\": \"Perception-Image\",\n          \"syntagmaType\": \"Descriptive Syntagma (DS)\",\n          \"content\": \"TV displays images of world's chaos.\",\n          \"cineosisFunction\": \"Subjective Frame Recalibration\",\n          \"operativeEkphrasis\": \"A television screen cycles through rapid, chaotic world events.\",\n          \"styleConditioning\": \"Photo-realistic, close-up on TV screen, montage of war, protests, natural disasters, flickering chaotic imagery, desaturated tones.\",\n          \"full_prompt\": \"PI · Subjective Frame Recalibration · A television screen cycles through rapid, chaotic world events · Photo-realistic, close-up on TV screen, montage of war, protests, natural disasters, flickering chaotic imagery, desaturated tones.\"\n        },",
+  "parent_generation_id": "94cb576c-2ebf-4a84-9e64-ad296363c670",
+  "start_keyframe_id": "94cb576c-2ebf-4a84-9e64-ad296363c670",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_053713_c3da8350_720p_5s_silent_timestamp_000103_image_path_usersgaiares",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_053713_c3da8350_720p_5s_silent_timestamp_000103_image_path_usersgaiares.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_053713_c3da8350_720p_5s_silent_timestamp_000103_image_path_usersgaiares.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/ebf5c932-be11-4c41-907d-5b76041af000/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/7356bf04-a14d-49df-9694-9357d6670cf9/a3df1c2e-092b-4092-a077-23dab6db005b/2025-07-19T05-37-13_timestamp____00_01_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/7356bf04-a14d-49df-9694-9357d6670cf9/8d86fbf9-eece-4565-a2a2-2632170e3d03/2025-07-19T05-37-13_timestamp____00_01.mp4"
+}

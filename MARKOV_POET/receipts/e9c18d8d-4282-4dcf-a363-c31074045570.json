@@ -1,0 +1,24 @@
+{
+  "id": "e9c18d8d-4282-4dcf-a363-c31074045570",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:05:30.128000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": true,
+  "model_version": "ray-v3-reasoning",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "",
+  "audio_prompt": "rain, distant sounds echo of radio, 80's ambient, drone glow rain",
+  "compound_prompt": "Sound: rain, distant sounds echo of radio, 80's ambient, drone glow rain",
+  "parent_generation_id": "fedbef68-b4d8-42b3-a7a0-3bc529a11ca5",
+  "start_keyframe_id": "fedbef68-b4d8-42b3-a7a0-3bc529a11ca5",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/5293eded-5527-4af0-df9a-9372649d2f00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/fd7e0196-bfe9-4f04-ae9a-ed523ec16f6a/8336ba87-cdc2-4190-a54f-bf91045497f0/2025-10-19T23-08-51_upscaled_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/fd7e0196-bfe9-4f04-ae9a-ed523ec16f6a/caa9c5aa-441e-47a8-af09-267e5b8e617e/2025-10-19T23-08-51_upscaled.mp4"
+}

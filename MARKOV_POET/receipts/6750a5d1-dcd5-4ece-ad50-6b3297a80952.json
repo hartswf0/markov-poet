@@ -1,0 +1,24 @@
+{
+  "id": "6750a5d1-dcd5-4ece-ad50-6b3297a80952",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T03:39:22.229000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": true,
+  "model_version": "ray-v3-reasoning",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "",
+  "audio_prompt": "foot steps running down stairs",
+  "compound_prompt": "Sound: foot steps running down stairs",
+  "parent_generation_id": "9ff807e6-11ab-4807-8c43-61336d0210a1",
+  "start_keyframe_id": "9ff807e6-11ab-4807-8c43-61336d0210a1",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/d3bfb4e7-8700-45eb-e9e2-c3cb3bb02500/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/84dd0c97-307e-4a93-b934-8dcbdc3a085b/0ca357a2-8764-4226-9d04-34dbaf004798/2025-10-20T03-42-28_upscaled_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/84dd0c97-307e-4a93-b934-8dcbdc3a085b/2ad7dd9b-c3fb-4ce9-a3c4-060b9b99f24c/2025-10-20T03-42-28_upscaled.mp4"
+}

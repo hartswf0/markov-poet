@@ -1,0 +1,24 @@
+{
+  "id": "222c8cca-2f7c-492e-8fb7-00bb771cdeb3",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:19:55.275000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the person s visible",
+  "audio_prompt": "",
+  "compound_prompt": "the person s visible",
+  "parent_generation_id": "81a48c48-d098-4ee8-91e3-ff4d74f20746",
+  "start_keyframe_id": "81a48c48-d098-4ee8-91e3-ff4d74f20746",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_231955_222c8cca_draft_5s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_231955_222c8cca_draft_5s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_231955_222c8cca_draft_5s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/8d2160c6-a733-4ac9-fefb-aa40cbbf5f00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/8274c113-caa9-4669-875c-de8a653de5fb/4951f9fb-8102-468f-a36e-20d07108173d/2025-10-19T23-16-45_the_person_s_visible_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/8274c113-caa9-4669-875c-de8a653de5fb/6d051c4e-08b1-4855-8305-28d66093cc43/2025-10-19T23-16-45_the_person_s_visible.mp4"
+}

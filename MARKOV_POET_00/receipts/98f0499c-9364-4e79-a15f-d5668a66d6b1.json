@@ -1,0 +1,24 @@
+{
+  "id": "98f0499c-9364-4e79-a15f-d5668a66d6b1",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:40:51.896000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "9:16",
+  "visual_prompt": "Overhead drone shot of POET in an unknown space - External chaos and blurring vision; EX recedes. Forces the 'LEAVE' trigger.. Focus on the visual impact of: Subjective Frame Recalibration. The scene's ambiance is Pastel sunrise palette with a Lo-fi VHS aesthetic style. Use Smooth drone shot, framed as an asymmetrical composition, aspect ratio 9:16. Add flavor: like digital echoes.",
+  "audio_prompt": "",
+  "compound_prompt": "Overhead drone shot of POET in an unknown space - External chaos and blurring vision; EX recedes. Forces the 'LEAVE' trigger.. Focus on the visual impact of: Subjective Frame Recalibration. The scene's ambiance is Pastel sunrise palette with a Lo-fi VHS aesthetic style. Use Smooth drone shot, framed as an asymmetrical composition, aspect ratio 9:16. Add flavor: like digital echoes.",
+  "parent_generation_id": "be18f17d-d626-47f1-a60e-e37eb26e2c58",
+  "start_keyframe_id": "be18f17d-d626-47f1-a60e-e37eb26e2c58",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_054051_98f0499c_720p_5s_silent_overhead_drone_shot_of_poet_in_an_unknow",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_054051_98f0499c_720p_5s_silent_overhead_drone_shot_of_poet_in_an_unknow.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_054051_98f0499c_720p_5s_silent_overhead_drone_shot_of_poet_in_an_unknow.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/fd028c28-2f15-46b6-9a07-1d6bbbc07400/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/053670a3-793c-47b8-83bb-7a26c80923b3/6cffb35f-b62e-41ad-9dec-2d504b8732fe/2025-07-19T05-40-51_overhead_drone_shot_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/053670a3-793c-47b8-83bb-7a26c80923b3/5b551fc8-124b-400d-84c4-63d2db6f45d3/2025-07-19T05-40-51_overhead_drone_shot.mp4"
+}

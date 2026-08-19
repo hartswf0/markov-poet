@@ -1,0 +1,24 @@
+{
+  "id": "653ecfbe-7c37-4986-a452-bd0b2538d7db",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T03:23:16.322000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "red light trails",
+  "audio_prompt": "vehicles zooming by, light, drone time lapse",
+  "compound_prompt": "red light trails [Audio: vehicles zooming by, light, drone time lapse]",
+  "parent_generation_id": "c927ab80-7605-4330-a8ed-6da2c71f369a",
+  "start_keyframe_id": "c927ab80-7605-4330-a8ed-6da2c71f369a",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_032316_653ecfbe_draft_5s_audio_sound_vehicles_zooming_by_light_drone_ti",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_032316_653ecfbe_draft_5s_audio_sound_vehicles_zooming_by_light_drone_ti.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_032316_653ecfbe_draft_5s_audio_sound_vehicles_zooming_by_light_drone_ti.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/59d8fd6c-94fa-4acb-32a6-727b1d18de00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/b7a53148-12e9-4bbe-953b-e8a2ac7104be/2b890ae6-8223-448c-bb8c-71d98a3eff44/2025-10-20T03-20-17_red_light_trails_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/b7a53148-12e9-4bbe-953b-e8a2ac7104be/6e7089cb-709a-4e15-970b-ef310a23dc40/2025-10-20T03-20-17_red_light_trails.mp4"
+}

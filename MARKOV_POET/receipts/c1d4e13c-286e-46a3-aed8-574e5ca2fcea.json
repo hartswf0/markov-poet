@@ -1,0 +1,24 @@
+{
+  "id": "c1d4e13c-286e-46a3-aed8-574e5ca2fcea",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:57:26.823000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "his facial muscles",
+  "audio_prompt": "",
+  "compound_prompt": "his facial muscles",
+  "parent_generation_id": "4bfac7bd-63f5-40d7-b34a-95cd2bec28d2",
+  "start_keyframe_id": "4bfac7bd-63f5-40d7-b34a-95cd2bec28d2",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_235726_c1d4e13c_draft_5s_silent_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_235726_c1d4e13c_draft_5s_silent_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_235726_c1d4e13c_draft_5s_silent_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/8b8d5298-967c-44b5-d1b6-818383bf2e00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/d5d6f9b6-e5c3-405e-a4e4-b3b69e70ff81/58414226-ce4b-402e-baa5-61a3059e4791/2025-10-19T23-50-58_his_facial_muscles_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/d5d6f9b6-e5c3-405e-a4e4-b3b69e70ff81/e52a7790-fcbc-4e44-a6c2-5263759d27a3/2025-10-19T23-50-58_his_facial_muscles.mp4"
+}

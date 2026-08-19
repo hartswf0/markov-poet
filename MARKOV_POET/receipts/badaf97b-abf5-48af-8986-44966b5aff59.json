@@ -1,0 +1,24 @@
+{
+  "id": "badaf97b-abf5-48af-8986-44966b5aff59",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T03:20:21.952000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": true,
+  "model_version": "ray-v3-reasoning",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "",
+  "audio_prompt": "surreal drone, flowers",
+  "compound_prompt": "Sound: surreal drone, flowers",
+  "parent_generation_id": "ad2d6445-c9d3-46b5-bef6-a726c3c95b05",
+  "start_keyframe_id": "ad2d6445-c9d3-46b5-bef6-a726c3c95b05",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/e2d22129-e4ad-47f6-2bc1-c78597080c00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/504265e3-ea24-4bbf-91ff-46125241bb75/b0ce4776-109a-4413-8ae1-99f180199965/2025-10-20T03-21-17_upscaled_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/504265e3-ea24-4bbf-91ff-46125241bb75/18087c5e-0836-4dc4-831a-0218ffb9ef20/2025-10-20T03-21-17_upscaled.mp4"
+}

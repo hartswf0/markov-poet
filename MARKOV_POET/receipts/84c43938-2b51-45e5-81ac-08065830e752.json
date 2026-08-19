@@ -1,0 +1,24 @@
+{
+  "id": "84c43938-2b51-45e5-81ac-08065830e752",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T06:42:57.433000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "tvs play water ocean atlantis, lost city of atlantis, afrofuturism",
+  "audio_prompt": "drones tatic, harmonies waves, ocean peace gates, drone, calm",
+  "compound_prompt": "tvs play water ocean atlantis, lost city of atlantis, afrofuturism [Audio: drones tatic, harmonies waves, ocean peace gates, drone, calm]",
+  "parent_generation_id": "d69a8a04-d04b-4615-8bf3-1ca93c87940d",
+  "start_keyframe_id": "d69a8a04-d04b-4615-8bf3-1ca93c87940d",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/8350f057-f9c9-4780-79bd-392209f91b00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/7570be27-024c-483c-8e39-627feb764dfd/8b22abbc-e0b3-4d4d-9f9f-de1abb4b314f/2025-10-20T06-42-57_tvs_play_water_ocean_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/7570be27-024c-483c-8e39-627feb764dfd/6bf84053-b961-4eb9-ab19-6d50b645e059/2025-10-20T06-42-57_tvs_play_water_ocean.mp4"
+}

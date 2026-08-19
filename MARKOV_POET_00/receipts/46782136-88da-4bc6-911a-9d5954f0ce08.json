@@ -1,0 +1,24 @@
+{
+  "id": "46782136-88da-4bc6-911a-9d5954f0ce08",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T10:24:41.399000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "My journey brings me to Dim Bedroom, as \"External chaos and blurring vision; EX recedes. Forces the 'LEAVE' trigger.\" unfolds before me. I am undergoing a Subjective Frame Recalibration, as aspects of myself : Disoriented. Through it all, I am becoming You_Falling (Engaging EX).",
+  "audio_prompt": "",
+  "compound_prompt": "My journey brings me to Dim Bedroom, as \"External chaos and blurring vision; EX recedes. Forces the 'LEAVE' trigger.\" unfolds before me. I am undergoing a Subjective Frame Recalibration, as aspects of myself : Disoriented. Through it all, I am becoming You_Falling (Engaging EX).",
+  "parent_generation_id": "c81cb1b0-52a4-4137-b56f-9b2eb0132d0a",
+  "start_keyframe_id": "c81cb1b0-52a4-4137-b56f-9b2eb0132d0a",
+  "end_keyframe_id": "4cfa729a-b8d4-4a0a-ba8b-27695912c8be",
+  "filename_stem": "20250719_102441_46782136_720p_31s_silent_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_102441_46782136_720p_31s_silent_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_102441_46782136_720p_31s_silent_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/6bdb497e-eebd-41e0-9669-2bdfbeff3500/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/b10b9765-9c7d-4a30-984c-3643a2b1da31/e685543c-34f3-499d-9608-5532ab792e6b/2025-07-19T10-24-41_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/b10b9765-9c7d-4a30-984c-3643a2b1da31/a991ee24-5758-4452-9924-136058e69779/2025-07-19T10-24-41_generation.mp4"
+}

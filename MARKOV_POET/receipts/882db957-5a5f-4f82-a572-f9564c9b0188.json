@@ -1,0 +1,24 @@
+{
+  "id": "882db957-5a5f-4f82-a572-f9564c9b0188",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T07:44:33.189000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the man slowly lifts",
+  "audio_prompt": "",
+  "compound_prompt": "the man slowly lifts",
+  "parent_generation_id": "f91d5823-b5c8-44e2-bd2e-c515ff90f15a",
+  "start_keyframe_id": "f91d5823-b5c8-44e2-bd2e-c515ff90f15a",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_074433_882db957_720p_9s_silent_tamborine_echo_waves_ocean_drone_beat_mi",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_074433_882db957_720p_9s_silent_tamborine_echo_waves_ocean_drone_beat_mi.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_074433_882db957_720p_9s_silent_tamborine_echo_waves_ocean_drone_beat_mi.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/b7ebab49-27d7-4cea-4a0c-21e05c041400/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/32881b35-553c-4b10-8d1f-9bb4e76301cb/67349a32-7e22-4604-a9ab-c6f06f08cb1c/2025-10-20T07-44-33_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/32881b35-553c-4b10-8d1f-9bb4e76301cb/c6773f17-116f-421f-a42b-67884e38c2f3/2025-10-20T07-44-33_generation.mp4"
+}

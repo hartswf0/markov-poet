@@ -1,0 +1,24 @@
+{
+  "id": "67e5b1cb-8b37-432f-8da1-2c0c35fcb7dc",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:58:41.617000Z",
+  "duration_seconds": "5",
+  "resolution": "1080p",
+  "has_audio": false,
+  "model_version": "photon-v2",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "\"full_prompt\": \"DS · Mood Environment Stabilizer · A dimly lit plain bedroom in a high-rise apartment · Photo-realistic, minimalist bedroom, urban high-rise window, blue-grey dim lighting, subtle dust motes in air.\"\n        },\n    {\n\n          \"full_prompt\": \"CS · Causal Motion Trigger · POET, wearing a black t-shirt, reads a poem aloud · Photo-realistic, medium shot, soft internal light on POET (black t-shirt), face focused, expressive reading.\"\n        },\n    {\n      \n          \"full_prompt\": \"CS · Causal Motion Trigger · EX, back turned, vapes on a fire escape outside a bedroom window · Photo-realistic, wide shot, EX (back to camera, never showing face), vape cloud, gritty fire escape, high-rise window frame, urban backdrop.\"\n        },",
+  "audio_prompt": "",
+  "compound_prompt": "\"full_prompt\": \"DS · Mood Environment Stabilizer · A dimly lit plain bedroom in a high-rise apartment · Photo-realistic, minimalist bedroom, urban high-rise window, blue-grey dim lighting, subtle dust motes in air.\"\n        },\n    {\n\n          \"full_prompt\": \"CS · Causal Motion Trigger · POET, wearing a black t-shirt, reads a poem aloud · Photo-realistic, medium shot, soft internal light on POET (black t-shirt), face focused, expressive reading.\"\n        },\n    {\n      \n          \"full_prompt\": \"CS · Causal Motion Trigger · EX, back turned, vapes on a fire escape outside a bedroom window · Photo-realistic, wide shot, EX (back to camera, never showing face), vape cloud, gritty fire escape, high-rise window frame, urban backdrop.\"\n        },",
+  "parent_generation_id": "1a518c63-72ad-4338-9cf5-6263c9b54f8c",
+  "start_keyframe_id": "1a518c63-72ad-4338-9cf5-6263c9b54f8c",
+  "end_keyframe_id": "ebe2426d-1585-4063-ae04-58f35167597a",
+  "filename_stem": "20250719_055841_67e5b1cb_1080p_21s_silent_full_prompt_ds_mood_environment_stabiliz",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_055841_67e5b1cb_1080p_21s_silent_full_prompt_ds_mood_environment_stabiliz.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_055841_67e5b1cb_1080p_21s_silent_full_prompt_ds_mood_environment_stabiliz.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/2b7297ab-4048-4377-7db0-b672d5733c00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/ffa32dea-a62c-4694-83d9-0b296f97e7b4/857fc124-5e7b-412a-8f17-b77075f3167b/2025-07-19T05-58-41_full_prompt____ds___last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/f3f8f603-61cb-4790-b3d2-d1813fcacb45/01d0f167-26ef-411d-8bc7-bd031e4670b0/2025-07-19T05-58-41_full_prompt____ds__.mp4"
+}

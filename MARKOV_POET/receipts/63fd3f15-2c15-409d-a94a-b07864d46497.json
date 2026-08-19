@@ -1,0 +1,24 @@
+{
+  "id": "63fd3f15-2c15-409d-a94a-b07864d46497",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T22:58:46.301000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": true,
+  "model_version": "ray-v3-reasoning",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "",
+  "audio_prompt": "epic drone, surreal, blessed, red engergy passion, mood",
+  "compound_prompt": "Sound: epic drone, surreal, blessed, red engergy passion, mood",
+  "parent_generation_id": "5662ac9b-9af2-4a02-adea-ee95ea05bd28",
+  "start_keyframe_id": "5662ac9b-9af2-4a02-adea-ee95ea05bd28",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_225846_63fd3f15_720p_5s_audio_sound_drone_sound_fire_light_energy_epic",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_225846_63fd3f15_720p_5s_audio_sound_drone_sound_fire_light_energy_epic.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_225846_63fd3f15_720p_5s_audio_sound_drone_sound_fire_light_energy_epic.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/c100f6e1-cc51-401d-3fd6-131ace826200/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/9f68d6a4-a274-4943-87fd-237ef265062a/476fb60d-485b-4642-966f-ec5257427231/2025-10-19T23-03-36_upscaled_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/9f68d6a4-a274-4943-87fd-237ef265062a/20d6e923-61ea-415b-98b8-5aeeddca28de/2025-10-19T23-03-36_upscaled.mp4"
+}

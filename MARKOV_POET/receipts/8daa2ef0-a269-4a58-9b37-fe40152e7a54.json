@@ -1,0 +1,24 @@
+{
+  "id": "8daa2ef0-a269-4a58-9b37-fe40152e7a54",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T03:31:50.671000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the chromatic",
+  "audio_prompt": "",
+  "compound_prompt": "the chromatic",
+  "parent_generation_id": "aa0d9307-2a5b-4884-83bc-be3d71662abc",
+  "start_keyframe_id": "aa0d9307-2a5b-4884-83bc-be3d71662abc",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_033150_8daa2ef0_draft_5s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_033150_8daa2ef0_draft_5s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_033150_8daa2ef0_draft_5s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/dbde8aa8-e4a4-4e80-04ed-4e49df819600/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/eb5b5636-cf24-4dd2-a2ad-6e00ec122761/5b1f7b38-1b28-4a72-ba70-abc6e0dd989b/2025-10-20T03-26-27_the_chromatic_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/eb5b5636-cf24-4dd2-a2ad-6e00ec122761/8ad2b480-9876-4164-815e-406c378ab0ac/2025-10-20T03-26-27_the_chromatic.mp4"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "a8922cd9-fa16-4930-9b61-eac9bfc2eaf1",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:26:34.201000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "At this point, POET is in a state of You_Falling (Engaging EX), navigating the Dim Bedroom. A key transformation occurring is the Subjective Frame Recalibration, which is intended to address its causes: Blurred Perception (Vape Haze). This leads to the new state: \": Disoriented\".",
+  "audio_prompt": "",
+  "compound_prompt": "At this point, POET is in a state of You_Falling (Engaging EX), navigating the Dim Bedroom. A key transformation occurring is the Subjective Frame Recalibration, which is intended to address its causes: Blurred Perception (Vape Haze). This leads to the new state: \": Disoriented\".",
+  "parent_generation_id": "a6f7c4a5-4379-4fc4-bff1-6bec32e984cf",
+  "start_keyframe_id": "a6f7c4a5-4379-4fc4-bff1-6bec32e984cf",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_052634_a8922cd9_720p_5s_silent_at_this_point_poet_is_in_a_state_of_you",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_052634_a8922cd9_720p_5s_silent_at_this_point_poet_is_in_a_state_of_you.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_052634_a8922cd9_720p_5s_silent_at_this_point_poet_is_in_a_state_of_you.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/0097cc93-55d4-4aa2-8bb9-46121c4a7c00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/48741cb9-43c7-4588-9752-4fff32c94934/0eca8cc5-fa32-4015-a25c-89c18a3ae3d4/2025-07-19T05-26-34_at_this_point__poet_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/48741cb9-43c7-4588-9752-4fff32c94934/1f5de1d6-e1fe-4d3f-b610-667597f270f1/2025-07-19T05-26-34_at_this_point__poet.mp4"
+}

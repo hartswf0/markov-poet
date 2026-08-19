@@ -1,0 +1,24 @@
+{
+  "id": "d5abc940-54af-4992-b173-cd32e82b1b17",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T07:51:24.108000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "9:16",
+  "visual_prompt": "POV shot through a glitching filter of POET in Inky Abyss - EX and POET fall into inky abyss; screen blacks out. Entering the deep unconscious.. Focus on the visual impact of: Descent Initiated. The scene's ambiance is Vibrant, kaleidoscopic light with a Psychedelic, abstract style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16. Add flavor:",
+  "audio_prompt": "",
+  "compound_prompt": "POV shot through a glitching filter of POET in Inky Abyss - EX and POET fall into inky abyss; screen blacks out. Entering the deep unconscious.. Focus on the visual impact of: Descent Initiated. The scene's ambiance is Vibrant, kaleidoscopic light with a Psychedelic, abstract style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16. Add flavor:",
+  "parent_generation_id": "4cfa729a-b8d4-4a0a-ba8b-27695912c8be",
+  "start_keyframe_id": "4cfa729a-b8d4-4a0a-ba8b-27695912c8be",
+  "end_keyframe_id": "c3cb5383-0e3b-4830-bb9e-5c1bed18db05",
+  "filename_stem": "20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/194580e7-3357-4a77-132a-5902a4f82200/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/9d5367c4-bc22-4e5e-816d-7cc82ee7903b/1667cf8e-bf83-404b-8e0e-b57eeecd69b5/2025-07-19T07-51-24_pov_shot_through_a_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/9d5367c4-bc22-4e5e-816d-7cc82ee7903b/bee160d6-6be3-4159-acb7-79ada88cb9fe/2025-07-19T07-51-24_pov_shot_through_a.mp4"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "2b779f89-5cd4-41e6-8432-f6d6be922f7e",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T01:26:59.233000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the thick mist",
+  "audio_prompt": "",
+  "compound_prompt": "the thick mist",
+  "parent_generation_id": "2b719fef-fd01-4ef7-b216-640a1506497a",
+  "start_keyframe_id": "2b719fef-fd01-4ef7-b216-640a1506497a",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_012659_2b779f89_draft_5s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_012659_2b779f89_draft_5s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_012659_2b779f89_draft_5s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/1fe4be7a-c00f-41c2-c52e-ddf817b81f00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/4f645560-f592-4ee0-8a36-f25d6ac72e9b/adcfe979-3618-441f-927f-1f002f1dc42a/2025-10-20T01-23-30_the_thick_mist_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/4f645560-f592-4ee0-8a36-f25d6ac72e9b/8c210b1d-6ec0-46fe-a071-63818fa944d0/2025-10-20T01-23-30_the_thick_mist.mp4"
+}

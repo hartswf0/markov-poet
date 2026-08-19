@@ -1,0 +1,24 @@
+{
+  "id": "447a4780-d3b7-497c-9c2f-14e13baf4f11",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T07:23:08.979000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the glowing red",
+  "audio_prompt": "",
+  "compound_prompt": "the glowing red",
+  "parent_generation_id": "d847a1b8-c5ee-426f-8af9-3e89f9280b2a",
+  "start_keyframe_id": "d847a1b8-c5ee-426f-8af9-3e89f9280b2a",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/f6b84b3b-eb35-4b32-f244-5c0b9d9e1300/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/730fa223-add7-441c-a675-b8a3e63185c0/fa771503-a149-4df0-abdf-660525d4ff40/2025-10-20T07-23-08_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/730fa223-add7-441c-a675-b8a3e63185c0/3ac79895-e48b-4020-ad3b-d2e0002c8941/2025-10-20T07-23-08_generation.mp4"
+}

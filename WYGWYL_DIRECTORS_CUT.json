@@ -1,0 +1,465 @@
+{
+  "title": "WYGWYL 14-Poem Suite — Definitive Director's Cut Film Assembly",
+  "author": "Mark Anthony Thomas",
+  "framework": "LEGOS Visual & Narrative Alignment",
+  "total_films": 14,
+  "total_runtime": "24:00.1 (1440.07s)",
+  "suites": [
+    {
+      "suite_num": "01",
+      "title": "OUT OF LIFE",
+      "time_range": "00:00 - 02:02",
+      "container_seconds": [
+        0.0,
+        122.99
+      ],
+      "full_verse": "What we've made, we don't want. What we've sold — to the world, to ourselves — doesn't exist. I look for a way out: through the hallways, within the drawers, and fire escapes. The vape gathers, inside and out. My vision blurs. I move toward the window — and you only get further away. More haze. What isn't mine, I still can not give.",
+      "curated_shots": [
+        {
+          "role": "ESTABLISHING MASTER",
+          "shot_id": "c81cb1b0-13f6-455b-bf42-9988ffaa3344",
+          "filename_stem": "20250719_085121_c81cb1b0_720p_26s_silent_my_journey_brings_me_to_dim_bedroom_as_e",
+          "visual_category": "POET_DIM_BEDROOM",
+          "duration": 26,
+          "editorial_reason": "Definitive 26-second wide master establishing the domestic stasis of the dim teal bedroom with vinyl records on wall and rainy window overlooking black car.",
+          "matched_verse_phrase": "The vape gathers, inside and out. My vision blurs. I move toward the window..."
+        },
+        {
+          "role": "CLIMACTIC SHIFT",
+          "shot_id": "a8922cd9-5678-4321-abcd-112233445566",
+          "filename_stem": "20250719_052634_a8922cd9_720p_5s_silent_at_this_point_poet_is_in_a_state_of_you",
+          "visual_category": "BEDROOM_FOG_GESTURE",
+          "duration": 5,
+          "editorial_reason": "Dense blue floor fog rolls across the unmade couch as the POET raises his arm high in an emphatic gesture toward the ceiling light.",
+          "matched_verse_phrase": "More haze. What isn't mine, I still can not give."
+        }
+      ]
+    },
+    {
+      "suite_num": "02",
+      "title": "FLASHING LIGHTS",
+      "time_range": "02:02 - 03:34",
+      "container_seconds": [
+        122.99,
+        214.11
+      ],
+      "full_verse": "It was the type of silent scream a trapped lover makes to escape: a pending marriage, a concussion, a set of walls caving inward. An emergency call while tossing and turning — the silent call a man makes to the mirror after midnight, to digest a truth. A truth he could neither alter nor change. What isn't mine, I still can not give.",
+      "curated_shots": [
+        {
+          "role": "HIGH-SPEED ESCAPE",
+          "shot_id": "6750a5d1-9876-4321-dcba-667788990011",
+          "filename_stem": "20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs",
+          "visual_category": "SUBWAY_SPRINT_STAIRS",
+          "duration": 5,
+          "editorial_reason": "Frantic sprint down monochrome orange subway stairs to breach transit threshold and escape marital confinement.",
+          "matched_verse_phrase": "It was the type of silent scream a trapped lover makes to escape..."
+        },
+        {
+          "role": "INTERNAL DISTRESS",
+          "shot_id": "63fd3f15-1111-2222-3333-444455556666",
+          "filename_stem": "20251019_225846_63fd3f15_720p_5s_audio_sound_drone_sound_fire_light_energy_epic",
+          "visual_category": "SHADOWED_STYLIST_PLASMA",
+          "duration": 5,
+          "editorial_reason": "Shadowed stylist on night street corner wrapped in glowing crimson plasma mist reflecting internal emergency call.",
+          "matched_verse_phrase": "The silent call a man makes to the mirror after midnight, to digest a truth."
+        }
+      ]
+    },
+    {
+      "suite_num": "03",
+      "title": "HOW TO BREAK OFF AN ENGAGEMENT",
+      "time_range": "03:34 - 04:46",
+      "container_seconds": [
+        214.11,
+        286.51
+      ],
+      "full_verse": "Ode to forever — a tambourine sounds off an empty temple, empty choir stands, empty prayer lines. And abandoned baptism pools. It flies in through the rose window — still whole. A broken promise.",
+      "curated_shots": [
+        {
+          "role": "SOUL CATHARSIS",
+          "shot_id": "447a4780-2222-3333-4444-555566667777",
+          "filename_stem": "20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone",
+          "visual_category": "BEACH_HEART_RIBBON",
+          "duration": 9,
+          "editorial_reason": "Man standing in twilight ocean surf releasing brilliant glowing red heart ribbons that coil across his chest and drift into the sea breeze.",
+          "matched_verse_phrase": "Ode to forever... It flies in through the rose window — still whole."
+        },
+        {
+          "role": "SENSORY SUBMERSION",
+          "shot_id": "0b025dc2-3333-4444-5555-666677778888",
+          "filename_stem": "20251019_230706_0b025dc2_draft_5s_audio_sound_drowning_in_red_light_fluid_bubbli",
+          "visual_category": "RED_FLUID_SUBMERSION",
+          "duration": 5,
+          "editorial_reason": "POET with glistening wet skin submerged in bubbling red liquid pool, head bowed in deep emotional surrender.",
+          "matched_verse_phrase": "And abandoned baptism pools... A broken promise."
+        }
+      ]
+    },
+    {
+      "suite_num": "04",
+      "title": "NEVERMORE",
+      "time_range": "04:46 - 07:01",
+      "container_seconds": [
+        286.51,
+        421.78
+      ],
+      "full_verse": "What if I followed this trail, to where the broken pieces have washed ashore — and the ashes of expired wildfires cover sands, and debris lifted from the night sea water's floor. The waves calm to folded whispers; the winds mute the trees. The right level of silence, to find a throbbing heart — it used to be mine. I lift it with care: nevermore.",
+      "curated_shots": [
+        {
+          "role": "PROPHETIC EMBLEM",
+          "shot_id": "63d387a4-4444-5555-6666-777788889999",
+          "filename_stem": "20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light",
+          "visual_category": "POET_CATHEDRAL_CROWS",
+          "duration": 5,
+          "editorial_reason": "POET in sunglasses standing centered in parched cathedral churchyard as dark ravens glide closely past his shoulders in golden atmospheric haze.",
+          "matched_verse_phrase": "The right level of silence, to find a throbbing heart — it used to be mine."
+        },
+        {
+          "role": "AUTHORIAL INSCRIPTION",
+          "shot_id": "9d16432c-5555-6666-7777-888899990000",
+          "filename_stem": "20250719_093818_9d16432c_720p_5s_silent_more_minimal_and_abstract_with_neon_touc",
+          "visual_category": "POEMS_TITLE_CARD",
+          "duration": 5,
+          "editorial_reason": "Crisp white 'Poems by Mark Anthony Thomas' typography centered over dark rain-slicked asphalt with subtle falling rain glints.",
+          "matched_verse_phrase": "I lift it with care: nevermore."
+        },
+        {
+          "role": "SACRED THRESHOLD",
+          "shot_id": "5bcf5bf5-6666-7777-8888-999900001111",
+          "filename_stem": "20251020_033411_5bcf5bf5_draft_5s_audio_interpolated_sequence",
+          "visual_category": "GOTHIC_CATHEDRAL_TERMINAL",
+          "duration": 5,
+          "editorial_reason": "Monumental stone gothic railway hall with suspended amber lanterns and wet reflective platform.",
+          "matched_verse_phrase": "What if I followed this trail, to where the broken pieces have washed ashore..."
+        }
+      ]
+    },
+    {
+      "suite_num": "05",
+      "title": "BLOODLINES",
+      "time_range": "07:02 - 08:33",
+      "container_seconds": [
+        422.18,
+        513.21
+      ],
+      "full_verse": "Now go, they tell me. To ask if I can inherit the earth — to ask if I can name my own stars. Even galaxies, if I may. The past, too, was waiting for me — coming of age in the shared rooms of humid basements as bedrooms; mattress pads where the wood beams of Southern pine could comfort my spine. It didn't. To dream was to prevail.",
+      "curated_shots": [
+        {
+          "role": "ANATOMICAL ENGINE",
+          "shot_id": "764b035a-7777-8888-9999-000011112222",
+          "filename_stem": "20251019_233913_764b035a_720p_5s_audio_interpolated_sequence",
+          "visual_category": "BEATING_HEART_SKELETON",
+          "duration": 5,
+          "editorial_reason": "POET with arms open in center-axis street, chest cavity displaying glowing white skeleton and beating red heart pulsating with bright energy.",
+          "matched_verse_phrase": "To dream was to prevail... Ask if I can name my own stars."
+        },
+        {
+          "role": "VERTEBRAL LINEAGE",
+          "shot_id": "34051c38-8888-9999-0000-111122223333",
+          "filename_stem": "20251019_234018_34051c38_720p_5s_audio_sound_hearbeat_drone_light_skeleton_purp",
+          "visual_category": "SKELETAL_PROFILE",
+          "duration": 5,
+          "editorial_reason": "Contemplative profile with translucent skin exposing glowing amber cervical vertebrae and vascular lines pulsing beneath the surface.",
+          "matched_verse_phrase": "Mattress pads where the wood beams of Southern pine could comfort my spine. It didn't."
+        },
+        {
+          "role": "FRATERNAL SANCTUARY",
+          "shot_id": "0107df88-9999-0000-1111-222233334444",
+          "filename_stem": "20251020_003624_0107df88_draft_5s_silent_interpolated_sequence",
+          "visual_category": "EMBRACING_YOUTHS_BUTTERFLIES",
+          "duration": 5,
+          "editorial_reason": "Two young Black brothers resting foreheads together in tender communion surrounded by bioluminescent turquoise butterflies.",
+          "matched_verse_phrase": "Coming of age in the shared rooms of humid basements... The past, too, was waiting for me."
+        }
+      ]
+    },
+    {
+      "suite_num": "06",
+      "title": "RESURRECTING ATLANTIS",
+      "time_range": "08:33 - 10:23",
+      "container_seconds": [
+        513.21,
+        623.45
+      ],
+      "full_verse": "Poets, who eased generations down yellow brick roads — and plucked our souls out of their secret places, to follow comets to the capital city of our collective consciousness. Resurrecting Atlantis. Here we are all one — the pact we've made here with nature, abandoned and hoped for the best, back on life.",
+      "curated_shots": [
+        {
+          "role": "MEDIA PYRAMID ARCHIVE",
+          "shot_id": "84c43938-0000-1111-2222-333344445555",
+          "filename_stem": "20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city",
+          "visual_category": "CRT_TV_PYRAMID_ATLANTIS",
+          "duration": 9,
+          "editorial_reason": "Stepped pyramid of stacked vintage CRT monitors glowing blue and purple, broadcasting turbulent ocean water in volumetric haze.",
+          "matched_verse_phrase": "To follow comets to the capital city of our collective consciousness. Resurrecting Atlantis."
+        },
+        {
+          "role": "SACRED COMMUNION",
+          "shot_id": "068f796b-1111-2222-3333-444455556666",
+          "filename_stem": "20251020_012957_068f796b_draft_5s_audio_sound_make_it_more_deep_dark_ocean_more",
+          "visual_category": "ANCESTRAL_COMMUNION_ROSES",
+          "duration": 5,
+          "editorial_reason": "Congregation of Black matriarchs in white garments with floating water bubbles and rose bouquets drifting weightlessly in serene communion.",
+          "matched_verse_phrase": "Here we are all one — the pact we've made here with nature... back on life."
+        },
+        {
+          "role": "UTOPIAN MIRROR",
+          "shot_id": "35855d8a-2222-3333-4444-555566667777",
+          "filename_stem": "20251020_071957_35855d8a_720p_14s_silent_interpolated_sequence",
+          "visual_category": "MIRRORED_ISLAND_METROPOLIS",
+          "duration": 14,
+          "editorial_reason": "High-contrast black-and-white landscape of futuristic geometric island towers reflected perfectly in still lake water under diagonal storm beams.",
+          "matched_verse_phrase": "The capital city of our collective consciousness..."
+        }
+      ]
+    },
+    {
+      "suite_num": "07",
+      "title": "DJ TURN ME UP",
+      "time_range": "10:23 - 12:12",
+      "container_seconds": [
+        623.45,
+        732.13
+      ],
+      "full_verse": "DJ, turn me up, please. Eyes wide shut, chin nested at the arch of the weight of these spoken words. I have a love story to tell — of ghosts, whispering unfolded dilutions, birthed in purity, and dying in the vineyards of sun-soaked evergreen fields, unnourished.",
+      "curated_shots": [
+        {
+          "role": "MELANCHOLIC WITNESS",
+          "shot_id": "e9c18d8d-3333-4444-5555-666677778888",
+          "filename_stem": "20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio",
+          "visual_category": "BOY_AT_RAIN_WINDOW",
+          "duration": 5,
+          "editorial_reason": "Young Black boy in bright red hoodie resting cheek on arm at roadside diner window, gazing thoughtfully through raindrops at overcast highway.",
+          "matched_verse_phrase": "I have a love story to tell — of ghosts, whispering unfolded dilutions..."
+        },
+        {
+          "role": "FOCAL PENETRATION",
+          "shot_id": "0183fedb-4444-5555-6666-777788889999",
+          "filename_stem": "20251019_231240_0183fedb_draft_5s_audio_sound_rain_drone_dope_slow_mo_vocoder_mo",
+          "visual_category": "BOY_AT_RAIN_WINDOW",
+          "duration": 5,
+          "editorial_reason": "Slow-motion focal shift from glistening raindrops on the glass to the boy's deep expressive eyes reflecting distant radio echoes.",
+          "matched_verse_phrase": "Eyes wide shut, chin nested at the arch of the weight of these spoken words."
+        }
+      ]
+    },
+    {
+      "suite_num": "08",
+      "title": "NEWLY SINGLE",
+      "time_range": "12:12 - 13:53",
+      "container_seconds": [
+        732.14,
+        833.39
+      ],
+      "full_verse": "Pulsing, and head throbbing from the music — and empty, on a crowded floor of sweated perfumes and temptations. The soul escapes my body, and leaves him on the dance floor — just flesh and bones. Rejection and heartache hit different, with no feelings afloat.",
+      "curated_shots": [
+        {
+          "role": "TRANSIT VELOCITY",
+          "shot_id": "8daa2ef0-5555-6666-7777-888899990000",
+          "filename_stem": "20251020_033150_8daa2ef0_draft_5s_audio_interpolated_sequence",
+          "visual_category": "TRAIN_WINDOW_REFRACTION",
+          "duration": 5,
+          "editorial_reason": "POET with close beard pressed against speeding train carriage window, looking directly back at viewer as neon city lights smear in chromatic aberration.",
+          "matched_verse_phrase": "The soul escapes my body, and leaves him on the dance floor — just flesh and bones."
+        },
+        {
+          "role": "PASSENGER ISOLATION",
+          "shot_id": "13fee118-6666-7777-8888-999900001111",
+          "filename_stem": "20251020_033310_13fee118_720p_5s_audio_interpolated_sequence",
+          "visual_category": "TRAIN_WINDOW_REFRACTION",
+          "duration": 5,
+          "editorial_reason": "Wider carriage angle showing solitary passenger suspended in stillness while external world rushes past in relativistic blur.",
+          "matched_verse_phrase": "Rejection and heartache hit different, with no feelings afloat."
+        }
+      ]
+    },
+    {
+      "suite_num": "09",
+      "title": "YET, HEARD",
+      "time_range": "13:53 - 15:50",
+      "container_seconds": [
+        833.39,
+        950.94
+      ],
+      "full_verse": "Before I go, we look at the moon the way we used to see it. We talk for years, travel through time — we grow old together, I believe. Before I go, I call on my mother — in tears, speaking of an abyss she's never known. Before I go, I call on my father — his calming demeanor summoned from the yonders. We stroll, father and son, hearted and shaken. Someone borrowed, and someone blue — yet, broken. Yet, heard.",
+      "curated_shots": [
+        {
+          "role": "AERIAL TRANSCENDENCE",
+          "shot_id": "d5abc940-7777-8888-9999-000011112222",
+          "filename_stem": "20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p",
+          "visual_category": "ROOFTOP_STEAM_LEAP",
+          "duration": 9,
+          "editorial_reason": "POET leaps off industrial rooftop ledge into steam, camera flips upward as he glides through radiant sunlit clouds wearing sunglasses toward the lens.",
+          "matched_verse_phrase": "Before I go... Someone borrowed, and someone blue — yet, broken. Yet, heard."
+        },
+        {
+          "role": "THE ABYSS OBSERVED",
+          "shot_id": "8aff03e4-8888-9999-0000-111122223333",
+          "filename_stem": "20250719_073830_8aff03e4_720p_13s_silent_here_in_inky_abyss_a_new_chapter_begins",
+          "visual_category": "ROOFTOP_STEAM_ALLEY",
+          "duration": 13,
+          "editorial_reason": "POET in black beanie and hoodie seated on brick roof ledge facing away from camera watching massive white plumes of steam surge into overcast sky.",
+          "matched_verse_phrase": "Before I go, I call on my mother — in tears, speaking of an abyss she's never known."
+        }
+      ]
+    },
+    {
+      "suite_num": "10",
+      "title": "MAGIC RIDE",
+      "time_range": "15:50 - 17:36",
+      "container_seconds": [
+        950.94,
+        1056.66
+      ],
+      "full_verse": "I wasn't looking for a ride, but here you are — blissful, and oddly sensitive. I rub my aggressions into your steel coverings, and hop on. Loneliness is having everything with no one to tell — being everywhere, with no one to love. I let the noise block the noise. The way I ride: eyes turn, heads twist — and prove the magic still exists. The moon settles, and I can see a morning ahead for me.",
+      "curated_shots": [
+        {
+          "role": "KINETIC LIBERATION",
+          "shot_id": "fc64e987-9999-0000-1111-222233334444",
+          "filename_stem": "20251020_032322_fc64e987_draft_5s_audio_sound_magic_ride_light_zooming_by_time_w",
+          "visual_category": "COASTAL_MAGIC_RIDE",
+          "duration": 5,
+          "editorial_reason": "Coastal highway at twilight lined with tall palm silhouettes, headlights and streetlamps smearing into horizontal golden light streaks.",
+          "matched_verse_phrase": "I let the noise block the noise. The way I ride: eyes turn, heads twist — and prove the magic still exists."
+        },
+        {
+          "role": "VELOCITY MOMENTUM",
+          "shot_id": "653ecfbe-0000-1111-2222-333344445555",
+          "filename_stem": "20251020_032316_653ecfbe_draft_5s_audio_sound_vehicles_zooming_by_light_drone_ti",
+          "visual_category": "COASTAL_MAGIC_RIDE",
+          "duration": 5,
+          "editorial_reason": "Forward-tracking coastal vehicle perspective accelerating along seaside asphalt into dawn.",
+          "matched_verse_phrase": "The moon settles, and the tease of distant stars subsides — and I can see a morning ahead for me."
+        }
+      ]
+    },
+    {
+      "suite_num": "11",
+      "title": "NEW DAY",
+      "time_range": "17:36 - 19:28",
+      "container_seconds": [
+        1056.66,
+        1168.02
+      ],
+      "full_verse": "Fog covers the seas and hugs the tree-covered hills, floating through the morning as it exhales its introduction. This world is at peace. In the awakening of dawn, in fresh muted colors: we can rebuild this temple. It's a new day — a catharsis for me to say, with newfound energies and recycled airs. Edgeless dreams that reflect the skies... that we too can walk on water.",
+      "curated_shots": [
+        {
+          "role": "BOTANICAL REBIRTH",
+          "shot_id": "badaf97b-1111-2222-3333-444455556666",
+          "filename_stem": "20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water",
+          "visual_category": "APOTHECARY_YELLOW_FLOWERS",
+          "duration": 5,
+          "editorial_reason": "POET in dark jacket and sunglasses wading waist-deep through dense blooming sea of thousands of yellow chrysanthemums filling an ancient stone library.",
+          "matched_verse_phrase": "In the awakening of dawn, in fresh muted colors: we can rebuild this temple. It's a new day — a catharsis..."
+        },
+        {
+          "role": "PILGRIMAGE HARMONY",
+          "shot_id": "8a9e7a1e-2222-3333-4444-555566667777",
+          "filename_stem": "20251020_032325_8a9e7a1e_720p_5s_audio_sound_more_humble_drone_glorious_morph_v",
+          "visual_category": "RUINED_COLONNADE_PILGRIM",
+          "duration": 5,
+          "editorial_reason": "Solitary pilgrim in dark robes walking thoughtfully through tall golden grass in grand sunlit ruined cathedral colonnade.",
+          "matched_verse_phrase": "We can rebuild this temple — under vibrant sun rays of glory..."
+        },
+        {
+          "role": "PRISMATIC CONVERGENCE",
+          "shot_id": "48a7a55a-3333-4444-5555-666677778888",
+          "filename_stem": "20251020_011907_48a7a55a_draft_5s_silent_interpolated_sequence",
+          "visual_category": "SAFFRON_SANCTUARY_MONKS",
+          "duration": 5,
+          "editorial_reason": "Saffron-robed Buddhist monks on ancient stone temple steps in radiant morning sunlight and prismatic refractions.",
+          "matched_verse_phrase": "And of modern faiths — that we too can walk on water."
+        }
+      ]
+    },
+    {
+      "suite_num": "12",
+      "title": "REUNION",
+      "time_range": "19:28 - 20:43",
+      "container_seconds": [
+        1168.02,
+        1243.0
+      ],
+      "full_verse": "Decades later, there is less time for words, and more space for laughter — hugs with no reason, and loud voices, so our hearts can be overheard. Reflecting on legacies, and creeds once told — of elders, now past. Or will we make time, in the sands of burning hourglasses? Before our winds part ways — to a next lifetime. This is brotherhood.",
+      "curated_shots": [
+        {
+          "role": "JOY OVERHEARD",
+          "shot_id": "37235c7f-4444-5555-6666-777788889999",
+          "filename_stem": "20251020_013140_37235c7f_draft_5s_audio_interpolated_sequence",
+          "visual_category": "TWO_KIN_WOMEN",
+          "duration": 5,
+          "editorial_reason": "Two kin women sharing an intimate, radiant laugh over a phone in golden chandelier bokeh, celebrating family survival.",
+          "matched_verse_phrase": "Decades later, there is less time for words, and more space for laughter — hugs with no reason, and loud voices..."
+        },
+        {
+          "role": "SACRED BROTHERHOOD",
+          "shot_id": "0107df88-5555-6666-7777-888899990000",
+          "filename_stem": "20251020_003624_0107df88_draft_5s_silent_interpolated_sequence",
+          "visual_category": "EMBRACING_YOUTHS_BUTTERFLIES",
+          "duration": 5,
+          "editorial_reason": "Two young Black brothers resting foreheads together in tender communion surrounded by bioluminescent butterflies.",
+          "matched_verse_phrase": "Before our winds part ways — to a next lifetime. This is brotherhood."
+        }
+      ]
+    },
+    {
+      "suite_num": "13",
+      "title": "HOW TO WIN MY HEART",
+      "time_range": "20:43 - 22:32",
+      "container_seconds": [
+        1243.0,
+        1352.98
+      ],
+      "full_verse": "Find me at the harbor, at the small tables, watching. The couples orbit each other the way Jupiter keeps its moons — close, and counted. Life has burned all my love stories — victory-less seasons. So I harvest the flowers instead — scarlet poppies, purple blossoms — and they become my power. Then, a distant window. She says: you'll see me. Capture the eyes. Refocus. Step back. Say hello. Don't make me leave. I escaped here for a reason.",
+      "curated_shots": [
+        {
+          "role": "TEMPORAL VOYAGER",
+          "shot_id": "53666716-6666-7777-8888-999900001111",
+          "filename_stem": "20251019_231956_53666716_720p_5s_silent_interpolated_sequence",
+          "visual_category": "TEMPORAL_ECHO_TRAIL",
+          "duration": 5,
+          "editorial_reason": "POET in black tracksuit with clear plastic sleeves and dark sunglasses walking forward with stepped multi-exposure after-image trail.",
+          "matched_verse_phrase": "Then, a distant window. She says: you'll see me. Capture the eyes. Refocus. Step back. Say hello."
+        },
+        {
+          "role": "ECHO VARIATION",
+          "shot_id": "222c8cca-7777-8888-9999-000011112222",
+          "filename_stem": "20251019_231955_222c8cca_draft_5s_audio_interpolated_sequence",
+          "visual_category": "TEMPORAL_ECHO_TRAIL",
+          "duration": 5,
+          "editorial_reason": "Dynamic camera tracking variation capturing forward gaze through temporal motion smear.",
+          "matched_verse_phrase": "Don't make me leave. I escaped here for a reason."
+        }
+      ]
+    },
+    {
+      "suite_num": "14",
+      "title": "HOT MINUTE",
+      "time_range": "22:32 - 24:00",
+      "container_seconds": [
+        1352.98,
+        1440.07
+      ],
+      "full_verse": "A hot minute. The haze gathers on the water — and everything I built here learns to be weather: the city, the temple, the harbor. It takes me last, and from the ground up. I am reluctant — but I have been weather before. All black again. But no walls this time. A life flashes the way a reel does: the window, the tambourine, the field, the stars, the candle, the daisy, the ride, the temple, the hourglass. Our dance together is a victory. An old door, from a vintage somewhere. It opens on a slow party — the kind I once fell out of a window to escape. This time, I choose the door.",
+      "curated_shots": [
+        {
+          "role": "WEATHER TRANSMUTATION",
+          "shot_id": "ce4762b5-8888-9999-0000-111122223333",
+          "filename_stem": "20251020_015442_ce4762b5_draft_5s_audio_interpolated_sequence",
+          "visual_category": "ROOFTOP_CRIMSON_FLARES",
+          "duration": 5,
+          "editorial_reason": "High-rise balcony overlooking dense European city engulfed in billowing red stadium flare smoke rolling over the glass railing.",
+          "matched_verse_phrase": "The haze gathers on the water — and everything I built here learns to be weather: the city, the temple, the harbor."
+        },
+        {
+          "role": "SOVEREIGN TRANSIT",
+          "shot_id": "60c4c35f-9999-0000-1111-222233334444",
+          "filename_stem": "20251019_225855_60c4c35f_720p_5s_audio_sound_drone_heavenly_sound_red_fire_echo",
+          "visual_category": "SHADOWED_STYLIST_PLASMA",
+          "duration": 5,
+          "editorial_reason": "Shadowed stylist standing poised in profile on city street corner as crimson energy mist swirls around his structured jacket.",
+          "matched_verse_phrase": "Our dance together is a victory... This time, I choose the door."
+        }
+      ]
+    }
+  ]
+}

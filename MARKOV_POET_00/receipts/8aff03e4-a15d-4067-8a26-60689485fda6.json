@@ -1,0 +1,24 @@
+{
+  "id": "8aff03e4-a15d-4067-8a26-60689485fda6",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T07:38:30.409000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "Here in Inky Abyss, a new chapter begins, marked by: \"EX and POET fall into inky abyss; screen blacks out. Entering the deep unconscious.\". The narrative takes a turn with the Descent Initiated, leading to a sense of \": You_Falling\". Through it all, I am becoming You_Falling (Engaging EX).",
+  "audio_prompt": "",
+  "compound_prompt": "Here in Inky Abyss, a new chapter begins, marked by: \"EX and POET fall into inky abyss; screen blacks out. Entering the deep unconscious.\". The narrative takes a turn with the Descent Initiated, leading to a sense of \": You_Falling\". Through it all, I am becoming You_Falling (Engaging EX).",
+  "parent_generation_id": "4cfa729a-b8d4-4a0a-ba8b-27695912c8be",
+  "start_keyframe_id": "4cfa729a-b8d4-4a0a-ba8b-27695912c8be",
+  "end_keyframe_id": "eef05914-0ef7-45c7-bd7e-28f11527f939",
+  "filename_stem": "20250719_073830_8aff03e4_720p_13s_silent_here_in_inky_abyss_a_new_chapter_begins",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_073830_8aff03e4_720p_13s_silent_here_in_inky_abyss_a_new_chapter_begins.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_073830_8aff03e4_720p_13s_silent_here_in_inky_abyss_a_new_chapter_begins.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/fde40c69-e2eb-4319-3012-7ef085b4a600/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/67c05a2e-d979-4c2a-b012-2d3c4f9d9553/22022909-fcf8-47b4-9ba0-45c0f4d73109/2025-07-19T07-38-30_here_in_inky_abyss__last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/67c05a2e-d979-4c2a-b012-2d3c4f9d9553/85322b5a-7c72-4a9d-8f48-9fdf30446daf/2025-07-19T07-38-30_here_in_inky_abyss_.mp4"
+}

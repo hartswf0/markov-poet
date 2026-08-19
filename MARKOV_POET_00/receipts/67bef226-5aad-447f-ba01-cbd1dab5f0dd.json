@@ -1,0 +1,24 @@
+{
+  "id": "67bef226-5aad-447f-ba01-cbd1dab5f0dd",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:52:38.778000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "\"full_prompt\": \"CS · Causal Motion Trigger · EX, back turned, vapes on a fire escape outside a bedroom window · Photo-realistic, wide shot, EX (back to camera, never showing face), vape cloud, gritty fire escape, high-rise window frame, urban backdrop.\"",
+  "audio_prompt": "",
+  "compound_prompt": "\"full_prompt\": \"CS · Causal Motion Trigger · EX, back turned, vapes on a fire escape outside a bedroom window · Photo-realistic, wide shot, EX (back to camera, never showing face), vape cloud, gritty fire escape, high-rise window frame, urban backdrop.\"",
+  "parent_generation_id": "de0f0438-6411-4e33-9e13-2467b6b6697e",
+  "start_keyframe_id": "de0f0438-6411-4e33-9e13-2467b6b6697e",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_055238_67bef226_720p_5s_silent_full_prompt_cs_causal_motion_trigger_ex",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_055238_67bef226_720p_5s_silent_full_prompt_cs_causal_motion_trigger_ex.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_055238_67bef226_720p_5s_silent_full_prompt_cs_causal_motion_trigger_ex.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/a75245b5-55f1-4852-04ae-59f6cf451500/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/6c1c9a58-731a-4351-b2ba-9b17e90edf6e/90c787ea-870b-445e-8776-548fcf0716b5/2025-07-19T05-52-38_full_prompt____cs___last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/6c1c9a58-731a-4351-b2ba-9b17e90edf6e/df4a1467-311e-4b86-968a-c09f81825e45/2025-07-19T05-52-38_full_prompt____cs__.mp4"
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WYGWYL 14-Film Director's Cut Master Storyboard</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --dim: #666;
+    --line: #000;
+    --blue: #0066cc;
+    --soft: #f8f8f8;
+    --accent: #d03535;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--paper); color: var(--ink); }
+  header { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 2px solid var(--line); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { font-size: 14px; font-weight: 900; letter-spacing: 0.08em; }
+  
+  main { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(400px, 1fr); min-height: calc(100vh - 50px); }
+  #screenPanel { border-right: 2px solid var(--line); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  #sidebarPanel { padding: 16px; background: var(--soft); overflow-y: auto; max-height: calc(100vh - 50px); }
+
+  .video-container { width: 100%; aspect-ratio: 16/9; background: #000; border: 2px solid var(--line); overflow: hidden; }
+  video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  
+  .timeline-bar { display: flex; gap: 2px; height: 16px; border: 1px solid var(--line); background: #eee; margin-top: 4px; }
+  .tl-suite { flex-grow: 1; height: 100%; background: #ccc; cursor: pointer; position: relative; }
+  .tl-suite:hover { background: var(--blue); }
+  .tl-suite.active { background: var(--ink); }
+
+  .suite-card { border: 1px solid var(--line); background: var(--paper); margin-bottom: 12px; cursor: pointer; }
+  .suite-card.active { border: 2px solid var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+  .suite-header { background: #eee; padding: 6px 8px; font-weight: 800; display: flex; justify-content: space-between; }
+  .suite-card.active .suite-header { background: var(--ink); color: #fff; }
+  .suite-body { padding: 8px; font-size: 11px; }
+  
+  .shot-pill { border: 1px solid var(--line); background: #fff; padding: 4px 6px; margin-top: 6px; font-size: 10px; }
+  .shot-pill:hover { background: #e0efff; }
+  .shot-pill.active-pill { background: var(--ink); color: #fff; }
+
+  .contact-box { border: 1px solid var(--line); background: #000; margin-top: 10px; }
+  .contact-box img { width: 100%; display: block; object-fit: contain; }
+
+  .quote-box { background: #fff; border: 1px solid var(--line); padding: 10px; font-style: italic; font-size: 13px; line-height: 1.4; border-left: 4px solid var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">🎬 WYGWYL 14-FILM DEFINITIVE DIRECTOR'S CUT</div>
+  <div style="font-weight:700;">RUNTIME: 24:00.1 · 14 CONTIGUOUS POEM-FILMS</div>
+</header>
+
+<main>
+  <section id="screenPanel">
+    <div class="video-container">
+      <video id="player" controls playsinline></video>
+    </div>
+    
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:13px; font-weight:900;" id="activeTitle">01 OUT OF LIFE</span>
+      <span style="color:var(--dim); font-weight:700;" id="activeRole">ESTABLISHING MASTER</span>
+    </div>
+
+    <div class="timeline-bar" id="timelineBar"></div>
+
+    <div class="quote-box" id="activeVerse">Loading verse...</div>
+
+    <div style="font-size:11px; line-height:1.4; background:#fff; border:1px solid var(--line); padding:10px;">
+      <b>Editorial Rationale:</b> <span id="activeReason">-</span>
+    </div>
+
+    <div class="contact-box">
+      <div style="background:#111; color:#aaa; font-size:10px; padding:3px 6px; font-weight:700;">TEMPORAL 8-FRAME CONTACT SHEET (4X2)</div>
+      <img id="activeContact" src="" alt="Contact Sheet" />
+    </div>
+  </section>
+
+  <aside id="sidebarPanel">
+    <h3 style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; border-bottom:1px solid var(--line); padding-bottom:4px;">14-Poem Film Sequence</h3>
+    <div id="suiteList"></div>
+  </aside>
+</main>
+
+<script>
+async function init() {
+  const res = await fetch("WYGWYL_DIRECTORS_CUT.json");
+  const DATA = await res.json();
+  let currentSuiteIdx = 0;
+  let currentShotIdx = 0;
+
+  const player = document.getElementById("player");
+  const tlBar = document.getElementById("timelineBar");
+  const sList = document.getElementById("suiteList");
+
+  DATA.suites.forEach((s, sIdx) => {
+    const seg = document.createElement("div");
+    seg.className = "tl-suite" + (sIdx === 0 ? " active" : "");
+    seg.title = s.suite_num + " " + s.title;
+    seg.onclick = () => selectSuite(sIdx, 0);
+    tlBar.appendChild(seg);
+
+    const card = document.createElement("div");
+    card.className = "suite-card" + (sIdx === 0 ? " active" : "");
+    card.dataset.sidx = sIdx;
+
+    let shotsHtml = s.curated_shots.map((sh, shIdx) => 
+      `<div class="shot-pill ${shIdx === 0 && sIdx === 0 ? 'active-pill' : ''}" onclick="event.stopPropagation(); selectSuite(${sIdx}, ${shIdx})">
+        <b>[${sh.role}]</b> ${sh.visual_category} (${sh.duration}s)
+      </div>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="suite-header"><span>${s.suite_num} ${s.title}</span> <span>${s.time_range}</span></div>
+      <div class="suite-body">
+        <div style="color:var(--dim); font-size:10px; margin-bottom:4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">“${s.full_verse}”</div>
+        ${shotsHtml}
+      </div>
+    `;
+
+    card.onclick = () => selectSuite(sIdx, 0);
+    sList.appendChild(card);
+  });
+
+  function selectSuite(sIdx, shIdx) {
+    currentSuiteIdx = sIdx;
+    currentShotIdx = shIdx;
+    const suite = DATA.suites[sIdx];
+    const shot = suite.curated_shots[shIdx];
+
+    document.querySelectorAll(".tl-suite").forEach((seg, i) => seg.classList.toggle("active", i === sIdx));
+    document.querySelectorAll(".suite-card").forEach((card, i) => card.classList.toggle("active", i === sIdx));
+    document.querySelectorAll(".shot-pill").forEach(p => p.classList.remove("active-pill"));
+
+    const activeCard = document.querySelector(`.suite-card[data-sidx="${sIdx}"]`);
+    if (activeCard) {
+      const pills = activeCard.querySelectorAll(".shot-pill");
+      if (pills[shIdx]) pills[shIdx].classList.add("active-pill");
+    }
+
+    document.getElementById("activeTitle").textContent = `${suite.suite_num} ${suite.title} (${suite.time_range})`;
+    document.getElementById("activeRole").textContent = `ROLE: ${shot.role} · ${shot.visual_category} (${shot.duration}s)`;
+    document.getElementById("activeVerse").innerHTML = `“${shot.matched_verse_phrase}”<br><span style="font-size:10px; color:var(--dim); font-style:normal; margin-top:4px; display:block;">Full Verse: ${suite.full_verse}</span>`;
+    document.getElementById("activeReason").textContent = shot.editorial_reason;
+
+    const vidSrc = `MARKOV_POET/videos/${shot.filename_stem}.mp4`;
+    const contactSrc = `contact_sheets/${shot.filename_stem}_contact.jpg`;
+
+    player.src = vidSrc;
+    document.getElementById("activeContact").src = contactSrc;
+    player.play().catch(()=>{});
+  }
+
+  selectSuite(0, 0);
+}
+
+init();
+</script>
+</body>
+</html>

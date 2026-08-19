@@ -1,0 +1,24 @@
+{
+  "id": "0183fedb-4dd9-4c31-87a8-65f4126f55d4",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:12:40.223000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the man in",
+  "audio_prompt": "rain, drone, dope slow mo, vocoder, mood",
+  "compound_prompt": "the man in [Audio: rain, drone, dope slow mo, vocoder, mood]",
+  "parent_generation_id": "216b7124-5391-40a4-9198-d5792ac25efc",
+  "start_keyframe_id": "216b7124-5391-40a4-9198-d5792ac25efc",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_231240_0183fedb_draft_5s_audio_sound_rain_drone_dope_slow_mo_vocoder_mo",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_231240_0183fedb_draft_5s_audio_sound_rain_drone_dope_slow_mo_vocoder_mo.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_231240_0183fedb_draft_5s_audio_sound_rain_drone_dope_slow_mo_vocoder_mo.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/a192db68-0488-43fc-81ac-5b63f208b400/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/49df1fc2-a49e-41ad-9d63-63100036f8d0/851c53bf-0c22-4e10-876f-6ade4e2d5d4c/2025-10-19T23-08-12_the_man_in_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/49df1fc2-a49e-41ad-9d63-63100036f8d0/f32ef869-01ba-46c6-9d57-b10322a7515c/2025-10-19T23-08-12_the_man_in.mp4"
+}

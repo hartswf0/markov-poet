@@ -1,0 +1,24 @@
+{
+  "id": "84592d51-5519-4ef3-9e82-728d1d45d0fa",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T09:36:42.305000Z",
+  "duration_seconds": "5",
+  "resolution": "1080p",
+  "has_audio": false,
+  "model_version": "photon-v2",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "should feel more abstact this is pre film.  think of this like art film like saul bass and john whitney would make",
+  "audio_prompt": "",
+  "compound_prompt": "should feel more abstact this is pre film.  think of this like art film like saul bass and john whitney would make",
+  "parent_generation_id": "2d3f48af-4e6d-4aa8-b635-6831277c3f21",
+  "start_keyframe_id": "2d3f48af-4e6d-4aa8-b635-6831277c3f21",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_093642_84592d51_1080p_5s_silent_should_feel_more_abstact_this_is_pre_fil",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_093642_84592d51_1080p_5s_silent_should_feel_more_abstact_this_is_pre_fil.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_093642_84592d51_1080p_5s_silent_should_feel_more_abstact_this_is_pre_fil.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/ec1abccb-5044-4a20-cf84-d375b62c1e00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/0118d5f7-39b4-488c-86d5-d056ca2ddab5/301955a2-cc2e-4313-b619-8cb98c2977bb/2025-07-19T09-36-42_should_feel_more_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/6e30e95b-f546-489f-a8d8-d8ad2b8b1804/555d8873-b405-4892-bcce-340bf15f5242/2025-07-19T09-36-42_should_feel_more.mp4"
+}

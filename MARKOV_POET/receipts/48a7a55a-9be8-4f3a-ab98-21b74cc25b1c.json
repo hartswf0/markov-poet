@@ -1,0 +1,24 @@
+{
+  "id": "48a7a55a-9be8-4f3a-ab98-21b74cc25b1c",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T01:19:07.118000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the robed figures",
+  "audio_prompt": "",
+  "compound_prompt": "the robed figures",
+  "parent_generation_id": "d7163c74-07b5-4c53-b265-4591f2a2c9db",
+  "start_keyframe_id": "d7163c74-07b5-4c53-b265-4591f2a2c9db",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_011907_48a7a55a_draft_5s_silent_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_011907_48a7a55a_draft_5s_silent_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_011907_48a7a55a_draft_5s_silent_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/77a546c5-4a2b-4e93-a6e8-467f64493900/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/8548bafa-2a7b-4c5b-9e49-020ff341cc6e/3d122f34-51ea-4d6b-97ba-215347d6bf41/2025-10-20T01-16-19_the_robed_figures_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/8548bafa-2a7b-4c5b-9e49-020ff341cc6e/6ee2215a-aa61-427a-9129-4ba86deabd14/2025-10-20T01-16-19_the_robed_figures.mp4"
+}

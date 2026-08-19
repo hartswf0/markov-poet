@@ -1,0 +1,24 @@
+{
+  "id": "90db999f-41be-4106-af9e-718e7f7b67c7",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T03:53:16.221000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "Establishing shot of POET in Dim Bedroom - Dim bedroom stasis, EX's detachment. POET's initial <You>₀.. Focus on the visual impact of: narrative progression. The scene's ambiance is Eerie green fog with a Film-noir grain style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16. Add flavor: with graffiti tag 'Turbo Pitch 2026'.",
+  "audio_prompt": "",
+  "compound_prompt": "Establishing shot of POET in Dim Bedroom - Dim bedroom stasis, EX's detachment. POET's initial <You>₀.. Focus on the visual impact of: narrative progression. The scene's ambiance is Eerie green fog with a Film-noir grain style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16. Add flavor: with graffiti tag 'Turbo Pitch 2026'.",
+  "parent_generation_id": "ebae2897-0fde-4bd2-8900-165d5704705e",
+  "start_keyframe_id": "ebae2897-0fde-4bd2-8900-165d5704705e",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_035316_90db999f_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_035316_90db999f_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_035316_90db999f_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/363c42d8-804f-443b-866b-4db3cb31d300/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/39164444-cb4a-4660-87d1-4ec3536cad4d/18ef9578-d66d-4479-84e3-3b12f352a55e/2025-07-19T03-53-16_establishing_shot_of_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/39164444-cb4a-4660-87d1-4ec3536cad4d/199ed80e-51a3-486f-b5bb-a08271c71c38/2025-07-19T03-53-16_establishing_shot_of.mp4"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "8bc45974-56d0-448a-8aa8-2ac151b2c9ff",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T04:52:39.462000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the man on the red",
+  "audio_prompt": "",
+  "compound_prompt": "the man on the red",
+  "parent_generation_id": "ef876320-8cf7-417c-be61-2d810cfee1ef",
+  "start_keyframe_id": "ef876320-8cf7-417c-be61-2d810cfee1ef",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_045239_8bc45974_720p_9s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_045239_8bc45974_720p_9s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_045239_8bc45974_720p_9s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/1b1ee234-4bf2-4463-7dea-3174eaf11200/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/3c9fcf5a-8939-4185-b36a-a03445fc5926/e5575801-a0e1-460c-bc66-4fa189cc2eac/2025-10-20T04-52-39_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/3c9fcf5a-8939-4185-b36a-a03445fc5926/c32d5eee-f8e0-4271-be7f-344016a50baf/2025-10-20T04-52-39_generation.mp4"
+}

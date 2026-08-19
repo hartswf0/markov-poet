@@ -1,0 +1,24 @@
+{
+  "id": "e4c9215f-2e57-45ec-9e5c-605ac8441ffa",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T05:27:44.041000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "[\n  {\n    \"id\": \"POET\",\n    \"type\": \"Character\",\n    \"name\": \"POET\",\n    \"traits\": [\n      \"Protagonist\",\n      \"Ego-Proxy\",\n      \"Transformer\",\n      \"Creator\",\n      \"Observer\"\n    ]\n  },\n  {\n    \"id\": \"EX\",\n    \"type\": \"Character\",\n    \"name\": \"EX\",\n    \"traits\": [\n      \"Antagonist-or-Catalyst\",\n      \"Unreachable\",\n      \"Elusive\",\n      \"Shadow-Projection\",\n      \"Past-Attachment\"\n    ]\n  },\n  {\n    \"id\": \"TV_CHAOS\",\n    \"type\": \"Object\",\n    \"name\": \"Television Screen\",\n    \"traits\": [\n      \"Source-of-External-Chaos\",\n      \"Reflection-of-Inner-Disorder\"\n    ]\n  },\n  {\n    \"id\": \"VAPE_HAZE\",\n    \"type\": \"Concept\",\n    \"name\": \"Vape Haze\",\n    \"traits\": [\n      \"Blurring-Agent\",\n      \"Obscuring-Perception\",\n      \"Symbol-of-Detachment\"\n    ]\n  }\n]",
+  "audio_prompt": "",
+  "compound_prompt": "[\n  {\n    \"id\": \"POET\",\n    \"type\": \"Character\",\n    \"name\": \"POET\",\n    \"traits\": [\n      \"Protagonist\",\n      \"Ego-Proxy\",\n      \"Transformer\",\n      \"Creator\",\n      \"Observer\"\n    ]\n  },\n  {\n    \"id\": \"EX\",\n    \"type\": \"Character\",\n    \"name\": \"EX\",\n    \"traits\": [\n      \"Antagonist-or-Catalyst\",\n      \"Unreachable\",\n      \"Elusive\",\n      \"Shadow-Projection\",\n      \"Past-Attachment\"\n    ]\n  },\n  {\n    \"id\": \"TV_CHAOS\",\n    \"type\": \"Object\",\n    \"name\": \"Television Screen\",\n    \"traits\": [\n      \"Source-of-External-Chaos\",\n      \"Reflection-of-Inner-Disorder\"\n    ]\n  },\n  {\n    \"id\": \"VAPE_HAZE\",\n    \"type\": \"Concept\",\n    \"name\": \"Vape Haze\",\n    \"traits\": [\n      \"Blurring-Agent\",\n      \"Obscuring-Perception\",\n      \"Symbol-of-Detachment\"\n    ]\n  }\n]",
+  "parent_generation_id": "f1d85108-a8c3-493a-8b57-a37db5cf95cb",
+  "start_keyframe_id": "f1d85108-a8c3-493a-8b57-a37db5cf95cb",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_052744_e4c9215f_720p_5s_silent_id_poet_type_character_name_poet_traits",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_052744_e4c9215f_720p_5s_silent_id_poet_type_character_name_poet_traits.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_052744_e4c9215f_720p_5s_silent_id_poet_type_character_name_poet_traits.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/765fee47-78cf-4d70-694c-481bc2918200/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/2bacfb77-31e0-49f5-b6a2-d2aa67f7e166/4110a76a-0f0f-484e-8425-6f16b83eb4d8/2025-07-19T05-27-44_id____poet____type___last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/2bacfb77-31e0-49f5-b6a2-d2aa67f7e166/0d97a8c6-0a10-4ea8-8095-c3b93404feff/2025-07-19T05-27-44_id____poet____type__.mp4"
+}

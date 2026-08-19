@@ -1,0 +1,24 @@
+{
+  "id": "d847a1b8-c5ee-426f-8af9-3e89f9280b2a",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-19T23:59:26.014000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": true,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "the glowing red",
+  "audio_prompt": "ocean, light, heartbreak, heart soul drone, light ocean acceptance, vocoder, echo, caretaker, african hauntology",
+  "compound_prompt": "the glowing red [Audio: ocean, light, heartbreak, heart soul drone, light ocean acceptance, vocoder, echo, caretaker, african hauntology]",
+  "parent_generation_id": "0a4855bf-b9cd-4063-abee-60cca0a6d4a6",
+  "start_keyframe_id": "0a4855bf-b9cd-4063-abee-60cca0a6d4a6",
+  "end_keyframe_id": null,
+  "filename_stem": "20251019_235926_d847a1b8_draft_5s_audio_sound_ocean_light_heartbreak_heart_soul",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251019_235926_d847a1b8_draft_5s_audio_sound_ocean_light_heartbreak_heart_soul.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251019_235926_d847a1b8_draft_5s_audio_sound_ocean_light_heartbreak_heart_soul.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/637c0eb7-d70d-4c4e-75dd-1f8218a17300/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/72a91af8-0579-4c34-9ef2-58760bf9fe0c/dbf07915-3fbe-4aba-9168-29d89245ca3f/2025-10-19T23-55-09_the_glowing_red_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/72a91af8-0579-4c34-9ef2-58760bf9fe0c/58fc19b8-17a6-49f5-ae9d-bbd518ac6431/2025-10-19T23-55-09_the_glowing_red.mp4"
+}

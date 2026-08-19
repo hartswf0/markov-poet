@@ -1,0 +1,24 @@
+{
+  "id": "2474f1b5-9758-48c9-b907-53b7efa5c6e7",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T03:43:51.960000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "Establishing shot of POET in Dim Bedroom - Dim bedroom stasis, EX's detachment. POET's initial <You>₀.. Focus on the visual impact of: narrative progression. The scene's ambiance is Eerie green fog with a Film-noir grain style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16.",
+  "audio_prompt": "",
+  "compound_prompt": "Establishing shot of POET in Dim Bedroom - Dim bedroom stasis, EX's detachment. POET's initial <You>₀.. Focus on the visual impact of: narrative progression. The scene's ambiance is Eerie green fog with a Film-noir grain style. Use Camera dollies forward, framed as in a symmetrical layout, aspect ratio 9:16.",
+  "parent_generation_id": "488c9fc3-7130-4ba3-a283-8aa85f183dc7",
+  "start_keyframe_id": "488c9fc3-7130-4ba3-a283-8aa85f183dc7",
+  "end_keyframe_id": null,
+  "filename_stem": "20250719_034351_2474f1b5_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_034351_2474f1b5_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_034351_2474f1b5_720p_5s_silent_establishing_shot_of_poet_in_dim_bedroom.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/ffa3d5c2-ed0e-4d48-9dd5-47e6e9bdbe00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/98163459-5df0-41f5-b201-9001da2aefa3/87ccd6d2-7b24-4cb1-8f99-8246a89ee140/2025-07-19T03-43-51_establishing_shot_of_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/98163459-5df0-41f5-b201-9001da2aefa3/3e296ecc-07da-42af-b1ed-ee1c7ed8e605/2025-07-19T03-43-51_establishing_shot_of.mp4"
+}

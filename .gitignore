@@ -1,0 +1,4 @@
+.DS_Store
+*.tmp
+# Exclude master file exceeding GitHub 100MB single-file limit
+rendered_cuts/WYGWYL_135SHOT_MASTER_CUT.mp4

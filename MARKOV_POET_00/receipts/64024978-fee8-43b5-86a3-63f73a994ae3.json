@@ -1,0 +1,24 @@
+{
+  "id": "64024978-fee8-43b5-86a3-63f73a994ae3",
+  "collection_name": "MARKOV_POET_00",
+  "created_at": "2025-07-19T04:52:57.975000Z",
+  "duration_seconds": "5",
+  "resolution": "720p",
+  "has_audio": false,
+  "model_version": "ray-v2-flash",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "overhead drone shot",
+  "audio_prompt": "",
+  "compound_prompt": "overhead drone shot",
+  "parent_generation_id": "72b8186d-42df-4b39-b0d4-726de421f7df",
+  "start_keyframe_id": "72b8186d-42df-4b39-b0d4-726de421f7df",
+  "end_keyframe_id": "2b145f77-c8a6-45ac-88fa-edbc74d4d2b3",
+  "filename_stem": "20250719_045257_64024978_720p_13s_silent_overhead_drone_shot_of_poet_in_an_unknow",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET_00/20250719_045257_64024978_720p_13s_silent_overhead_drone_shot_of_poet_in_an_unknow.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET_00/videos/20250719_045257_64024978_720p_13s_silent_overhead_drone_shot_of_poet_in_an_unknow.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/742ff42a-9f4f-4770-3353-091d9cad1e00/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/c4e919cf-ff24-4a4c-a69d-fce46f2b8e30/317b6a5d-b9d8-4689-90a2-d11c286fbefa/2025-07-19T04-52-57_generation_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/c4e919cf-ff24-4a4c-a69d-fce46f2b8e30/0ea8cab4-3b7c-423e-a021-0b17fee71b67/2025-07-19T04-52-57_generation.mp4"
+}

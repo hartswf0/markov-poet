@@ -1,0 +1,24 @@
+{
+  "id": "5c7f1747-09ab-4f1e-a16c-17af2273ac5a",
+  "collection_name": "MARKOV_POET",
+  "created_at": "2025-10-20T00:17:40.384000Z",
+  "duration_seconds": "5",
+  "resolution": "draft",
+  "has_audio": false,
+  "model_version": "ray-v3",
+  "aspect_ratio": "16:9",
+  "visual_prompt": "dense fog drifts",
+  "audio_prompt": "",
+  "compound_prompt": "dense fog drifts",
+  "parent_generation_id": "c20d991f-a312-4da0-88ff-f2eb5accce7c",
+  "start_keyframe_id": "c20d991f-a312-4da0-88ff-f2eb5accce7c",
+  "end_keyframe_id": null,
+  "filename_stem": "20251020_001740_5c7f1747_draft_5s_audio_interpolated_sequence",
+  "source_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/videos/MARKOV POET/20251020_001740_5c7f1747_draft_5s_audio_interpolated_sequence.mp4",
+  "dest_video_path": "/Users/gaia/WYGWYL-LUMA-RAY/downloads/MARKOV_POET_ARCHIVE/MARKOV_POET/videos/20251020_001740_5c7f1747_draft_5s_audio_interpolated_sequence.mp4",
+  "variants": {
+    "thumbnail": "https://imagedelivery.net/1KomXrSWiTojGGip43n0SQ/f0bc2ae8-2aea-4895-14f0-9d10f13f1100/public",
+    "last_frame": "https://storage.cdn-luma.com/dream-machine/05d401b4-8bcf-48fc-bcae-a6df92bf6f40/d523a071-a179-4723-9877-0887e763e963/2025-10-20T00-11-48_dense_fog_drifts_last_frame.jpg"
+  },
+  "best_video_url": "https://storage.cdn-luma.com/dream-machine/05d401b4-8bcf-48fc-bcae-a6df92bf6f40/2bffce95-768b-4bb6-b527-1f7740d9be1b/2025-10-20T00-11-48_dense_fog_drifts.mp4"
+}
