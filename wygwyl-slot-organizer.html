@@ -3,103 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WYGWYL 14-Slot Minimal Organizer</title>
+<title>WYGWYL CONFORM</title>
 <style>
-  :root {
-    --bg: #0d0d0d;
-    --paper: #ffffff;
-    --ink: #000000;
-    --dim: #777777;
-    --line: #222222;
-    --blue: #0066cc;
-    --green: #22c55e;
-    --red: #ef4444;
-  }
   * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
-  body { background: var(--bg); color: #fff; font: 12px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 16px; height: 100vh; display: flex; flex-direction: column; gap: 14px; user-select: none; }
+  body { background: #000; color: #fff; font: 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 12px; height: 100vh; display: flex; flex-direction: column; gap: 10px; user-select: none; }
 
-  /* Header */
-  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
-  h1 { font-size: 13px; font-weight: 900; letter-spacing: 0.08em; }
-  .actions { display: flex; gap: 8px; }
-  .btn { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 5px 10px; font-weight: 800; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-  .btn:hover { background: #fff; color: #000; border-color: #fff; }
-  .btn-green { background: var(--green); color: #000; border-color: var(--green); }
-  .btn-green:hover { background: #16a34a; color: #fff; }
+  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 8px; }
+  .title { font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+  .actions { display: flex; gap: 6px; }
+  button { background: #000; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+  button:hover { background: #fff; color: #000; }
 
   /* 14 Slots Row */
-  #slotsStrip { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; height: 160px; }
-  .slot { background: #141414; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; position: relative; }
-  .slot:hover { border-color: #555; }
-  .slot.active { border: 2px solid var(--blue); background: #1a2333; }
-  
-  .slot-head { background: #000; padding: 4px 6px; font-size: 9px; font-weight: 800; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); }
-  .slot.active .slot-head { background: var(--blue); }
-  
-  .slot-thumb { flex: 1; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
-  .slot-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .slot-thumb .empty-text { font-size: 9px; font-weight: 800; color: #444; text-transform: uppercase; }
-  
-  .slot-foot { padding: 4px; font-size: 9px; display: flex; justify-content: space-between; align-items: center; background: #0a0a0a; border-top: 1px solid #1a1a1a; }
-  .slot-foot b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px; color: #ccc; }
-  .clear-btn { color: #666; font-weight: 900; font-size: 10px; cursor: pointer; padding: 0 2px; }
-  .clear-btn:hover { color: var(--red); }
+  #slotsRow { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; height: 130px; }
+  .slot { background: #080808; border: 1px solid #222; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+  .slot.active { border-color: #fff; }
+  .slot-bar { padding: 3px 4px; font-size: 9px; font-weight: 700; display: flex; justify-content: space-between; border-bottom: 1px solid #1a1a1a; background: #000; }
+  .slot.active .slot-bar { background: #fff; color: #000; }
+  .slot-img { flex: 1; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .slot-img img { width: 100%; height: 100%; object-fit: cover; }
+  .slot-img span { font-size: 8px; color: #333; }
+  .slot-del { padding: 2px 4px; font-size: 8px; color: #555; text-align: right; background: #000; }
+  .slot-del:hover { color: #fff; }
 
-  /* Active Verse Banner */
-  #activeBanner { background: #141414; border: 1px solid var(--line); border-left: 3px solid var(--blue); padding: 10px 14px; }
-  #activeBanner b { font-size: 12px; color: #fff; display: block; margin-bottom: 2px; }
-  #activeBanner p { font-size: 11px; color: #aaa; font-style: italic; }
+  /* Status Bar */
+  #statusBar { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px; }
+  #statusBar b { color: #fff; }
 
-  /* Candidates Grid */
-  #candidatesSection { flex: 1; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
-  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--dim); letter-spacing: 0.05em; }
-  #candidatesGrid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; overflow-y: auto; }
-
-  .candidate-card { background: #141414; border: 1px solid var(--line); display: flex; flex-direction: column; cursor: pointer; position: relative; }
-  .candidate-card:hover { border-color: var(--blue); background: #182230; }
-  .candidate-thumb { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; position: relative; }
-  .candidate-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .prob-badge { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.8); border: 1px solid #333; color: var(--green); font-weight: 900; font-size: 10px; padding: 2px 6px; }
-  
-  .candidate-info { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-  .candidate-info b { font-size: 11px; color: #fff; }
-  .candidate-info span { font-size: 9.5px; color: var(--dim); }
-  .assign-bar { background: #222; border-top: 1px solid #333; text-align: center; padding: 5px 0; font-size: 10px; font-weight: 800; color: #ccc; text-transform: uppercase; }
-  .candidate-card:hover .assign-bar { background: var(--blue); color: #fff; }
+  /* Candidate Grid */
+  #candidateGrid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; overflow-y: auto; }
+  .card { background: #080808; border: 1px solid #222; display: flex; flex-direction: column; cursor: pointer; position: relative; }
+  .card:hover { border-color: #fff; }
+  .card-img { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .card-info { padding: 4px; font-size: 9px; display: flex; justify-content: space-between; background: #000; border-top: 1px solid #1a1a1a; }
+  .card-info b { color: #fff; }
+  .card-info span { color: #888; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>WYGWYL 14-SLOT ORGANIZER</h1>
+  <div class="title">WYGWYL CONFORM — 14 SLOTS</div>
   <div class="actions">
-    <button class="btn" onclick="autoFillOptimal()">⚡ AUTO-FILL BEST MATCHES</button>
-    <button class="btn" onclick="clearAll()">CLEAR ALL</button>
-    <button class="btn btn-green" onclick="copyFFmpegConform()">📋 COPY FFMPEG CONFORM</button>
+    <button onclick="autoFill()">AUTO-FILL</button>
+    <button onclick="clearAll()">CLEAR</button>
+    <button onclick="exportFFmpeg()">EXPORT FFMPEG</button>
   </div>
 </header>
 
-<!-- 14 Slots Row -->
-<div id="slotsStrip"></div>
+<div id="slotsRow"></div>
 
-<!-- Active Verse & Details -->
-<div id="activeBanner">
-  <b id="activeTitle">SLOT #01 — OUT OF LIFE</b>
-  <p id="activeVerse">"The vape gathers, inside and out. My vision blurs. I move toward the window — and you only get further away."</p>
+<div id="statusBar">
+  <span>ACTIVE: <b id="activeName">SLOT 01 — OUT OF LIFE</b></span>
+  <span id="slotCount">14 / 14 FILLED</span>
 </div>
 
-<!-- Candidate Picker for Active Slot -->
-<div id="candidatesSection">
-  <div class="section-label">Top Probabilistic Candidates for Active Slot (Click to Assign)</div>
-  <div id="candidatesGrid"></div>
-</div>
+<div id="candidateGrid"></div>
 
 <script>
 let POEMS = [];
 let ALL_RECORDS = [];
-let COVERAGE_MAP = [];
+let COVERAGE = [];
 let SLOTS = [];
-let activeSlotIdx = 0;
+let activeIdx = 0;
 
 async function init() {
   const [pRes, rRes, cRes] = await Promise.all([
@@ -110,172 +77,141 @@ async function init() {
 
   POEMS = (await pRes.json()).poems;
   ALL_RECORDS = (await rRes.json()).records;
-  COVERAGE_MAP = (await cRes.json()).stanza_coverage_matrix;
+  COVERAGE = (await cRes.json()).stanza_coverage_matrix;
 
-  SLOTS = POEMS.map((p, idx) => ({
-    slotNum: p.number,
+  SLOTS = POEMS.map(p => ({
+    num: p.number,
     title: p.title,
-    verse: p.full_verse,
-    assignedRecord: null
+    assigned: null
   }));
 
-  autoFillOptimal();
+  autoFill();
 }
 
-function autoFillOptimal() {
-  SLOTS.forEach((s, idx) => {
-    const pNum = s.slotNum;
-    const candidates = getCandidatesForSuite(pNum);
-    if (candidates.length > 0) {
-      s.assignedRecord = candidates[0].record;
-    }
+function autoFill() {
+  SLOTS.forEach(s => {
+    const list = getCandidates(s.num);
+    if (list.length > 0) s.assigned = list[0].rec;
   });
   renderSlots();
   selectSlot(0);
 }
 
 function clearAll() {
-  SLOTS.forEach(s => s.assignedRecord = null);
+  SLOTS.forEach(s => s.assigned = null);
   renderSlots();
   selectSlot(0);
 }
 
 function renderSlots() {
-  const strip = document.getElementById("slotsStrip");
-  strip.innerHTML = "";
+  const row = document.getElementById("slotsRow");
+  row.innerHTML = "";
+  let filled = 0;
 
-  SLOTS.forEach((s, idx) => {
-    const card = document.createElement("div");
-    card.className = "slot" + (idx === activeSlotIdx ? " active" : "");
-    card.onclick = () => selectSlot(idx);
+  SLOTS.forEach((s, i) => {
+    if (s.assigned) filled++;
+    const el = document.createElement("div");
+    el.className = "slot" + (i === activeIdx ? " active" : "");
+    el.onclick = () => selectSlot(i);
 
-    const rec = s.assignedRecord;
-    const thumb = rec ? `contact_sheets/${rec.filename_stem}_contact.jpg` : "";
+    const thumb = s.assigned ? `contact_sheets/${s.assigned.filename_stem}_contact.jpg` : "";
 
-    card.innerHTML = `
-      <div class="slot-head">
-        <span>#${s.slotNum}</span>
-        <span>${rec ? (rec.duration_seconds || 5) + 's' : '-'}</span>
-      </div>
-      <div class="slot-thumb">
-        ${rec ? `<img src="${thumb}" alt="thumb" />` : `<div class="empty-text">EMPTY</div>`}
-      </div>
-      <div class="slot-foot">
-        <b>${rec ? rec.visual_category : s.title}</b>
-        ${rec ? `<span class="clear-btn" onclick="event.stopPropagation(); clearSlot(${idx})">✕</span>` : ''}
-      </div>
+    el.innerHTML = `
+      <div class="slot-bar"><span>${s.num}</span><span>${s.assigned ? (s.assigned.duration_seconds || 5) + 'S' : ''}</span></div>
+      <div class="slot-img">${s.assigned ? `<img src="${thumb}">` : `<span>EMPTY</span>`}</div>
+      <div class="slot-del" onclick="event.stopPropagation(); clearSlot(${i})">${s.assigned ? 'CLR' : ''}</div>
     `;
-    strip.appendChild(card);
+    row.appendChild(el);
   });
+
+  document.getElementById("slotCount").textContent = `${filled} / 14 FILLED`;
 }
 
-function selectSlot(idx) {
-  if (idx < 0 || idx >= SLOTS.length) return;
-  activeSlotIdx = idx;
-  const s = SLOTS[idx];
+function selectSlot(i) {
+  if (i < 0 || i >= SLOTS.length) return;
+  activeIdx = i;
+  const s = SLOTS[i];
 
-  document.querySelectorAll(".slot").forEach((el, i) => el.classList.toggle("active", i === idx));
-  document.getElementById("activeTitle").textContent = `SLOT #${s.slotNum} — ${s.title}`;
-  document.getElementById("activeVerse").textContent = `“${s.verse}”`;
-
-  renderCandidates(s.slotNum);
+  document.querySelectorAll(".slot").forEach((el, idx) => el.classList.toggle("active", idx === i));
+  document.getElementById("activeName").textContent = `SLOT ${s.num} — ${s.title}`;
+  renderCandidates(s.num);
 }
 
-function clearSlot(idx) {
-  SLOTS[idx].assignedRecord = null;
+function clearSlot(i) {
+  SLOTS[i].assigned = null;
   renderSlots();
-  selectSlot(idx);
+  selectSlot(i);
 }
 
-function assignCandidate(record) {
-  SLOTS[activeSlotIdx].assignedRecord = record;
+function assign(rec) {
+  SLOTS[activeIdx].assigned = rec;
   renderSlots();
-  if (activeSlotIdx < SLOTS.length - 1) {
-    selectSlot(activeSlotIdx + 1);
+  if (activeIdx < SLOTS.length - 1) {
+    selectSlot(activeIdx + 1);
   } else {
-    selectSlot(activeSlotIdx);
+    selectSlot(activeIdx);
   }
 }
 
-function getCandidatesForSuite(suiteNum) {
-  // Find stanzas belonging to this suite in coverage map
-  const matchingStanzas = COVERAGE_MAP.filter(st => st.suite_number === suiteNum);
-  const candidates = [];
-  const seenIds = new Set();
+function getCandidates(suiteNum) {
+  const matching = COVERAGE.filter(st => st.suite_number === suiteNum);
+  const out = [];
+  const seen = new Set();
 
-  matchingStanzas.forEach(st => {
+  matching.forEach(st => {
     st.allocated_shots.forEach(sh => {
-      if (!seenIds.has(sh.shot_id)) {
-        const fullRec = ALL_RECORDS.find(r => r.id === sh.shot_id || r.id.startsWith(sh.shot_id.substring(0,8)));
-        if (fullRec) {
-          candidates.push({
-            record: fullRec,
-            prob: sh.match_probability || 85,
-            reason: sh.match_reason || "Direct thematic match"
-          });
-          seenIds.add(sh.shot_id);
+      if (!seen.has(sh.shot_id)) {
+        const rec = ALL_RECORDS.find(r => r.id === sh.shot_id || r.id.startsWith(sh.shot_id.substring(0,8)));
+        if (rec) {
+          out.push({ rec, prob: sh.match_probability || 85 });
+          seen.add(sh.shot_id);
         }
       }
     });
   });
 
-  // If few candidates, pull related category shots
-  if (candidates.length < 3) {
-    const fallback = ALL_RECORDS.filter(r => !seenIds.has(r.id)).slice(0, 4);
-    fallback.forEach(r => {
-      candidates.push({
-        record: r,
-        prob: 60,
-        reason: "Alternative visual resonance"
-      });
-      seenIds.add(r.id);
-    });
-  }
-
-  candidates.sort((a, b) => b.prob - a.prob);
-  return candidates;
-}
-
-function renderCandidates(suiteNum) {
-  const grid = document.getElementById("candidatesGrid");
-  grid.innerHTML = "";
-
-  const candidates = getCandidatesForSuite(suiteNum);
-
-  candidates.forEach(c => {
-    const rec = c.record;
-    const thumb = `contact_sheets/${rec.filename_stem}_contact.jpg`;
-    const card = document.createElement("div");
-    card.className = "candidate-card";
-    card.onclick = () => assignCandidate(rec);
-
-    card.innerHTML = `
-      <div class="candidate-thumb">
-        <img src="${thumb}" alt="thumb" loading="lazy" />
-        <div class="prob-badge">${c.prob}% MATCH</div>
-      </div>
-      <div class="candidate-info">
-        <b>${rec.visual_category}</b>
-        <span>${rec.duration_seconds || 5}s · ${c.reason}</span>
-      </div>
-      <div class="assign-bar">+ ASSIGN TO SLOT #${SLOTS[activeSlotIdx].slotNum}</div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function copyFFmpegConform() {
-  let list = "";
-  SLOTS.forEach(s => {
-    if (s.assignedRecord) {
-      list += `file 'MARKOV_POET/videos/${s.assignedRecord.filename_stem}.mp4'\n`;
+  // Fallback to pool if few
+  ALL_RECORDS.forEach(r => {
+    if (!seen.has(r.id) && out.length < 24) {
+      out.push({ rec: r, prob: 50 });
+      seen.add(r.id);
     }
   });
 
-  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${list}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_CUSTOM_CUT.mp4\n`;
+  out.sort((a, b) => b.prob - a.prob);
+  return out;
+}
+
+function renderCandidates(suiteNum) {
+  const grid = document.getElementById("candidateGrid");
+  grid.innerHTML = "";
+
+  const list = getCandidates(suiteNum);
+  list.forEach(c => {
+    const r = c.rec;
+    const thumb = `contact_sheets/${r.filename_stem}_contact.jpg`;
+    const el = document.createElement("div");
+    el.className = "card";
+    el.onclick = () => assign(r);
+
+    el.innerHTML = `
+      <div class="card-img"><img src="${thumb}" loading="lazy"></div>
+      <div class="card-info"><b>${r.id.substring(0,8)}</b><span>${c.prob}%</span></div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+function exportFFmpeg() {
+  let txt = "";
+  SLOTS.forEach(s => {
+    if (s.assigned) txt += `file 'MARKOV_POET/videos/${s.assigned.filename_stem}.mp4'\n`;
+  });
+
+  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${txt}EOF\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_CUSTOM_CUT.mp4\n`;
 
   navigator.clipboard.writeText(cmd);
-  alert("✓ Copied 1-Click FFmpeg Conform Command to clipboard!");
+  alert("COPIED FFMPEG CONFORM COMMAND");
 }
 
 init();
