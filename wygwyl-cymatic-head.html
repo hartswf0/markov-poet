@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WYGWYL CYMATIC HEAD · CHLADNI SAND PLATE &amp; NEUROGLOW CRANIUM</title>
+<link rel="icon" href="halfworld/dot.svg">
+<link rel="stylesheet" href="halfworld/halfworld.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root {
+    --bg: #060608;
+    --paper: #0c0d12;
+    --rule: #20222e;
+    --ink: #ffffff;
+    --dim: #787c99;
+    --cyan: #00d2d3;
+    --magenta: #ff3838;
+    --gold: #ffb142;
+    --green: #2ed573;
+    --blue: #54a0ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--bg); color: var(--ink); font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; user-select: none; }
+
+  header { height: 38px; background: #000; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-weight: 900; flex-shrink: 0; z-index: 50; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.08em; }
+  .dot-live { width: 6px; height: 6px; background: var(--cyan); border-radius: 50% !important; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+  .header-actions { display: flex; gap: 6px; align-items: center; }
+  button, select, input[type=text] { background: #14161f; border: 1px solid #33384a; color: #fff; padding: 4px 8px; font: inherit; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+  button:hover, select:hover { background: #fff; color: #000; }
+  button.btn-active { background: var(--cyan); border-color: var(--cyan); color: #000; font-weight: 900; }
+
+  #main-viewport { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(280px, 1fr) minmax(500px, 2.4fr) minmax(320px, 1.2fr); }
+
+  /* Left Panel: Chladni Cymatics & Optical Flow Telemetry */
+  #telemetryCol { background: var(--paper); border-right: 1px solid var(--rule); display: flex; flex-direction: column; overflow-y: auto; }
+  .section-head { background: #10121a; padding: 7px 10px; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: var(--gold); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .card-box { padding: 8px 10px; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; }
+
+  .row { display: flex; align-items: center; gap: 6px; font-size: 10px; }
+  .row label { width: 110px; color: var(--dim); font-size: 9.5px; }
+  .row select, .row input[type=range] { flex: 1; accent-color: var(--cyan); }
+  .val { width: 36px; text-align: right; color: var(--cyan); font-variant-numeric: tabular-nums; font-size: 9.5px; }
+
+  /* Center Stage: 3D WebGL Holographic Stage */
+  #stageWrap { background: #000; position: relative; overflow: hidden; border-right: 1px solid var(--rule); display: flex; flex-direction: column; }
+  #canvas3D { width: 100%; height: 100%; display: block; }
+
+  #stageHud { position: absolute; top: 12px; left: 12px; z-index: 10; background: rgba(6,7,10,0.85); border: 1px solid var(--rule); padding: 6px 12px; font-size: 10px; letter-spacing: 0.1em; pointer-events: none; }
+  #stageHud b { color: var(--cyan); }
+
+  /* Right Panel: Neuroglow Cranium & Viseme Controls */
+  #controlCol { background: var(--bg); overflow-y: auto; display: flex; flex-direction: column; }
+
+  .fft-box { width: 100%; height: 44px; background: #030406; border: 1px solid var(--rule); display: block; }
+  video { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; left: -9999px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="dot-live"></span>WYGWYL CYMATIC HEAD · CHLADNI PLATE &amp; NEUROGLOW CRANIUM</div>
+  <div class="header-actions">
+    <button class="btn-active" id="masterPlayBtn" onclick="togglePlayback()">▶ START ACOUSTIC SCULPTURE</button>
+    <a href="lidar-flux.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">LIDAR</a>
+    <a href="wygwyl-vj-suite.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">VJ SUITE</a>
+    <a href="dj.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">MASTER DJ</a>
+    <a href="index.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">PORTAL</a>
+  </div>
+</header>
+
+<main id="main-viewport">
+  <!-- Left Column: Chladni Cymatics & Optical Coupling -->
+  <section id="telemetryCol">
+    <div class="section-head">
+      <span>CHLADNI SAND PLATE EIGENMODES</span>
+      <span style="color:var(--cyan);">10,000 PARTICLES</span>
+    </div>
+
+    <div class="card-box">
+      <div class="row">
+        <label>Modal Index N</label>
+        <input type="range" id="chladniN" min="1" max="10" value="3" oninput="updateChladniParams()">
+        <span class="val" id="valN">3</span>
+      </div>
+      <div class="row">
+        <label>Modal Index M</label>
+        <input type="range" id="chladniM" min="1" max="10" value="5" oninput="updateChladniParams()">
+        <span class="val" id="valM">5</span>
+      </div>
+      <div class="row">
+        <label>Modal Ratio (A/B)</label>
+        <input type="range" id="chladniRatio" min="1" max="200" value="100" oninput="updateChladniParams()">
+        <span class="val" id="valRatio">1.0</span>
+      </div>
+      <div class="row">
+        <label>Vibration Drive</label>
+        <input type="range" id="chladniAmp" min="0" max="100" value="70">
+        <span class="val" id="valAmp">70%</span>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span>ACOUSTIC SPECTRUM &amp; FFT FLUX</span>
+      <span style="color:var(--green);">WEB AUDIO 32-BIN</span>
+    </div>
+
+    <div class="card-box">
+      <canvas class="fft-box" id="fftCanvas" width="260" height="44"></canvas>
+      <div class="row" style="margin-top:4px;">
+        <label>Audio Source</label>
+        <select id="audioSourceSelect" onchange="switchAudioSource(this.value)">
+          <option value="soundtrack" selected>Unified Drones (Soundtrack)</option>
+          <option value="mic">Live Microphone Input</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span>OPTICAL FLOW KINEMATIC DRIFT</span>
+      <span style="color:var(--gold);">135 CLIPS COUPLING</span>
+    </div>
+
+    <div class="card-box">
+      <div class="row">
+        <label>Source Footage</label>
+        <select id="cymaticClipSelect" onchange="loadCymaticClip(this.value)"></select>
+      </div>
+      <div class="row">
+        <label>Flow Drive Gain</label>
+        <input type="range" id="flowGain" min="0" max="100" value="50">
+        <span class="val" id="valFlowGain">50%</span>
+      </div>
+      <div class="subnote" style="font-size:9.5px; color:var(--dim); line-height:1.4;">
+        Optical flow velocity vectors $(\Delta u, \Delta v)$ physically drag the nodal lines across the Chladni plate in real time.
+      </div>
+    </div>
+  </section>
+
+  <!-- Center Stage: 3D Holographic WebGL Scene -->
+  <section id="stageWrap">
+    <canvas id="canvas3D"></canvas>
+    <div id="stageHud">
+      MODE: <b id="hudMode">CHLADNI CYMATICS (N=3, M=5)</b> &nbsp;·&nbsp;
+      CRANIUM: <b id="hudCranium" style="color:var(--gold);">NEUROGLOW VISAGE</b> &nbsp;·&nbsp;
+      VISEME: <b id="hudViseme" style="color:var(--green);">0%</b>
+    </div>
+  </section>
+
+  <!-- Right Column: 3D Neuroglow Cranium & Viseme Controls -->
+  <aside id="controlCol">
+    <div class="section-head">
+      <span>3D NEUROGLOW CRANIUM VISAGE</span>
+      <span style="color:var(--magenta);">PROCEDURAL SCULPTURE</span>
+    </div>
+
+    <div class="card-box">
+      <div class="row">
+        <label>Sculpture Style</label>
+        <select id="headStyle" onchange="updateHeadStyle(this.value)">
+          <option value="pointcloud" selected>Holographic Point Cloud</option>
+          <option value="wireframe">Cybernetic Wireframe</option>
+          <option value="solid">Luminous Neural Solid</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Viseme Speech Sensitivity</label>
+        <input type="range" id="visemeSensitivity" min="10" max="200" value="100">
+        <span class="val" id="valViseme">1.0x</span>
+      </div>
+      <div class="row">
+        <label>Neural Particle Halo</label>
+        <input type="range" id="haloDensity" min="100" max="2000" value="800">
+        <span class="val" id="valHalo">800</span>
+      </div>
+      <div class="row">
+        <label>Orbital Rotation</label>
+        <input type="range" id="orbitSpeed" min="0" max="100" value="30">
+        <span class="val" id="valOrbit">0.3x</span>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span>PHYSICAL CONSTANTS</span>
+      <span style="color:var(--dim);">PARTICULATE DYNAMICS</span>
+    </div>
+
+    <div class="card-box">
+      <div class="row"><label>Particle Count</label><span class="val" style="color:#fff;">10,000</span></div>
+      <div class="row"><label>Damping Ratio</label><span class="val" style="color:#fff;">0.92</span></div>
+      <div class="row"><label>Cymatic Solver</label><span class="val" style="color:#fff;">Runge-Kutta 2</span></div>
+      <div class="row"><label>Chladni Grid</label><span class="val" style="color:#fff;">2D Harmonic</span></div>
+    </div>
+  </aside>
+</main>
+
+<video id="cymaticFootage" preload="auto" playsinline muted loop></video>
+<audio id="cymaticAudio" src="halfworld/footage/unified-drones.mp3" preload="auto" loop></audio>
+
+<script>
+// --- Three.js Holographic Stage Setup ---
+const canvas = document.getElementById("canvas3D");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x060608, 0.0015);
+
+const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 1, 3000);
+camera.position.set(0, 180, 480);
+camera.lookAt(0, 0, 0);
+
+// --- 1. Chladni Cymatic Sand Plate System (10,000 Particles) ---
+const NUM_PARTICLES = 10000;
+const PLATE_SIZE = 340;
+const sandGeo = new THREE.BufferGeometry();
+const sandPos = new Float32Array(NUM_PARTICLES * 3);
+const sandVel = new Float32Array(NUM_PARTICLES * 2);
+
+for (let i = 0; i < NUM_PARTICLES; i++) {
+  sandPos[i * 3 + 0] = (Math.random() - 0.5) * PLATE_SIZE;
+  sandPos[i * 3 + 1] = -60; // plate Y elevation
+  sandPos[i * 3 + 2] = (Math.random() - 0.5) * PLATE_SIZE;
+  sandVel[i * 2 + 0] = 0;
+  sandVel[i * 2 + 1] = 0;
+}
+sandGeo.setAttribute('position', new THREE.BufferAttribute(sandPos, 3));
+
+const sandMat = new THREE.PointsMaterial({
+  color: 0x00d2d3,
+  size: 2.2,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const sandSwarm = new THREE.Points(sandGeo, sandMat);
+scene.add(sandSwarm);
+
+// Plate Rim Outline
+const rimGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(PLATE_SIZE, 4, PLATE_SIZE));
+const rimMat = new THREE.LineBasicMaterial({ color: 0x20222e });
+const plateRim = new THREE.LineSegments(rimGeo, rimMat);
+plateRim.position.y = -60;
+scene.add(plateRim);
+
+// --- 2. 3D Procedural Neuroglow Cranium Sculpture ---
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 40, 0);
+scene.add(headGroup);
+
+// Procedural Cranial Point Cloud Mesh
+const headGeo = new THREE.IcosahedronGeometry(75, 4);
+const originalPositions = headGeo.attributes.position.array.slice();
+
+const headMat = new THREE.PointsMaterial({
+  color: 0xffb142,
+  size: 2.4,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending
+});
+const headMesh = new THREE.Points(headGeo, headMat);
+headGroup.add(headMesh);
+
+// Neural Particle Halo
+const HALO_COUNT = 800;
+const haloGeo = new THREE.BufferGeometry();
+const haloPos = new Float32Array(HALO_COUNT * 3);
+for (let i = 0; i < HALO_COUNT; i++) {
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.acos((Math.random() * 2) - 1);
+  const r = 85 + Math.random() * 35;
+  haloPos[i * 3 + 0] = r * Math.sin(phi) * Math.cos(theta);
+  haloPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+  haloPos[i * 3 + 2] = r * Math.cos(phi);
+}
+haloGeo.setAttribute('position', new THREE.BufferAttribute(haloPos, 3));
+const haloMat = new THREE.PointsMaterial({
+  color: 0x54a0ff,
+  size: 1.8,
+  transparent: true,
+  opacity: 0.6,
+  blending: THREE.AdditiveBlending
+});
+const haloSwarm = new THREE.Points(haloGeo, haloMat);
+headGroup.add(haloSwarm);
+
+// --- 3. Web Audio API Frequency & Formant Engine ---
+let audioCtx = null, analyser = null, fftData = null, isPlaying = false;
+const audioEl = document.getElementById("cymaticAudio");
+const fftCanvas = document.getElementById("fftCanvas");
+const fftCtx = fftCanvas.getContext("2d");
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 64;
+  analyser.smoothingTimeConstant = 0.8;
+  const src = audioCtx.createMediaElementSource(audioEl);
+  src.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  fftData = new Uint8Array(analyser.frequencyBinCount);
+}
+
+// --- 4. Chladni Math Solver ---
+let chladniN = 3, chladniM = 5, chladniA = 1.0, chladniB = 1.0;
+function updateChladniParams() {
+  chladniN = +document.getElementById("chladniN").value;
+  chladniM = +document.getElementById("chladniM").value;
+  chladniA = +document.getElementById("chladniRatio").value / 100;
+  chladniB = 1.0;
+  document.getElementById("valN").textContent = chladniN;
+  document.getElementById("valM").textContent = chladniM;
+  document.getElementById("valRatio").textContent = chladniA.toFixed(1);
+  document.getElementById("hudMode").textContent = `CHLADNI CYMATICS (N=${chladniN}, M=${chladniM})`;
+}
+
+function chladniFunction(x, y, L) {
+  const nx = (x / L) * Math.PI;
+  const my = (y / L) * Math.PI;
+  return chladniA * Math.sin(chladniN * nx) * Math.sin(chladniM * my) +
+         chladniB * Math.sin(chladniM * nx) * Math.sin(chladniN * my);
+}
+
+// --- 5. Animation & Simulation Loop ---
+let lastTime = performance.now();
+function animate(now) {
+  requestAnimationFrame(animate);
+
+  const dt = Math.min(0.1, (now - lastTime) / 1000);
+  lastTime = now;
+
+  // Audio Analysis
+  let vocalEnergy = 0, bassEnergy = 0;
+  if (analyser && fftData) {
+    analyser.getByteFrequencyData(fftData);
+
+    // Draw FFT
+    const w = fftCanvas.width, h = fftCanvas.height;
+    fftCtx.fillStyle = "#030406";
+    fftCtx.fillRect(0, 0, w, h);
+    const barW = w / fftData.length;
+    for (let i = 0; i < fftData.length; i++) {
+      const val = fftData[i] / 255;
+      const barH = val * h;
+      fftCtx.fillStyle = i < 4 ? "#ff3838" : (i < 14 ? "#00d2d3" : "#ffb142");
+      fftCtx.fillRect(i * barW, h - barH, barW - 1, barH);
+    }
+
+    bassEnergy = (fftData[0] + fftData[1] + fftData[2]) / (3 * 255);
+    vocalEnergy = (fftData[5] + fftData[6] + fftData[7] + fftData[8]) / (4 * 255);
+  }
+
+  // Viseme Mouth Morphing on 3D Head
+  const posAttr = headGeo.attributes.position;
+  const sens = +document.getElementById("visemeSensitivity").value / 100;
+  const mouthOpen = vocalEnergy * 28 * sens;
+  document.getElementById("hudViseme").textContent = `${Math.round(vocalEnergy * 100)}%`;
+
+  for (let i = 0; i < posAttr.count; i++) {
+    const ox = originalPositions[i * 3 + 0];
+    const oy = originalPositions[i * 3 + 1];
+    const oz = originalPositions[i * 3 + 2];
+
+    // Mouth / Jaw vertices (lower front region: y < -10, z > 20)
+    if (oy < -5 && oz > 20) {
+      posAttr.setY(i, oy - mouthOpen * (1 - oy / -75));
+      posAttr.setZ(i, oz + mouthOpen * 0.4);
+    } else {
+      posAttr.setY(i, oy);
+      posAttr.setZ(i, oz);
+    }
+  }
+  posAttr.needsUpdate = true;
+
+  // Head Orbital Rotation
+  const rotSpeed = +document.getElementById("orbitSpeed").value / 100;
+  headGroup.rotation.y += 0.008 * rotSpeed;
+  haloSwarm.rotation.y -= 0.004 * rotSpeed;
+
+  // Chladni Sand Plate Particle Simulation
+  const pos = sandGeo.attributes.position.array;
+  const L = PLATE_SIZE;
+  const halfL = L / 2;
+  const driveAmp = (+document.getElementById("chladniAmp").value / 100) * (1.0 + bassEnergy * 1.5);
+
+  const eps = 1.0;
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    const px = pos[i * 3 + 0];
+    const pz = pos[i * 3 + 2];
+
+    // Compute Chladni potential gradient
+    const val = chladniFunction(px, pz, L);
+    const dValX = (chladniFunction(px + eps, pz, L) - chladniFunction(px - eps, pz, L)) / (2 * eps);
+    const dValZ = (chladniFunction(px, pz + eps, L) - chladniFunction(px, pz - eps, L)) / (2 * eps);
+
+    // Force toward nodal line (where val = 0)
+    const forceX = -val * dValX * 18 * driveAmp;
+    const forceZ = -val * dValZ * 18 * driveAmp;
+
+    sandVel[i * 2 + 0] = (sandVel[i * 2 + 0] + forceX * dt) * 0.92;
+    sandVel[i * 2 + 1] = (sandVel[i * 2 + 1] + forceZ * dt) * 0.92;
+
+    let nx = px + sandVel[i * 2 + 0];
+    let nz = pz + sandVel[i * 2 + 1];
+
+    // Boundary bounce
+    if (nx < -halfL) { nx = -halfL; sandVel[i * 2 + 0] *= -0.3; }
+    if (nx > halfL) { nx = halfL; sandVel[i * 2 + 0] *= -0.3; }
+    if (nz < -halfL) { nz = -halfL; sandVel[i * 2 + 1] *= -0.3; }
+    if (nz > halfL) { nz = halfL; sandVel[i * 2 + 1] *= -0.3; }
+
+    pos[i * 3 + 0] = nx;
+    pos[i * 3 + 2] = nz;
+  }
+  sandGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== w || canvas.height !== h) {
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+}
+window.addEventListener("resize", resize);
+
+// Toggle Playback
+function togglePlayback() {
+  initAudio();
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  const btn = document.getElementById("masterPlayBtn");
+  isPlaying = !isPlaying;
+  if (isPlaying) {
+    audioEl.play().catch(()=>{});
+    btn.textContent = "⏸ PAUSE ACOUSTIC SCULPTURE";
+    btn.classList.remove("btn-active");
+  } else {
+    audioEl.pause();
+    btn.textContent = "▶ START ACOUSTIC SCULPTURE";
+    btn.classList.add("btn-active");
+  }
+}
+
+// 135 Clips Loader
+async function initInventory() {
+  const sel = document.getElementById("cymaticClipSelect");
+  try {
+    const res = await fetch("CLIPS_INVENTORY.json");
+    const clips = await res.json();
+    sel.innerHTML = "";
+    clips.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.fn;
+      opt.textContent = `[P${String(c.poem).padStart(2,'0')}] ${c.cat}`;
+      sel.appendChild(opt);
+    });
+  } catch(e) {}
+}
+
+function loadCymaticClip(fn) {
+  const vid = document.getElementById("cymaticFootage");
+  vid.src = fn;
+  vid.play().catch(()=>{});
+}
+
+function updateHeadStyle(style) {
+  // Update material styling
+}
+
+initInventory();
+resize();
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Neuroglow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; font-family: monospace; background: #111; }
+        :root {
+            --panel-bg: rgba(25, 28, 40, 0.9);
+            --border-color: rgba(100, 120, 200, 0.3);
+            --header-bg: rgba(40, 45, 65, 0.95);
+            --text-primary: #e0e5f0;
+            --text-secondary: #808a9f;
+            --accent-color: #00bfff; /* DeepSkyBlue */
+            --accent-hover: #00ffff; /* Cyan/Aqua */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #ui-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 320px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px) saturate(150%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            padding: 0;
+            cursor: move;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden; /* To contain the border-radius */
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--header-bg);
+            padding: 10px 15px;
+            user-select: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .panel-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        #toggle-controls-btn {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0px 8px;
+            border-radius: 5px;
+            font-size: 18px;
+            line-height: 1;
+            transition: all 0.2s ease;
+        }
+        #toggle-controls-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+        .panel-content {
+            padding: 15px;
+            max-height: calc(100vh - 85px); /* Header height + top/bottom margin */
+            overflow-y: auto;
+        }
+
+        /* Custom Scrollbar Styling */
+        .panel-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .panel-content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        .panel-content::-webkit-scrollbar-thumb {
+            background-color: var(--text-secondary);
+            border-radius: 4px;
+        }
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background-color: var(--text-primary);
+        }
+        .control-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .control-group:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        label span {
+            float: right;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: var(--accent-color);
+            border: none;
+            color: #000;
+            font-weight: 600;
+            border-radius: 6px;
+            margin-top: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+        }
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            background: var(--header-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 6px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 5px;
+            background: var(--header-bg);
+            border-radius: 5px;
+            outline: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+        }
+
+        .wave-axis-controls-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+        .wave-axis-controls {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+        .wave-axis-controls h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: center;
+            color: var(--accent-color-light);
+            font-weight: normal;
+        }
+        .wave-axis-controls label {
+            margin-top: 8px;
+        }
+        .wave-axis-controls select {
+            width: 100%;
+            background: var(--accent-color);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--panel-bg);
+            transition: background 0.2s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--accent-hover);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--panel-bg);
+        }
+        #status {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 1.5em; text-shadow: 0 0 15px var(--accent-hover); color: var(--accent-hover);
+            background: rgba(0,0,0,0.8); padding: 20px; border-radius: 10px;
+            transition: opacity 0.5s ease-out; opacity: 0;
+            border: 1px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <div id="ui-panel">
+        <div class="panel-header"><h3>Neuroglow Controls</h3><button id="toggle-controls-btn">–</button></div>
+        <div class="panel-content">
+            <div class="control-group">
+                 <button id="load-audio-btn">Load Audio</button>
+                 <input type="file" id="audio-file-input" accept="audio/*" style="display:none;">
+                 <button id="play-pause-btn" disabled>Play</button>
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                    <label for="loop-audio" style="cursor: pointer; font-size: 12px; color: #ccc;"><input type="checkbox" id="loop-audio"> Loop Audio</label>
+                    <button id="fullscreen-btn" style="width: auto; padding: 4px 8px;">Fullscreen</button>
+                 </div>
+                 <button id="reset-animation-btn" style="background-color: #555;">Reset Animation</button>
+            </div>
+             <div class="control-group">
+                 <button id="load-slice-btn">Load Slice JSON</button>
+                 <input type="file" id="json-file-input" accept=".json" style="display:none;">
+            </div>
+            <hr>
+            <div class="control-group">
+                <label style="margin-bottom: 10px;"><input type="checkbox" id="link-spacing-toggle" checked> Link Spacing Controls</label>
+                <label>Axial (Y) Spacing: <span id="spacing-y-label">1.0</span></label>
+                <input type="range" id="slice-spacing-y" class="spacing-slider" data-axis="y" min="0.1" max="5" step="0.1" value="1">
+                <label>Sagittal (X) Spacing: <span id="spacing-x-label">1.0</span></label>
+                <input type="range" id="slice-spacing-x" class="spacing-slider" data-axis="x" min="0.1" max="5" step="0.1" value="1">
+                <label>Coronal (Z) Spacing: <span id="spacing-z-label">1.0</span></label>
+                <input type="range" id="slice-spacing-z" class="spacing-slider" data-axis="z" min="0.1" max="5" step="0.1" value="1">
+            </div>
+            <div class="control-group">
+                <label><input type="checkbox" id="reactive-spacing-toggle"> Audio-Reactive Spacing</label>
+                <div id="reactive-spacing-controls" style="display: none; margin-top: 10px;">
+                    <label>Spacing Reactivity: <span id="spacing-reactivity-label">1.0</span></label>
+                    <input type="range" id="spacing-reactivity" min="0" max="5" step="0.1" value="1.0">
+                </div>
+            </div>
+            <hr>
+            <div class="control-group">
+                <label>Render Mode</label>
+                <select id="render-mode">
+                    <option value="lines">Lines</option>
+                    <option value="points">Points</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Animation Mode</label>
+                <select id="animation-mode">
+                    <option value="group">Grouped</option>
+                    <option value="individual">Individual</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Animation Amount: <span id="anim-amount-label">50</span></label>
+                <input type="range" id="anim-amount" min="0" max="200" step="1" value="50">
+            </div>
+            <div class="control-group" id="point-size-control" style="display: none;">
+                <label>Point Size: <span id="point-size-label">1.0</span></label>
+                <input type="range" id="point-size" min="0.1" max="10" step="0.1" value="1.0">
+            </div>
+            <hr>
+             <div class="control-group">
+                <label>Color Mode</label>
+                <select id="color-mode">
+                    <option value="classic_rgb">Classic RGB</option>
+                    <option value="analogous_gradient">Analogous Gradient</option>
+                </select>
+            </div>
+            <div class="control-group" id="base-hue-control" style="display: none;">
+                <label>Base Hue: <span id="base-hue-label">0</span></label>
+                <input type="range" id="base-hue" min="0" max="360" step="1" value="0">
+            </div>
+            <hr>
+            <div class="control-group">
+                <label>Animation Effect</label>
+                <select id="animation-effect">
+                    <option value="displacement">Displacement</option>
+                    <option value="color_pulse">Color Pulse</option>
+                    <option value="rotational_jitter">Rotational Jitter</option>
+                    <option value="line_vibration">Line Vibration (Lines)</option>
+                    <option value="particle_drift">Particle Drift (Points)</option>
+                    <option value="tonal_response">Tonal Response</option>
+                    <option value="slice_wave">Slice Wave</option>
+                    <option value="vector_wave">Vector Wave</option>
+                </select>
+            </div>
+            <div id="slice-wave-controls" class="control-group" style="display: none;">
+                <div class="wave-axis-controls-container">
+                    <div class="wave-axis-controls">
+                        <h4>Sagittal (X)</h4>
+                        <label>Amplitude: <span id="slice-wave-amp-x-label">20.0</span></label>
+                        <input type="range" id="slice-wave-amp-x" min="0" max="100" step="1" value="20">
+                        <label>Frequency: <span id="slice-wave-freq-x-label">0.050</span></label>
+                        <input type="range" id="slice-wave-freq-x" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="slice-wave-speed-x-label">1.0</span></label>
+                        <input type="range" id="slice-wave-speed-x" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="slice-wave-react-target-x"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="slice-wave-react-band-x"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                    <div class="wave-axis-controls">
+                        <h4>Axial (Y)</h4>
+                        <label>Amplitude: <span id="slice-wave-amp-y-label">20.0</span></label>
+                        <input type="range" id="slice-wave-amp-y" min="0" max="100" step="1" value="20">
+                        <label>Frequency: <span id="slice-wave-freq-y-label">0.050</span></label>
+                        <input type="range" id="slice-wave-freq-y" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="slice-wave-speed-y-label">1.0</span></label>
+                        <input type="range" id="slice-wave-speed-y" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="slice-wave-react-target-y"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="slice-wave-react-band-y"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                    <div class="wave-axis-controls">
+                        <h4>Coronal (Z)</h4>
+                        <label>Amplitude: <span id="slice-wave-amp-z-label">20.0</span></label>
+                        <input type="range" id="slice-wave-amp-z" min="0" max="100" step="1" value="20">
+                        <label>Frequency: <span id="slice-wave-freq-z-label">0.050</span></label>
+                        <input type="range" id="slice-wave-freq-z" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="slice-wave-speed-z-label">1.0</span></label>
+                        <input type="range" id="slice-wave-speed-z" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="slice-wave-react-target-z"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="slice-wave-react-band-z"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                </div>
+            </div>
+            <div id="vector-wave-controls" class="control-group" style="display: none;">
+                <div class="wave-axis-controls-container">
+                    <div class="wave-axis-controls">
+                        <h4>X-Axis Wave</h4>
+                        <label>Amplitude: <span id="vector-wave-amp-x-label">0.0</span></label>
+                        <input type="range" id="vector-wave-amp-x" min="0" max="100" step="1" value="0">
+                        <label>Frequency: <span id="vector-wave-freq-x-label">0.050</span></label>
+                        <input type="range" id="vector-wave-freq-x" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="vector-wave-speed-x-label">1.0</span></label>
+                        <input type="range" id="vector-wave-speed-x" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="vector-wave-react-target-x"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="vector-wave-react-band-x"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                    <div class="wave-axis-controls">
+                        <h4>Y-Axis Wave</h4>
+                        <label>Amplitude: <span id="vector-wave-amp-y-label">0.0</span></label>
+                        <input type="range" id="vector-wave-amp-y" min="0" max="100" step="1" value="0">
+                        <label>Frequency: <span id="vector-wave-freq-y-label">0.050</span></label>
+                        <input type="range" id="vector-wave-freq-y" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="vector-wave-speed-y-label">1.0</span></label>
+                        <input type="range" id="vector-wave-speed-y" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="vector-wave-react-target-y"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="vector-wave-react-band-y"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                    <div class="wave-axis-controls">
+                        <h4>Z-Axis Wave</h4>
+                        <label>Amplitude: <span id="vector-wave-amp-z-label">0.0</span></label>
+                        <input type="range" id="vector-wave-amp-z" min="0" max="100" step="1" value="0">
+                        <label>Frequency: <span id="vector-wave-freq-z-label">0.050</span></label>
+                        <input type="range" id="vector-wave-freq-z" min="0.001" max="0.2" step="0.001" value="0.05">
+                        <label>Speed: <span id="vector-wave-speed-z-label">1.0</span></label>
+                        <input type="range" id="vector-wave-speed-z" min="0" max="10" step="0.1" value="1">
+                        <label>Reactivity</label>
+                        <select id="vector-wave-react-target-z"><option value="none">None</option><option value="amplitude">Amplitude</option><option value="frequency">Frequency</option><option value="speed">Speed</option></select>
+                        <label>Band</label>
+                        <select id="vector-wave-react-band-z"><option value="bass">Bass</option><option value="mids">Mids</option><option value="treble">Treble</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group" id="effect-intensity-control">
+                <label>Effect Intensity: <span id="effect-intensity-label">1.0</span></label>
+                <input type="range" id="effect-intensity" min="0" max="5" step="0.1" value="1.0">
+            </div>
+            <hr>
+             <div class="control-group">
+                <label>Camera Mode</label>
+                <select id="camera-mode">
+                    <option value="orbit">Orbit (Manual)</option>
+                    <option value="fly_through">Fly-Through</option>
+                    <option value="dolly_zoom">Dolly Zoom</option>
+                    <option value="side_to_side_pan">Side-to-Side Pan</option>
+                </select>
+            </div>
+            <hr>
+            <div class="control-group">
+                <label><input type="checkbox" id="bloom-toggle"> Bloom / Glow</label>
+                <div id="bloom-main-controls" style="display:none;">
+                    <label>Bloom Preset</label>
+                    <select id="bloom-preset">
+                        <option value="cinematic">Cinematic</option>
+                        <option value="subtle">Subtle</option>
+                        <option value="intense">Intense</option>
+                        <option value="ghostly">Ghostly</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <div id="bloom-custom-controls" style="display:none; margin-top: 10px;">
+                        <label>Strength: <span id="bloom-strength-label">1.5</span></label>
+                        <input type="range" id="bloom-strength" min="0" max="3" step="0.1" value="1.5">
+                        <label>Radius: <span id="bloom-radius-label">0.4</span></label>
+                        <input type="range" id="bloom-radius" min="0" max="2" step="0.1" value="0.4">
+                        <label>Threshold: <span id="bloom-threshold-label">0.85</span></label>
+                        <input type="range" id="bloom-threshold" min="0" max="1" step="0.01" value="0.85">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="control-group" id="view-toggles">
+                <label>View Planes</label>
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <input type="checkbox" id="view-y" checked> <label for="view-y" style="flex-grow: 1;">Axial (Y)</label> <span style="width: 20px; height: 20px; background: #00ff00;"></span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <input type="checkbox" id="view-x" checked> <label for="view-x" style="flex-grow: 1;">Sagittal (X)</label> <span style="width: 20px; height: 20px; background: #ff0000;"></span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="checkbox" id="view-z" checked> <label for="view-z" style="flex-grow: 1;">Coronal (Z)</label> <span style="width: 20px; height: 20px; background: #0000ff;"></span>
+                </div>
+            </div>
+            <div class="control-group">
+
+            </div>
+        </div>
+    </div>
+    <div id="status">Initializing...</div>
+
+    <script type="importmap">
+        { "imports": { "three": "https://esm.sh/three@0.155.0", "three/addons/": "https://esm.sh/three@0.155.0/examples/jsm/" } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        const DEFAULT_SLICE_URL = './slices_decimated_95.json';
+
+        class NeuroglowApp {
+            constructor() {
+                this.sliceData = null;
+                this.sliceGroup = new THREE.Group();
+
+                // Audio properties
+                this.audioContext = null;
+                this.audioBuffer = null;
+                this.sourceNode = null;
+                this.analyserNode = null;
+                this.isPlaying = false;
+                this.startTime = 0;
+                this.startOffset = 0;
+                this.frequencyData = null;
+
+                // VJ Controls state
+                this.renderMode = 'lines';
+                this.animationMode = 'group';
+                this.animationEffect = 'displacement';
+                this.pointSize = 1.0;
+                this.sliceSpacing = { x: 1.0, y: 1.0, z: 1.0 };
+                this.linkSpacingControls = true;
+                this.animAmount = 50;
+                this.colorMode = 'classic_rgb';
+                this.baseHue = 0;
+                this.effectIntensity = 1.0;
+
+                // Slice Wave animation properties
+                this.sliceWaveParams = {};
+                ['x', 'y', 'z'].forEach(axis => {
+                    this.sliceWaveParams[axis] = {
+                        amp: 20.0,
+                        freq: 0.05,
+                        speed: 1.0,
+                        reactTarget: 'none',
+                        reactBand: 'bass'
+                    };
+                });
+
+                // Vector Wave animation properties
+                this.vectorWaveParams = {};
+                ['x', 'y', 'z'].forEach(axis => {
+                    this.vectorWaveParams[axis] = {
+                        amp: 0.0,
+                        freq: 0.05,
+                        speed: 1.0,
+                        reactTarget: 'none',
+                        reactBand: 'bass'
+                    };
+                });
+                this.cameraMode = 'orbit';
+                this.dollyZoom = { active: false, startTime: 0, duration: 500 };
+
+                this.reactiveSpacingEnabled = false;
+                this.spacingReactivity = 1.0;
+
+                // Post-processing
+                this.composer = null;
+                this.bloomPass = null;
+                this.bloomEnabled = false;
+                this.bloomTarget = { strength: 1.5, radius: 0.4, threshold: 0.85 };
+
+                this.initScene();
+                this.initUI();
+                this.showStatus('Loading default slices...', false);
+                this.loadDefaultSlices();
+            }
+
+            initScene() {
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x111);
+                this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 5000);
+                this.camera.position.set(0, 0, 500);
+                
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+                this.renderer.autoClearColor = false; // For trails
+                this.container = document.getElementById('canvas-container');
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.container.appendChild(this.renderer.domElement);
+                
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.5));
+                this.scene.add(this.sliceGroup);
+
+                // Post-processing setup
+                const renderPass = new RenderPass(this.scene, this.camera);
+                this.bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+                this.composer = new EffectComposer(this.renderer);
+                this.composer.addPass(renderPass);
+                this.composer.addPass(this.bloomPass);
+
+                window.addEventListener('resize', () => this.onWindowResize());
+                this.animate();
+            }
+
+            initUI() {
+                document.getElementById('link-spacing-toggle').addEventListener('change', (e) => {
+                    this.linkSpacingControls = e.target.checked;
+                });
+
+                document.querySelectorAll('.spacing-slider').forEach(slider => {
+                    slider.addEventListener('input', (e) => {
+                        const axis = e.target.dataset.axis;
+                        const value = parseFloat(e.target.value);
+
+                        if (this.linkSpacingControls) {
+                            this.sliceSpacing.x = value;
+                            this.sliceSpacing.y = value;
+                            this.sliceSpacing.z = value;
+                            document.getElementById('slice-spacing-x').value = value;
+                            document.getElementById('slice-spacing-y').value = value;
+                            document.getElementById('slice-spacing-z').value = value;
+                            document.getElementById('spacing-x-label').textContent = value.toFixed(1);
+                            document.getElementById('spacing-y-label').textContent = value.toFixed(1);
+                            document.getElementById('spacing-z-label').textContent = value.toFixed(1);
+                        } else {
+                            this.sliceSpacing[axis] = value;
+                            document.getElementById(`spacing-${axis}-label`).textContent = value.toFixed(1);
+                        }
+                        
+                        this.updateSlicePositions();
+                    });
+                });
+                document.getElementById('view-x').addEventListener('change', () => this.renderSlices());
+                document.getElementById('view-y').addEventListener('change', () => this.renderSlices());
+                document.getElementById('view-z').addEventListener('change', () => this.renderSlices());
+
+                // Reactive Spacing Controls
+                document.getElementById('reactive-spacing-toggle').addEventListener('change', (e) => {
+                    this.reactiveSpacingEnabled = e.target.checked;
+                    document.getElementById('reactive-spacing-controls').style.display = e.target.checked ? 'block' : 'none';
+                    if (!e.target.checked) {
+                        // Reset positions when disabled
+                        this.sliceGroup.children.forEach(slice => {
+                            const axis = slice.userData.axis;
+                            const rawPos = slice.userData.rawPosition;
+                            const baseSpacing = parseFloat(document.getElementById('slice-spacing').value);
+                            if (axis === 'x') slice.position.x = rawPos * baseSpacing;
+                            if (axis === 'y') slice.position.y = rawPos * baseSpacing;
+                            if (axis === 'z') slice.position.z = rawPos * baseSpacing;
+                        });
+                    }
+                });
+                document.getElementById('spacing-reactivity').addEventListener('input', (e) => {
+                    this.spacingReactivity = parseFloat(e.target.value);
+                    document.getElementById('spacing-reactivity-label').textContent = this.spacingReactivity.toFixed(1);
+                });
+
+                // VJ controls
+                document.getElementById('render-mode').addEventListener('change', (e) => {
+                    this.renderMode = e.target.value;
+                    document.getElementById('point-size-control').style.display = (this.renderMode === 'points') ? 'block' : 'none';
+                    this.renderSlices();
+                });
+                document.getElementById('animation-mode').addEventListener('change', (e) => {
+                    this.animationMode = e.target.value;
+                });
+                document.getElementById('anim-amount').addEventListener('input', (e) => {
+                    this.animAmount = parseFloat(e.target.value);
+                    document.getElementById('anim-amount-label').textContent = this.animAmount.toFixed(0);
+                });
+                document.getElementById('point-size').addEventListener('input', (e) => {
+                    this.pointSize = parseFloat(e.target.value);
+                    document.getElementById('point-size-label').textContent = this.pointSize.toFixed(1);
+                    this.renderSlices(); // Re-render to apply new point size
+                });
+
+                document.getElementById('animation-effect').addEventListener('change', (e) => {
+                    this.animationEffect = e.target.value;
+                    const isSliceWave = this.animationEffect === 'slice_wave';
+                    const isVectorWave = this.animationEffect === 'vector_wave';
+                    document.getElementById('effect-intensity-control').style.display = !isSliceWave && !isVectorWave ? 'block' : 'none';
+                    document.getElementById('slice-wave-controls').style.display = isSliceWave ? 'block' : 'none';
+                    document.getElementById('vector-wave-controls').style.display = isVectorWave ? 'block' : 'none';
+                    this.renderSlices(); // Re-render to apply certain effects correctly
+                });
+
+                // Per-Axis Slice Wave Controls
+                ['x', 'y', 'z'].forEach(axis => {
+                    document.getElementById(`slice-wave-amp-${axis}`).addEventListener('input', e => {
+                        this.sliceWaveParams[axis].amp = parseFloat(e.target.value);
+                        document.getElementById(`slice-wave-amp-${axis}-label`).textContent = this.sliceWaveParams[axis].amp.toFixed(1);
+                    });
+                    document.getElementById(`slice-wave-freq-${axis}`).addEventListener('input', e => {
+                        this.sliceWaveParams[axis].freq = parseFloat(e.target.value);
+                        document.getElementById(`slice-wave-freq-${axis}-label`).textContent = this.sliceWaveParams[axis].freq.toFixed(3);
+                    });
+                    document.getElementById(`slice-wave-speed-${axis}`).addEventListener('input', e => {
+                        this.sliceWaveParams[axis].speed = parseFloat(e.target.value);
+                        document.getElementById(`slice-wave-speed-${axis}-label`).textContent = this.sliceWaveParams[axis].speed.toFixed(1);
+                    });
+                    document.getElementById(`slice-wave-react-target-${axis}`).addEventListener('change', e => {
+                        this.sliceWaveParams[axis].reactTarget = e.target.value;
+                    });
+                    document.getElementById(`slice-wave-react-band-${axis}`).addEventListener('change', e => {
+                        this.sliceWaveParams[axis].reactBand = e.target.value;
+                    });
+                });
+
+                // Per-Axis Vector Wave Controls
+                ['x', 'y', 'z'].forEach(axis => {
+                    document.getElementById(`vector-wave-amp-${axis}`).addEventListener('input', e => {
+                        this.vectorWaveParams[axis].amp = parseFloat(e.target.value);
+                        document.getElementById(`vector-wave-amp-${axis}-label`).textContent = this.vectorWaveParams[axis].amp.toFixed(1);
+                    });
+                    document.getElementById(`vector-wave-freq-${axis}`).addEventListener('input', e => {
+                        this.vectorWaveParams[axis].freq = parseFloat(e.target.value);
+                        document.getElementById(`vector-wave-freq-${axis}-label`).textContent = this.vectorWaveParams[axis].freq.toFixed(3);
+                    });
+                    document.getElementById(`vector-wave-speed-${axis}`).addEventListener('input', e => {
+                        this.vectorWaveParams[axis].speed = parseFloat(e.target.value);
+                        document.getElementById(`vector-wave-speed-${axis}-label`).textContent = this.vectorWaveParams[axis].speed.toFixed(1);
+                    });
+                    document.getElementById(`vector-wave-react-target-${axis}`).addEventListener('change', e => {
+                        this.vectorWaveParams[axis].reactTarget = e.target.value;
+                    });
+                    document.getElementById(`vector-wave-react-band-${axis}`).addEventListener('change', e => {
+                        this.vectorWaveParams[axis].reactBand = e.target.value;
+                    });
+                });
+
+                // Color controls
+                const baseHueControl = document.getElementById('base-hue-control');
+                document.getElementById('color-mode').addEventListener('change', (e) => {
+                    this.colorMode = e.target.value;
+                    baseHueControl.style.display = (this.colorMode === 'classic_rgb') ? 'none' : 'block';
+                    this.renderSlices();
+                });
+                document.getElementById('base-hue').addEventListener('input', (e) => {
+                    this.baseHue = parseInt(e.target.value);
+                    document.getElementById('base-hue-label').textContent = this.baseHue;
+                    if (this.colorMode === 'analogous_gradient') {
+                        this.renderSlices();
+                    }
+                });
+
+                document.getElementById('camera-mode').addEventListener('change', (e) => {
+                    this.cameraMode = e.target.value;
+                    this.controls.enabled = (this.cameraMode === 'orbit');
+                });
+                document.getElementById('reset-animation-btn').addEventListener('click', () => this.resetAnimationState());
+
+                // Post-processing controls
+                const bloomMainControls = document.getElementById('bloom-main-controls');
+                const bloomCustomControls = document.getElementById('bloom-custom-controls');
+                document.getElementById('bloom-toggle').addEventListener('change', (e) => {
+                    this.bloomEnabled = e.target.checked;
+                    bloomMainControls.style.display = this.bloomEnabled ? 'block' : 'none';
+                    // When enabling, start from zero strength for a smooth fade-in effect
+                    if (this.bloomEnabled) {
+                        this.bloomPass.strength = 0;
+                    }
+                });
+                document.getElementById('bloom-preset').addEventListener('change', (e) => {
+                    const preset = e.target.value;
+                    bloomCustomControls.style.display = (preset === 'custom') ? 'block' : 'none';
+                    switch (preset) {
+                        case 'subtle': this.setBloomParams(0.8, 0.6, 0.9); break;
+                        case 'cinematic': this.setBloomParams(1.5, 0.4, 0.85); break;
+                        case 'intense': this.setBloomParams(2.5, 0.2, 0.7); break;
+                        case 'ghostly': this.setBloomParams(1.0, 1.5, 0.95); break;
+                    }
+                });
+                document.getElementById('bloom-strength').addEventListener('input', (e) => this.setBloomParams(e.target.value));
+                document.getElementById('bloom-radius').addEventListener('input', (e) => this.setBloomParams(null, e.target.value));
+                document.getElementById('bloom-threshold').addEventListener('input', (e) => this.setBloomParams(null, null, e.target.value));
+
+                const jsonFileInput = document.getElementById('json-file-input');
+                document.getElementById('load-slice-btn').addEventListener('click', () => jsonFileInput.click());
+                jsonFileInput.addEventListener('change', (e) => this.loadJSON(e.target.files[0]));
+
+                const audioFileInput = document.getElementById('audio-file-input');
+                document.getElementById('load-audio-btn').addEventListener('click', () => audioFileInput.click());
+                audioFileInput.addEventListener('change', (e) => this.loadAudio(e.target.files[0]));
+
+                document.getElementById('play-pause-btn').addEventListener('click', () => this.togglePlayback());
+                this.makeDraggable(document.getElementById('ui-panel'));
+
+                document.getElementById('loop-audio').addEventListener('change', (e) => {
+                    this.loopAudio = e.target.checked;
+                    if (this.sourceNode) this.sourceNode.loop = this.loopAudio;
+                });
+
+                document.getElementById('fullscreen-btn').addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                        });
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        }
+                    }
+                });
+
+                const panelContent = document.querySelector('.panel-content');
+                const toggleBtn = document.getElementById('toggle-controls-btn');
+                toggleBtn.addEventListener('click', () => {
+                    const isHidden = panelContent.style.display === 'none';
+                    panelContent.style.display = isHidden ? 'block' : 'none';
+                    toggleBtn.textContent = isHidden ? '–' : '+';
+                });
+
+                document.getElementById('effect-intensity').addEventListener('input', (e) => {
+                    this.effectIntensity = parseFloat(e.target.value);
+                    document.getElementById('effect-intensity-label').textContent = this.effectIntensity.toFixed(1);
+                });
+            }
+
+            showStatus(message, fadeOut = true) {
+                const statusEl = document.getElementById('status');
+                statusEl.textContent = message;
+                statusEl.style.opacity = 1;
+
+                if (this.statusTimeout) clearTimeout(this.statusTimeout);
+
+                if (fadeOut) {
+                    this.statusTimeout = setTimeout(() => {
+                        statusEl.style.opacity = 0;
+                    }, 3000);
+                }
+            }
+
+            async loadDefaultSlices() {
+                try {
+                    const response = await fetch(DEFAULT_SLICE_URL);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    this.sliceData = data;
+                    this.renderSlices();
+                    this.frameCamera();
+                    this.showStatus('Slices loaded. Ready for audio.');
+                } catch (error) {
+                    console.error('Failed to load default slices:', error);
+                    this.showStatus('Error loading slices. Please load a file manually.');
+                }
+            }
+
+            setBloomParams(strength = null, radius = null, threshold = null) {
+                // Set the *target* for the bloom, which will be smoothly approached in the animate loop
+                if (strength !== null) this.bloomTarget.strength = parseFloat(strength);
+                if (radius !== null) this.bloomTarget.radius = parseFloat(radius);
+                if (threshold !== null) this.bloomTarget.threshold = parseFloat(threshold);
+
+                // Update the UI labels to reflect the target values immediately
+                document.getElementById('bloom-strength-label').textContent = this.bloomTarget.strength.toFixed(1);
+                document.getElementById('bloom-radius-label').textContent = this.bloomTarget.radius.toFixed(1);
+                document.getElementById('bloom-threshold-label').textContent = this.bloomTarget.threshold.toFixed(2);
+            }
+
+            resetAnimationState() {
+                // Clear time worm trails
+                const clearCtx = this.renderer.getContext();
+                clearCtx.clearColor(0, 0, 0, 0);
+                clearCtx.clear(clearCtx.COLOR_BUFFER_BIT);
+
+                // Reset particle velocities
+                this.sliceGroup.children.forEach(slice => {
+                    if (slice.userData.velocities) {
+                        slice.userData.velocities.array.fill(0);
+                    }
+                });
+
+                // Reset macro animation
+                this.sliceGroup.scale.set(1, 1, 1);
+                this.expansionFactor = 1.0;
+
+                // Re-render from base state
+                this.renderSlices();
+                this.showStatus('Animation Reset', true);
+            }
+
+            renderSlices() {
+                if (!this.sliceData) return;
+
+                while (this.sliceGroup.children.length > 0) {
+                    const child = this.sliceGroup.children[0];
+                    this.sliceGroup.remove(child);
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) child.material.dispose();
+                }
+
+
+                const visibility = {
+                    x: document.getElementById('view-x').checked,
+                    y: document.getElementById('view-y').checked,
+                    z: document.getElementById('view-z').checked
+                };
+
+                let skippedSlices = 0;
+                const pointSize = this.pointSize;
+
+                for (const axis of ['x', 'y', 'z']) {
+                    if (!visibility[axis] || !this.sliceData[axis]) continue;
+
+                    for (const slice of this.sliceData[axis]) {
+                        const isValidSlice = slice &&
+                            typeof slice.position === 'number' && isFinite(slice.position) &&
+                            slice.profile && Array.isArray(slice.profile) && slice.profile.length >= 3 &&
+                            slice.profile.every(p => p && typeof p.x === 'number' && isFinite(p.x) && typeof p.y === 'number' && isFinite(p.y));
+
+                        if (!isValidSlice) {
+                            skippedSlices++;
+                            continue;
+                        }
+                        
+                        let color = new THREE.Color();
+                        switch (this.colorMode) {
+                            case 'classic_rgb':
+                                if (axis === 'x') color.setRGB(1, 0, 0);
+                                else if (axis === 'y') color.setRGB(0, 1, 0);
+                                else color.setRGB(0, 0, 1);
+                                break;
+                            case 'analogous_gradient':
+                                const hue = (this.baseHue / 360 + (slice.position / 400) * 0.15) % 1.0;
+                                color.setHSL(hue, 0.9, 0.7);
+                                break;
+                        }
+
+                        const points = slice.profile.map(p => new THREE.Vector3(p.x, p.y, 0));
+                        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                        let object;
+                        if (this.renderMode === 'lines') {
+                            const material = new THREE.LineBasicMaterial({ color });
+                            object = new THREE.LineLoop(geometry, material);
+                        } else {
+                            const material = new THREE.PointsMaterial({ color, size: pointSize, sizeAttenuation: true });
+                            object = new THREE.Points(geometry, material);
+                        }
+
+                        object.rotation.set(0, 0, 0);
+                        if (axis === 'y') object.rotation.x = -Math.PI / 2;
+                        if (axis === 'x') object.rotation.y = Math.PI / 2;
+                        
+                        const currentSpacing = this.sliceSpacing[axis];
+                        if (axis === 'x') object.position.x = slice.position * currentSpacing;
+                        if (axis === 'y') object.position.y = slice.position * currentSpacing;
+                        if (axis === 'z') object.position.z = slice.position * currentSpacing;
+                        
+                        object.userData.originalPosition = object.position.clone();
+                        object.userData.originalRotation = object.rotation.clone();
+                        object.userData.axis = axis;
+                        if (object.material.color) {
+                            object.userData.originalColor = object.material.color.clone();
+                        }
+                        object.userData.originalVertices = object.geometry.attributes.position.clone();
+                        object.userData.rawPosition = slice.position;
+                        this.sliceGroup.add(object);
+                    }
+                }
+                if (skippedSlices > 0) {
+                    console.warn(`Skipped ${skippedSlices} invalid slices during rendering.`);
+                }
+            }
+
+            updateSlicePositions() {
+                if (this.reactiveSpacingEnabled) return; // Audio-reactive logic will handle it
+
+                this.sliceGroup.children.forEach(slice => {
+                    const axis = slice.userData.axis;
+                    const rawPos = slice.userData.rawPosition;
+                    if (rawPos === undefined) return;
+                    
+                    const spacing = this.sliceSpacing[axis];
+                    if (axis === 'x') slice.position.x = rawPos * spacing;
+                    if (axis === 'y') slice.position.y = rawPos * spacing;
+                    if (axis === 'z') slice.position.z = rawPos * spacing;
+                });
+            }
+
+            frameCamera() {
+                if (this.sliceGroup.children.length === 0) return;
+                const box = new THREE.Box3().setFromObject(this.sliceGroup);
+                if (box.isEmpty()) return;
+
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const fov = this.camera.fov * (Math.PI / 180);
+                let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                cameraZ *= 1.5; // Add some padding
+
+                this.camera.position.set(center.x, center.y, center.z + cameraZ);
+                this.controls.target.copy(center);
+                this.controls.update();
+            }
+
+            loadAudio(file) {
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    if (!this.audioContext) {
+                        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    this.showStatus('Decoding audio...', false);
+                    try {
+                        this.audioBuffer = await this.audioContext.decodeAudioData(e.target.result);
+                        this.showStatus('Audio loaded. Press Play.');
+                        document.getElementById('play-pause-btn').disabled = false;
+                    } catch (err) {
+                        this.showStatus('Failed to decode audio.');
+                        console.error(err);
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            }
+
+            togglePlayback() {
+                if (!this.audioBuffer) return;
+
+                if (this.audioContext.state === 'suspended') {
+                    this.audioContext.resume();
+                }
+
+                if (this.isPlaying) {
+                    this.sourceNode.stop();
+                    this.startOffset += this.audioContext.currentTime - this.startTime;
+                    this.isPlaying = false;
+                    document.getElementById('play-pause-btn').textContent = 'Play';
+                } else {
+                    this.sourceNode = this.audioContext.createBufferSource();
+                    this.sourceNode.buffer = this.audioBuffer;
+                    this.sourceNode.loop = this.loopAudio;
+
+                    this.analyserNode = this.audioContext.createAnalyser();
+                    this.analyserNode.fftSize = 256;
+                    this.frequencyData = new Uint8Array(this.analyserNode.frequencyBinCount);
+
+                    this.sourceNode.connect(this.analyserNode);
+                    this.analyserNode.connect(this.audioContext.destination);
+
+                    this.sourceNode.start(0, this.startOffset % this.audioBuffer.duration);
+                    this.startTime = this.audioContext.currentTime;
+                    this.isPlaying = true;
+                    document.getElementById('play-pause-btn').textContent = 'Pause';
+
+                    this.sourceNode.onended = () => {
+                        if (this.isPlaying) { // Ended naturally, not paused
+                            this.isPlaying = false;
+                            this.startOffset = 0;
+                            document.getElementById('play-pause-btn').textContent = 'Play';
+                        }
+                    };
+                }
+            }
+
+            loadJSON(file) {
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        this.sliceData = JSON.parse(e.target.result);
+                        this.renderSlices();
+                        this.frameCamera();
+                    } catch (err) {
+                        alert('Error parsing JSON file.');
+                        console.error(err);
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            makeDraggable(el) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                el.querySelector('.panel-header').onmousedown = e => {
+                    e.preventDefault();
+                    pos3 = e.clientX; pos4 = e.clientY;
+                    document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+                    document.onmousemove = e => {
+                        e.preventDefault();
+                        pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+                        pos3 = e.clientX; pos4 = e.clientY;
+                        el.style.top = (el.offsetTop - pos2) + 'px';
+                        el.style.left = (el.offsetLeft - pos1) + 'px';
+                    };
+                };
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.composer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+
+                const time = this.audioContext ? this.audioContext.currentTime : 0;
+                this.renderer.clear();
+
+                if (this.isPlaying && this.analyserNode) {
+                    this.analyserNode.getByteFrequencyData(this.frequencyData);
+                    const animAmount = this.effectIntensity / 100.0;
+
+                    // --- Reset state before applying new animation ---
+                    this.sliceGroup.children.forEach(slice => {
+                        slice.position.copy(slice.userData.originalPosition);
+                        slice.rotation.copy(slice.userData.originalRotation);
+                        if (this.colorMode === 'classic_rgb' && slice.material.color && slice.userData.originalColor) {
+                           slice.material.color.copy(slice.userData.originalColor);
+                        }
+                        const originalVertices = slice.userData.originalVertices;
+                        if (originalVertices) {
+                            slice.geometry.attributes.position.copy(originalVertices);
+                        }
+                    });
+
+                    // --- Define Frequency Bands ---
+                    const numBins = this.analyserNode.frequencyBinCount;
+                    const bassBins = Math.floor(numBins * 0.1);
+                    const midBins = Math.floor(numBins * 0.4);
+                    
+                    let bassAvg = Array.from(this.frequencyData.slice(0, bassBins)).reduce((s, v) => s + v, 0) / (bassBins || 1);
+                    let midAvg = Array.from(this.frequencyData.slice(bassBins, midBins)).reduce((s, v) => s + v, 0) / ((midBins - bassBins) || 1);
+                    let trebleAvg = Array.from(this.frequencyData.slice(midBins, numBins)).reduce((s, v) => s + v, 0) / ((numBins - midBins) || 1);
+                    
+                    bassAvg = (bassAvg / 255.0) || 0;
+                    midAvg = (midAvg / 255.0) || 0;
+                    trebleAvg = (trebleAvg / 255.0) || 0;
+
+                    // --- Dynamic Color Logic ---
+                    if (this.colorMode === 'analogous_gradient') {
+                        const hueShift = (bassAvg - 0.5) * 60;
+                        const currentHue = (this.baseHue + hueShift) / 360;
+                        const flash = trebleAvg * 0.4;
+
+                        this.sliceGroup.children.forEach(slice => {
+                            if (!slice.material.color) return;
+                            let axisHue = currentHue;
+                            if (slice.userData.axis === 'x') axisHue = (currentHue + 30/360) % 1;
+                            else if (slice.userData.axis === 'z') axisHue = (currentHue - 30/360 + 1) % 1;
+                            slice.material.color.setHSL(axisHue, 0.9 - flash, 0.6 + flash * 0.4);
+                        });
+                    }
+
+                    // --- Mode-Specific Animation Effects ---
+                    if (this.animationEffect === 'line_vibration' && this.renderMode === 'lines') {
+                        this.sliceGroup.children.forEach(slice => {
+                            if (slice.type !== 'LineLoop') return;
+                            const positions = slice.geometry.attributes.position;
+                            for (let i = 0; i < positions.count; i++) {
+                                const displacement = (Math.random() - 0.5) * trebleAvg * animAmount;
+                                positions.setY(i, positions.getY(i) + displacement);
+                            }
+                            positions.needsUpdate = true;
+                        });
+                    }
+
+                    // --- Main Animation Effects ---
+                    const sliceCount = this.sliceGroup.children.length;
+                    this.sliceGroup.children.forEach((slice, i) => {
+                        let amp = 0;
+                        if (this.animationMode === 'group') {
+                            if (slice.userData.axis === 'x') amp = bassAvg;
+                            if (slice.userData.axis === 'y') amp = midAvg;
+                            if (slice.userData.axis === 'z') amp = trebleAvg;
+                        } else {
+                            const freqIndex = Math.floor((i / sliceCount) * numBins);
+                            amp = this.frequencyData[freqIndex] / 255.0;
+                        }
+
+                        switch (this.animationEffect) {
+                            case 'displacement': {
+                                const displacement = amp * 50 * animAmount;
+                                if (slice.userData.axis === 'x') slice.position.x += displacement;
+                                if (slice.userData.axis === 'y') slice.position.y -= displacement;
+                                if (slice.userData.axis === 'z') slice.position.z += displacement;
+                                break;
+                            }
+                            case 'color_pulse': {
+                                if (slice.material.color) {
+                                    const pulseColor = new THREE.Color(0xffffff);
+                                    slice.material.color.lerp(pulseColor, amp * animAmount);
+                                }
+                                break;
+                            }
+                            case 'tonal_response':
+                                break;
+                            case 'slice_wave': {
+                                const axis = slice.userData.axis;
+                                if (!this.sliceWaveParams[axis]) break;
+
+                                const params = this.sliceWaveParams[axis];
+                                const waveTime = time * params.speed;
+                                
+                                let audioAmp = 0;
+                                if (params.reactTarget !== 'none') {
+                                    const bandData = { bass: bassAvg, mids: midAvg, treble: trebleAvg };
+                                    audioAmp = bandData[params.reactBand] || 0;
+                                }
+
+                                let finalAmp = params.amp;
+                                let finalFreq = params.freq;
+                                let finalSpeed = params.speed;
+
+                                switch (params.reactTarget) {
+                                    case 'amplitude': finalAmp *= (1 + audioAmp * 2); break;
+                                    case 'frequency': finalFreq *= (1 + audioAmp * 2); break;
+                                    case 'speed': finalSpeed *= (1 + audioAmp * 2); break;
+                                }
+                                
+                                const finalWaveTime = time * finalSpeed;
+                                const displacement = finalAmp * Math.sin(slice.userData.rawPosition * finalFreq + finalWaveTime);
+                                
+                                const normal = new THREE.Vector3();
+                                if (axis === 'x') normal.set(1, 0, 0);
+                                if (axis === 'y') normal.set(0, 1, 0);
+                                if (axis === 'z') normal.set(0, 0, 1);
+                                
+                                slice.position.add(normal.multiplyScalar(displacement));
+                                break;
+                            }
+                            case 'vector_wave': {
+                                const pos = slice.userData.originalPosition;
+                                let totalDisplacement = new THREE.Vector3(0, 0, 0);
+
+                                ['x', 'y', 'z'].forEach(axis => {
+                                    const params = this.vectorWaveParams[axis];
+                                    if (params.amp === 0) return;
+
+                                    let audioAmp = 0;
+                                    if (params.reactTarget !== 'none') {
+                                        const bandData = { bass: bassAvg, mids: midAvg, treble: trebleAvg };
+                                        audioAmp = bandData[params.reactBand] || 0;
+                                    }
+
+                                    let finalAmp = params.amp;
+                                    let finalFreq = params.freq;
+                                    let finalSpeed = params.speed;
+
+                                    switch (params.reactTarget) {
+                                        case 'amplitude': finalAmp *= (1 + audioAmp * 4); break;
+                                        case 'frequency': finalFreq *= (1 + audioAmp * 4); break;
+                                        case 'speed': finalSpeed *= (1 + audioAmp * 4); break;
+                                    }
+
+                                    const finalWaveTime = time * finalSpeed;
+                                    let waveInput = 0;
+                                    if (axis === 'x') waveInput = pos.z; // Wave along X propagates on Z axis
+                                    if (axis === 'y') waveInput = pos.x; // Wave along Y propagates on X axis
+                                    if (axis === 'z') waveInput = pos.y; // Wave along Z propagates on Y axis
+
+                                    const displacement = finalAmp * Math.sin(waveInput * finalFreq + finalWaveTime);
+                                    totalDisplacement[axis] += displacement;
+                                });
+
+                                slice.position.add(totalDisplacement);
+                                break;
+                            }
+                        }
+                    });
+
+                    // --- Audio-Reactive Slice Spacing ---
+                    if (this.reactiveSpacingEnabled) {
+                        const bass = this.frequencyData[2] / 255.0;
+                        const spacingMultiplier = 1.0 + (bass * this.spacingReactivity);
+
+                        this.sliceGroup.children.forEach(slice => {
+                            const axis = slice.userData.axis;
+                            const rawPos = slice.userData.rawPosition;
+                            if (rawPos === undefined) return;
+
+                            const baseSpacing = this.sliceSpacing[axis];
+                            const finalSpacing = baseSpacing * spacingMultiplier;
+
+                            if (axis === 'x') slice.position.x = rawPos * finalSpacing;
+                            if (axis === 'y') slice.position.y = rawPos * finalSpacing;
+                            if (axis === 'z') slice.position.z = rawPos * finalSpacing;
+                        });
+                    }
+                } // End of if (this.isPlaying && this.analyserNode)
+
+                // --- Camera Logic ---
+                switch (this.cameraMode) {
+                    case 'fly_through': {
+                        const orbitSpeed = 0.05;
+                        const orbitRadius = 400;
+                        this.camera.position.x = Math.sin(time * orbitSpeed) * orbitRadius;
+                        this.camera.position.z = Math.cos(time * orbitSpeed) * orbitRadius;
+                        this.camera.lookAt(this.scene.position);
+                        break;
+                    }
+                    case 'dolly_zoom': {
+                        if (!this.dollyZoom.active) {
+                            this.dollyZoom.active = true;
+                            this.dollyZoom.startTime = performance.now();
+                        }
+                        const progress = Math.min((performance.now() - this.dollyZoom.startTime) / this.dollyZoom.duration, 1);
+                        const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI);
+
+                        if (progress < 1) {
+                            this.camera.position.z = 500 - (easedProgress * 200); // Move in
+                            this.camera.fov = 50 + (easedProgress * 25); // Zoom out
+                            this.camera.updateProjectionMatrix();
+                        } else {
+                            this.dollyZoom.active = false;
+                        }
+                        break;
+                    }
+                    case 'side_to_side_pan': {
+                        const panSpeed = 0.1;
+                        const panRange = 300;
+                        this.camera.position.x = Math.sin(time * panSpeed) * panRange;
+                        this.camera.lookAt(this.scene.position);
+                        break;
+                    }
+                    case 'orbit':
+                    default: {
+                        this.controls.update();
+                        break;
+                    }
+                }
+
+                // --- Bloom Fade Logic ---
+                if (this.bloomEnabled) {
+                    const lerpFactor = 0.05; // Controls the speed of the fade
+                    this.bloomPass.strength += (this.bloomTarget.strength - this.bloomPass.strength) * lerpFactor;
+                    this.bloomPass.radius += (this.bloomTarget.radius - this.bloomPass.radius) * lerpFactor;
+                    this.bloomPass.threshold += (this.bloomTarget.threshold - this.bloomPass.threshold) * lerpFactor;
+                    this.composer.render();
+                } else {
+                    this.renderer.render(this.scene, this.camera);
+                }
+            }
+        }
+
+        new NeuroglowApp();
+    </script>
+</body>
+</html>

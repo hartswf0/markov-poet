@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECD — Manila Morphisms Cabinet (3D)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+
+    <style>
+        :root {
+            --paper: #d5c9a1;
+            --steel: #505052;
+            --steel-dark: #404042;
+            --steel-face: #606062;
+            --ink: #3d3a31;
+            --bg-color: #e6e2d8;
+            --transition-speed: 0.4s;
+            --viewer-bg: rgba(26, 26, 26, 0.95);
+            --viewer-border: #555;
+            --viewer-close-color: #ccc;
+            --viewer-close-hover: white;
+        }
+
+        body.terminal-mode {
+            --paper: #222;
+            --steel: #333;
+            --steel-dark: #222;
+            --steel-face: #444;
+            --ink: #00ff41;
+            --bg-color: #18181a;
+            --viewer-bg: rgba(0, 0, 0, 0.95);
+            --viewer-border: #00ff41;
+            --viewer-close-color: #00ff41;
+            --viewer-close-hover: #00ff80;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg-color);
+            color: var(--ink);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+        }
+        body.grabbing #container { cursor: grabbing; }
+
+        .label {
+            color: var(--ink);
+            background: var(--paper);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .drawer-face-label { font-size: 0.9rem; font-weight: 600; padding: 8px 16px; }
+        .folder-label { font-size: 0.75rem; font-weight: 500; padding: 4px 8px; }
+        .drawer-face-label.selected { background: var(--ink); color: var(--paper); }
+        
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.05);
+            padding: 8px 12px;
+            border-radius: 6px;
+            opacity: 0.7;
+            z-index: 20;
+            transition: all var(--transition-speed) ease;
+            text-align: center;
+            max-width: 90%;
+        }
+        body.terminal-mode .instructions { background: rgba(0,255,65,0.1); }
+        
+        #file-viewer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80vw; height: 80vh; background-color: var(--viewer-bg); border: 1px solid var(--viewer-border); border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 100; display: flex; flex-direction: column; transition: opacity 0.3s, transform 0.3s; }
+        #file-viewer.hidden { opacity: 0; transform: translate(-50%, -50%) scale(0.95); pointer-events: none; }
+        #viewer-controls { position: absolute; top: 10px; right: 10px; z-index: 1; display: flex; gap: 5px; }
+        #close-viewer, #open-new-tab { background: var(--paper); color: var(--ink); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; width: 30px; height: 30px; font-size: 20px; line-height: 28px; text-align: center; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        #file-content { flex-grow: 1; border: none; border-radius: 0 0 8px 8px; margin-top: 40px; background-color: transparent; }
+        
+        #view-toggle { 
+            position: fixed; 
+            bottom: 20px; /* MOVED TO BOTTOM */
+            left: 20px;   /* MOVED TO LEFT */
+            z-index: 1001; 
+            padding: 8px 12px; 
+            font-family: 'IBM Plex Mono', monospace; 
+            font-weight: 600; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            background: var(--paper); 
+            color: var(--ink); 
+            border: 1px solid rgba(0,0,0,0.1); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+        }
+        
+        #2d-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 99; padding: 60px 20px 20px 20px; box-sizing: border-box; overflow-y: auto; }
+        .drawer-2d { margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.1); border-radius: 6px; }
+        .drawer-header-2d { background: var(--paper); color: var(--ink); padding: 12px 15px; font-weight: 600; cursor: pointer; border-radius: 6px 6px 0 0; }
+        .drawer-content-2d { padding: 15px; display: none; }
+        .file-link-2d { display: block; padding: 8px 0; color: var(--ink); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        @media (hover: hover) {
+            .folder-label.hovered { background: var(--ink); color: var(--paper); }
+            #close-viewer:hover { color: var(--viewer-close-hover); }
+            .file-link-2d:hover { font-weight: 600; }
+        }
+
+        @media (max-width: 768px) {
+            .drawer-face-label { font-size: 1rem; padding: 10px 12px; }
+            .folder-label { font-size: 0.8rem; padding: 5px 10px; }
+            .instructions { font-size: 0.75rem; padding: 6px 10px; bottom: 10px; }
+            #file-viewer { width: 95vw; height: 85vh; }
+            #view-toggle { 
+                bottom: 15px;
+                left: 15px;
+                padding: 10px 14px; 
+            }
+            #2d-view { padding-top: 20px; }
+            #close-viewer, #open-new-tab { width: 36px; height: 36px; font-size: 24px; line-height: 34px; }
+        }
+    </style>
+</head>
+<body>
+    <button id="view-toggle">2D View</button>
+    <div id="container"></div>
+    <div id="2d-view" class="hidden"></div>
+    <div id="file-viewer" class="hidden">
+        <div id="viewer-controls">
+            <button id="open-new-tab" title="Open in new tab">↗</button>
+            <button id="close-viewer" title="Close">×</button>
+        </div>
+        <iframe id="file-content" src="about:blank"></iframe>
+    </div>
+    <div class="instructions"></div>
+
+    <script>
+        // --- NO JAVASCRIPT CHANGES ---
+        // The previous script with separate desktop/mobile handlers is correct.
+
+        const drawersData = [ { name: "NeuroGlow Suite", files: [ { title: "NeuroGlow v3+ Visualizer", url: "neuroglow_v3-plus.html" }, { title: "3D Model Slicer", url: "red-33.html" }, { title: "NeuroGlow v4 (Mic Input)", url: "neuroglow-v4-mic.html" } ] }, { name: "NIOSH Headforms", files: [ { title: "Interactive Slicing Profile", url: "red.html" }, { title: "STL/MRI Cut Plane Viewer", url: "stl-mri-viewer.html" } ] }, { name: "Generative Sculptors", files: [ { title: "Simple Block Head", url: "head3d.html" }, { title: "Block Head Sculptor", url: "head-up.html" }, { title: "Simple Round Head", url: "head3c.html" }, { title: "Block Head Evolver", url: "head-evolution.html" }, { title: "Slice-based Sculptor", url: "head-clipper.html" }, { title: "Abstract Sculptor", url: "head-evo-04.html" }, { title: "Mega Evolver", url: "head-evo-03.html" }, { title: "Voxel Sculptor", url: "head-dipper.html" } ] } ];
+
+        let scene, camera, renderer, controls, css2dRenderer;
+        let materials, drawers = [], openDrawer = null, hoveredFolder = null;
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        let longPressTimer;
+
+        function getCssVarColor(varName) { const colorString = getComputedStyle(document.body).getPropertyValue(varName).trim(); if (colorString.startsWith('#')) return parseInt(colorString.replace('#', '0x')); const parts = colorString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/); if (parts) return (parseInt(parts[1]) << 16) | (parseInt(parts[2]) << 8) | parseInt(parts[3]); return 0x000000; }
+
+        function init() {
+            const container = document.getElementById('container');
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(getCssVarColor('--bg-color')); 
+            container.appendChild(renderer.domElement);
+            css2dRenderer = new THREE.CSS2DRenderer();
+            css2dRenderer.setSize(window.innerWidth, window.innerHeight);
+            css2dRenderer.domElement.style.position = 'absolute';
+            css2dRenderer.domElement.style.top = '0px';
+            css2dRenderer.domElement.style.pointerEvents = 'none';
+            container.appendChild(css2dRenderer.domElement);
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const isPortrait = window.innerHeight > window.innerWidth;
+            camera.position.set(isPortrait ? 5 : 15, 10, isPortrait ? 35 : 25);
+            controls = new THREE.OrbitControls(camera, renderer.domElement); 
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 15);
+            scene.add(directionalLight);
+            materials = {
+                steel: new THREE.MeshStandardMaterial({ color: getCssVarColor('--steel'), metalness: 0.6, roughness: 0.4 }),
+                steelFace: new THREE.MeshStandardMaterial({ color: getCssVarColor('--steel-face'), metalness: 0.6, roughness: 0.4 }),
+                paper: new THREE.MeshStandardMaterial({ color: getCssVarColor('--paper'), roughness: 0.9 })
+            };
+            
+            createCabinet();
+            populate2DView();
+            setupEventListeners();
+            updateInstructions();
+            animate();
+        }
+
+        function createCabinet() { const DRAWER_WIDTH = 8; const DRAWER_HEIGHT = 2.5; const DRAWER_DEPTH = 10; const DRAWER_SPACING = 0.5; drawersData.forEach((drawerData, i) => { const totalHeight = DRAWER_HEIGHT + DRAWER_SPACING; const yPos = i * totalHeight; const zStagger = (drawersData.length - 1 - i) * 0.5; const drawerGroup = new THREE.Group(); drawerGroup.position.set(0, yPos, zStagger); scene.add(drawerGroup); const drawerBox = new THREE.Mesh(new THREE.BoxGeometry(DRAWER_WIDTH, DRAWER_HEIGHT, DRAWER_DEPTH), materials.steel); drawerGroup.add(drawerBox); const drawerFace = new THREE.Mesh(new THREE.BoxGeometry(DRAWER_WIDTH + 0.2, DRAWER_HEIGHT + 0.2, 0.2), materials.steelFace); drawerFace.position.z = DRAWER_DEPTH / 2 + 0.1; drawerGroup.add(drawerFace); const faceLabelDiv = document.createElement('div'); faceLabelDiv.className = 'label drawer-face-label'; faceLabelDiv.textContent = drawerData.name; const drawerFaceLabel = new THREE.CSS2DObject(faceLabelDiv); drawerFaceLabel.position.z = 0.15; drawerFace.add(drawerFaceLabel); const drawer = { group: drawerGroup, face: drawerFace, folders: [], isOpen: false, label: drawerFaceLabel }; drawerData.files.forEach((fileData, j) => { const folder = new THREE.Mesh(new THREE.BoxGeometry(DRAWER_WIDTH - 1, DRAWER_HEIGHT - 0.5, 0.2), materials.paper); const initialZ = DRAWER_DEPTH / 2 - 1 - j * 0.3; folder.position.set(0, 0, initialZ); const labelDiv = document.createElement('div'); labelDiv.className = 'label folder-label'; labelDiv.textContent = fileData.title; const folderLabel = new THREE.CSS2DObject(labelDiv); folderLabel.position.set(0, (DRAWER_HEIGHT - 0.5) / 2 + 0.5, 0); folderLabel.visible = false; folder.add(folderLabel); folder.userData = { type: 'folder', url: fileData.url, title: fileData.title, initialZ: initialZ, label: folderLabel }; folder.visible = false; drawerGroup.add(folder); drawer.folders.push(folder); }); drawerFace.userData = { type: 'drawer', drawer }; drawers.push(drawer); }); const cabinetTotalHeight = drawersData.length * (DRAWER_HEIGHT + DRAWER_SPACING) - DRAWER_SPACING; controls.target.set(0, cabinetTotalHeight / 2, 0); }
+        function populate2DView() { const view2D = document.getElementById('2d-view'); drawersData.forEach(drawerData => { const drawerDiv = document.createElement('div'); drawerDiv.className = 'drawer-2d'; const header = document.createElement('div'); header.className = 'drawer-header-2d'; header.textContent = drawerData.name; const content = document.createElement('div'); content.className = 'drawer-content-2d'; drawerData.files.forEach(fileData => { const link = document.createElement('a'); link.className = 'file-link-2d'; link.href = '#'; link.textContent = fileData.title; link.dataset.url = fileData.url; link.addEventListener('click', (e) => { e.preventDefault(); openFileViewer(e.target.dataset.url); }); content.appendChild(link); }); header.addEventListener('click', () => { content.style.display = content.style.display === 'block' ? 'none' : 'block'; }); drawerDiv.appendChild(header); drawerDiv.appendChild(content); view2D.appendChild(drawerDiv); }); }
+        
+        function toggleDrawer(drawer) {
+            const isPortrait = window.innerWidth < window.innerHeight;
+            const FAN_OUT_X = isPortrait ? 6 : 9;
+            const FAN_OUT_Z_SPACING = 2;
+            const FAN_OUT_Y_SPACING = 0.4;
+            if (openDrawer && openDrawer !== drawer) toggleDrawer(openDrawer);
+            drawer.isOpen = !drawer.isOpen;
+            openDrawer = drawer.isOpen ? drawer : null;
+            if (drawer.label) drawer.label.element.classList.toggle('selected', drawer.isOpen);
+            drawer.folders.forEach((folder, i) => { const folderLabel = folder.userData.label; if (drawer.isOpen) { folder.visible = true; folderLabel.visible = true; const targetZ = i * FAN_OUT_Z_SPACING; const targetY = -(i * FAN_OUT_Y_SPACING); folder.userData.initialZ_fan = targetZ; gsap.to(folder.position, { x: FAN_OUT_X + i * 0.5, y: targetY, z: targetZ, duration: 0.5 + i * 0.05, ease: 'power3.out' }); gsap.to(folder.rotation, { y: -0.5, duration: 0.6 + i * 0.05, ease: 'power3.out' }); } else { if (hoveredFolder === folder) { gsap.killTweensOf(folder.position); gsap.killTweensOf(folder.scale); folder.scale.set(1, 1, 1); hoveredFolder = null; } folderLabel.visible = false; gsap.to(folder.position, { x: 0, y: 0, z: folder.userData.initialZ, duration: 0.4, ease: 'power3.in', onComplete: () => { folder.visible = false; } }); gsap.to(folder.rotation, { y: 0, duration: 0.4, ease: 'power3.in' }); delete folder.userData.initialZ_fan; } });
+        }
+
+        function handleHover() {
+            if (isTouchDevice || document.getElementById('container').style.display === 'none') return;
+            raycaster.setFromCamera(mouse, camera);
+            const visibleFolders = drawers.flatMap(d => d.folders).filter(f => f.visible);
+            const intersects = raycaster.intersectObjects(visibleFolders);
+            const folderToHover = (intersects.length > 0) ? intersects[0].object : null;
+            if (hoveredFolder !== folderToHover) { if (hoveredFolder) { gsap.to(hoveredFolder.position, { z: hoveredFolder.userData.initialZ_fan, duration: 0.3, ease: 'power2.out' }); gsap.to(hoveredFolder.scale, { x: 1, y: 1, z: 1, duration: 0.3, ease: 'power2.out' }); if (hoveredFolder.userData.label) { hoveredFolder.userData.label.element.classList.remove('hovered'); } } hoveredFolder = folderToHover; if (hoveredFolder) { gsap.to(hoveredFolder.position, { z: hoveredFolder.userData.initialZ_fan + 0.5, duration: 0.3, ease: 'power2.out' }); gsap.to(hoveredFolder.scale, { x: 1.05, y: 1.05, z: 1.05, duration: 0.3, ease: 'power2.out' }); if (hoveredFolder.userData.label) { hoveredFolder.userData.label.element.classList.add('hovered'); } } }
+        }
+
+        function openFileViewer(url) { const viewer = document.getElementById('file-viewer'); const iframe = document.getElementById('file-content'); const newTabButton = document.getElementById('open-new-tab'); iframe.src = url; newTabButton.dataset.url = url; viewer.classList.remove('hidden'); }
+        function toggleTheme() { document.body.classList.toggle('terminal-mode'); materials.steel.color.set(getCssVarColor('--steel')); materials.steelFace.color.set(getCssVarColor('--steel-face')); materials.paper.color.set(getCssVarColor('--paper')); renderer.setClearColor(getCssVarColor('--bg-color')); }
+        function animate() { requestAnimationFrame(animate); controls.update(); handleHover(); renderer.render(scene, camera); css2dRenderer.render(scene, camera); }
+
+        function updateInstructions() {
+            document.querySelector('.instructions').textContent = isTouchDevice 
+                ? 'Tap a drawer to open • Pinch to zoom • Swipe to orbit • Hold to toggle theme'
+                : 'Click a drawer to open • Scroll to zoom • Drag to orbit • Long-press to toggle theme';
+        }
+
+        function handleInteraction(event) {
+            if (!document.getElementById('file-viewer').classList.contains('hidden')) return;
+            const pointer = event.changedTouches ? event.changedTouches[0] : event;
+            mouse.x = (pointer.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(pointer.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const clickableObjects = [...drawers.map(d => d.face), ...drawers.flatMap(d => d.folders).filter(f => f.visible)];
+            const intersects = raycaster.intersectObjects(clickableObjects);
+            if (intersects.length > 0) {
+                const { type, drawer, url } = intersects[0].object.userData;
+                if (type === 'drawer') {
+                    toggleDrawer(drawer);
+                } else if (type === 'folder' && url && url !== "#") {
+                    openFileViewer(url);
+                }
+            }
+        }
+        
+        function setupEventListeners() {
+            const container = document.getElementById('container');
+            
+            if (isTouchDevice) {
+                // --- MOBILE EVENT LISTENERS ---
+                let touchStartPos = new THREE.Vector2();
+                let isDragging = false;
+                container.addEventListener('touchstart', (e) => {
+                    isDragging = false;
+                    const touch = e.touches[0];
+                    touchStartPos.set(touch.clientX, touch.clientY);
+                    document.body.classList.add('grabbing');
+                    longPressTimer = setTimeout(toggleTheme, 600);
+                }, { passive: true });
+                container.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - touchStartPos.x);
+                    const deltaY = Math.abs(touch.clientY - touchStartPos.y);
+                    if (deltaX > 5 || deltaY > 5) {
+                        isDragging = true;
+                        clearTimeout(longPressTimer);
+                    }
+                }, { passive: true });
+                container.addEventListener('touchend', (e) => {
+                    document.body.classList.remove('grabbing');
+                    clearTimeout(longPressTimer);
+                    if (!isDragging) handleInteraction(e);
+                });
+            } else {
+                // --- DESKTOP EVENT LISTENERS ---
+                container.addEventListener('click', handleInteraction);
+                window.addEventListener('mousemove', (event) => {
+                    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                });
+                window.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('#file-viewer, #view-toggle')) return;
+                    document.body.classList.add('grabbing');
+                    longPressTimer = setTimeout(toggleTheme, 600);
+                });
+                window.addEventListener('mouseup', () => {
+                    document.body.classList.remove('grabbing');
+                    clearTimeout(longPressTimer);
+                });
+                window.addEventListener('mousemove', e => {
+                    if (e.buttons > 0) clearTimeout(longPressTimer);
+                });
+            }
+
+            // --- COMMON UI LISTENERS ---
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                css2dRenderer.setSize(window.innerWidth, window.innerHeight);
+                updateInstructions();
+            });
+            document.getElementById('view-toggle').addEventListener('click', () => { const container3D = document.getElementById('container'); const view2D = document.getElementById('2d-view'); const is3D = container3D.style.display !== 'none'; container3D.style.display = is3D ? 'none' : 'block'; view2D.classList.toggle('hidden', !is3D); document.getElementById('view-toggle').textContent = is3D ? '2D View' : '3D View'; });
+            document.getElementById('close-viewer').addEventListener('click', () => { document.getElementById('file-viewer').classList.add('hidden'); document.getElementById('file-content').src = 'about:blank'; });
+            document.getElementById('open-new-tab').addEventListener('click', (e) => { const url = e.currentTarget.dataset.url; if (url) window.open(url, '_blank'); });
+        }
+
+        init();
+    </script> 
+</body>
+</html>

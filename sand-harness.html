@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>ICARO HARNESS — Unified Production Bus</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a0a0a'/><circle cx='16' cy='16' r='8' fill='none' stroke='%2322c55e' stroke-width='2.5'/><circle cx='16' cy='16' r='2.5' fill='%23ef4444'/></svg>" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; height: 100dvh; overflow: hidden; background: #0a0a0a; font-family: ui-monospace, monospace; }
+        
+        #harness {
+            display: flex;
+            flex-direction: column;
+            width: 100%; height: 100%; height: 100dvh;
+        }
+        
+        #engine-frame {
+            flex: 0 0 55%; width: 100%; border: none;
+        }
+        #tunnel-frame {
+            flex: 1; width: 100%; border: none;
+        }
+        
+        /* Thin bus strip — minimal gap between instruments */
+        #bus-strip {
+            height: 18px; background: #0a0a0a;
+            font-size: 9px; font-weight: 900; text-transform: uppercase;
+            display: flex; align-items: center;
+            gap: 10px; padding: 0 8px;
+            letter-spacing: 0.05em; flex-shrink: 0;
+            cursor: row-resize; position: relative; z-index: 10;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            user-select: none;
+        }
+        #bus-strip span { color: #555; }
+        
+        /* Pulse dot for bus activity */
+        .bus-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #333; flex-shrink: 0;
+            transition: background 0.08s;
+        }
+        .bus-dot.live { background: #22c55e; }
+        .bus-dot.sync {
+            background: #ef4444;
+        }
+        @keyframes busPulse {
+            0% { transform: scale(1.8); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes busPulse2 {
+            0% { transform: scale(1.8); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Sync bar — shows frame transfer progress */
+        #sync-bar {
+            position: absolute; left: 0; bottom: 0;
+            height: 2px; background: #22c55e;
+            width: 0%; transition: width 0.15s ease-out;
+            opacity: 0.8;
+        }
+        
+        .bus-btn {
+            background: none; border: 1px solid #333; color: #888;
+            padding: 0 6px; height: 14px; font: inherit;
+            font-size: 8px; font-weight: 900; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            transition: color 0.1s, border-color 0.1s;
+        }
+        .bus-btn:hover { color: #fff; border-color: #666; }
+        .bus-btn:active { color: #22c55e; border-color: #22c55e; }
+        
+        .bus-spacer { flex: 1; }
+        
+        /* Error state */
+        .bus-error { color: #ef4444 !important; }
+        
+        /* Clip info in strip */
+        #bus-clip {
+            color: #888; transition: color 0.3s;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            max-width: 120px;
+        }
+
+        /* Mobile toggle button */
+        .bus-toggle {
+            display: none; /* Hidden on desktop */
+            background: #222; border: 1px solid #444; color: #ccc;
+            padding: 0 10px; height: 18px; font: inherit;
+            font-size: 9px; font-weight: 900; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            transition: all 0.1s;
+        }
+        .bus-toggle:active { color: #22c55e; border-color: #22c55e; }
+        .bus-toggle.active { background: #22c55e; color: #000; border-color: #22c55e; }
+
+        /* ── MOBILE: both instruments visible in vertical split ── */
+        @media (max-width: 767px) {
+            #harness {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100dvh;
+                overflow: hidden;
+            }
+
+            /* Engine: top half — explicit height, not flex */
+            #engine-frame {
+                flex: none !important;
+                width: 100%;
+                height: calc(50dvh - 14px); /* half viewport minus half bus strip */
+                border: none;
+            }
+
+            /* Bus strip between the two */
+            #bus-strip {
+                flex-shrink: 0;
+                height: 28px;
+                font-size: 10px;
+                cursor: default;
+            }
+
+            /* Tunnel: bottom half — explicit height */
+            #tunnel-frame {
+                flex: none !important;
+                width: 100%;
+                height: calc(50dvh - 14px); /* half viewport minus half bus strip */
+                border: none;
+            }
+
+            /* Toggle: maximize one instrument to full height */
+            #harness.max-engine #engine-frame { height: calc(100dvh - 28px); }
+            #harness.max-engine #tunnel-frame { height: 0; overflow: hidden; }
+            #harness.max-tunnel #engine-frame { height: 0; overflow: hidden; }
+            #harness.max-tunnel #tunnel-frame { height: calc(100dvh - 28px); }
+
+            .bus-toggle { display: inline-block; }
+            .bus-btn { height: 18px; font-size: 9px; padding: 0 8px; }
+
+            /* Hide non-essential bus info on mobile */
+            #bus-clip { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="harness">
+        <iframe id="engine-frame" src="sand-plate.html"></iframe>
+        <div id="bus-strip">
+            <div class="bus-dot" id="bus-dot"></div>
+            <span id="bus-msg">IDLE</span>
+            <span id="bus-clip"></span>
+            <span id="bus-frames">0 FR</span>
+            <span id="bus-cursor">CUR 0</span>
+            <div class="bus-spacer"></div>
+            <button class="bus-btn" id="bus-view">BARREL</button>
+            <button class="bus-toggle" id="bus-toggle">SPLIT</button>
+            <div id="sync-bar"></div>
+        </div>
+        <iframe id="tunnel-frame" loading="lazy"></iframe>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        // ── ELEMENT REFS ──
+        const engine = document.getElementById('engine-frame');
+        const tunnel = document.getElementById('tunnel-frame');
+        const strip = document.getElementById('bus-strip');
+        const busMsg = document.getElementById('bus-msg');
+        const busFrames = document.getElementById('bus-frames');
+        const busCursor = document.getElementById('bus-cursor');
+        const busClip = document.getElementById('bus-clip');
+        const busDot = document.getElementById('bus-dot');
+        const busViewBtn = document.getElementById('bus-view');
+        const syncBar = document.getElementById('sync-bar');
+
+        // ── PERFORMANCE LOGGING ──
+        const _t0 = performance.now();
+        console.log('[HARNESS] Boot at', _t0.toFixed(0) + 'ms');
+
+        // Defer tunnel load — engine loads first for better LCP
+        engine.onload = () => {
+            const loadTime = (performance.now() - _t0).toFixed(0);
+            console.log('[HARNESS] Engine loaded in ' + loadTime + 'ms — now loading tunnel');
+            engineReady = false;
+            tunnel.src = 'c-bus.html';
+        };
+
+        // ── STATE ──
+        const VIEWS = ['BARREL', 'INSIDE', 'OUTSIDE', 'SIDE', 'BENCH'];
+        let currentView = 0;
+        let msgCount = 0;
+        let lastEngineMsg = 0;
+        let lastTunnelMsg = 0;
+        let engineReady = false;
+        let tunnelReady = false;
+        let framesSynced = 0;
+        let syncPulseTimer = null;
+
+        // ── BUS ACTIVITY ANIMATION (no forced reflow) ──
+        let _pulseFrame = 0;
+        function pulseSync(direction, type) {
+            // Animation restart via name swap — no forced reflow
+            _pulseFrame++;
+            busDot.style.animationName = (_pulseFrame % 2) ? 'busPulse' : 'busPulse2';
+            busDot.classList.add('live');
+
+            // Sync bar animation for FRAMES_SYNC
+            if (type === 'FRAMES_SYNC') {
+                syncBar.style.width = '100%';
+                syncBar.style.background = '#22c55e';
+                clearTimeout(syncPulseTimer);
+                syncPulseTimer = setTimeout(() => {
+                    syncBar.style.width = '0%';
+                }, 600);
+            } else if (type === 'CURSOR_MOVE') {
+                syncBar.style.width = '30%';
+                syncBar.style.background = '#3b82f6';
+                clearTimeout(syncPulseTimer);
+                syncPulseTimer = setTimeout(() => {
+                    syncBar.style.width = '0%';
+                }, 200);
+            }
+        }
+
+        // ── VIEW CYCLE ──
+        busViewBtn.onclick = () => {
+            currentView = (currentView + 1) % VIEWS.length;
+            busViewBtn.textContent = VIEWS[currentView];
+            safeSend(tunnel, { type: 'VIEW_CYCLE', view: currentView });
+        };
+
+        // ── MOBILE TOGGLE (3 modes: SPLIT → MAX ENGINE → MAX TUNNEL) ──
+        const harness = document.getElementById('harness');
+        const busToggle = document.getElementById('bus-toggle');
+        const MODES = ['split', 'max-engine', 'max-tunnel'];
+        let mobileMode = 0; // 0=split, 1=max-engine, 2=max-tunnel
+
+        busToggle.onclick = () => {
+            mobileMode = (mobileMode + 1) % MODES.length;
+            harness.classList.remove('max-engine', 'max-tunnel');
+            if (MODES[mobileMode] !== 'split') {
+                harness.classList.add(MODES[mobileMode]);
+            }
+            const labels = ['SPLIT', 'ENGINE ▣', 'TUNNEL ▣'];
+            busToggle.textContent = labels[mobileMode];
+            busToggle.classList.toggle('active', mobileMode !== 0);
+        };
+
+        // ── SAFE SEND — wraps postMessage with error boundary ──
+        function safeSend(iframe, data) {
+            try {
+                if (iframe.contentWindow) {
+                    iframe.contentWindow.postMessage(data, '*');
+                    return true;
+                }
+            } catch (e) {
+                console.warn('[HARNESS] Send failed:', e.message);
+                busMsg.textContent = 'SEND ERR';
+                busMsg.classList.add('bus-error');
+                setTimeout(() => busMsg.classList.remove('bus-error'), 2000);
+            }
+            return false;
+        }
+
+        // ── rAF MESSAGE DEDUPLICATION ──
+        // Pool CURSOR_MOVE and GOTO_FRAME — only forward latest per render frame
+        let _pendingCursorToTunnel = null;
+        let _pendingGotoToEngine = null;
+        let _rafPooled = false;
+
+        function _flushPooledMessages() {
+            _rafPooled = false;
+            if (_pendingCursorToTunnel) {
+                safeSend(tunnel, _pendingCursorToTunnel);
+                _pendingCursorToTunnel = null;
+            }
+            if (_pendingGotoToEngine) {
+                safeSend(engine, _pendingGotoToEngine);
+                _pendingGotoToEngine = null;
+            }
+        }
+
+        function poolMessage(target, data) {
+            if (target === 'tunnel' && data.type === 'CURSOR_MOVE') {
+                _pendingCursorToTunnel = data;
+            } else if (target === 'engine' && data.type === 'GOTO_FRAME') {
+                _pendingGotoToEngine = data;
+            } else {
+                // Non-poolable: send immediately
+                safeSend(target === 'tunnel' ? tunnel : engine, data);
+                return;
+            }
+            if (!_rafPooled) {
+                _rafPooled = true;
+                requestAnimationFrame(_flushPooledMessages);
+            }
+        }
+
+        // ── MESSAGE ROUTER (Hardened — Error Elimination) ──
+        // STRUCTURAL GUARANTEES:
+        // 1. Only messages from known sources are processed
+        // 2. Messages must be {type: string} — malformed payloads rejected
+        // 3. Router NEVER forwards back to origin — echo impossible
+        // 4. _origin tags preserved for downstream validation
+        const VALID_TYPES = new Set([
+            'FRAMES_SYNC', 'FRAME_PATCH', 'CURSOR_MOVE', 'GOTO_FRAME',
+            'PLAY_SYNC', 'CLIP_SELECT', 'REQUEST_SYNC', 'RIP_PROGRESS',
+            'VIEW_CYCLE'
+        ]);
+
+        window.addEventListener('message', e => {
+            const d = e.data;
+
+            // ── GATE 1: Shape validation (rejects malformed messages) ──
+            if (!d || typeof d !== 'object' || typeof d.type !== 'string') return;
+
+            // ── GATE 2: Known type validation ──
+            if (!VALID_TYPES.has(d.type)) return;
+
+            msgCount++;
+
+            // ── GATE 3: Source identification (rejects unknown sources) ──
+            const fromEngine = e.source === engine.contentWindow;
+            const fromTunnel = e.source === tunnel.contentWindow;
+            if (!fromEngine && !fromTunnel) return; // Unknown source — drop
+
+            if (fromEngine) {
+                // ENGINE → TUNNEL (never back to engine)
+                lastEngineMsg = Date.now();
+                engineReady = true;
+
+                // Pool high-frequency cursor messages, send others immediately
+                if (d.type === 'CURSOR_MOVE') {
+                    poolMessage('tunnel', d);
+                } else {
+                    safeSend(tunnel, d);
+                }
+                pulseSync('down', d.type);
+
+                // Update status
+                if (d.type === 'FRAMES_SYNC') {
+                    framesSynced = d.total;
+                    busFrames.textContent = d.total + ' FR';
+                    busMsg.textContent = 'SYNC ' + d.total;
+                }
+                if (d.type === 'CURSOR_MOVE' || d.type === 'FRAMES_SYNC') {
+                    busCursor.textContent = 'CUR ' + (d.cursor + 1);
+                }
+                if (d.type === 'CURSOR_MOVE') {
+                    busMsg.textContent = 'CUR ' + (d.cursor + 1);
+                }
+                if (d.type === 'FRAME_PATCH') {
+                    busMsg.textContent = 'PATCH F' + (d.index + 1);
+                }
+                // Route loading progress to tunnel + show in bus strip
+                if (d.type === 'RIP_PROGRESS') {
+                    if (d.phase === 'START') {
+                        busMsg.textContent = 'RIP 0/' + d.total;
+                        syncBar.style.background = '#ef4444';
+                        syncBar.style.width = '0%';
+                        syncBar.style.transition = 'width 0.3s';
+                    } else if (d.phase === 'CHUNK') {
+                        const pct = Math.round((d.done / d.total) * 100);
+                        busMsg.textContent = 'RIP ' + d.done + '/' + d.total;
+                        busFrames.textContent = d.done + ' FR';
+                        syncBar.style.width = pct + '%';
+                    } else if (d.phase === 'DONE') {
+                        busMsg.textContent = 'RIP DONE';
+                        busFrames.textContent = d.total + ' FR';
+                        syncBar.style.width = '100%';
+                        syncBar.style.background = '#22c55e';
+                        setTimeout(() => { syncBar.style.width = '0%'; }, 1500);
+                    }
+                }
+
+            } else if (fromTunnel) {
+                // TUNNEL → ENGINE (never back to tunnel)
+                lastTunnelMsg = Date.now();
+                tunnelReady = true;
+
+                // Pool high-frequency goto messages
+                if (d.type === 'GOTO_FRAME') {
+                    poolMessage('engine', d);
+                } else {
+                    safeSend(engine, d);
+                }
+                pulseSync('up', d.type);
+
+                if (d.type === 'GOTO_FRAME') {
+                    busCursor.textContent = 'CUR ' + (d.cursor + 1);
+                    busMsg.textContent = 'GOTO ' + (d.cursor + 1);
+                }
+                if (d.type === 'CLIP_SELECT') {
+                    busClip.textContent = d.name || '';
+                    busClip.style.color = '#fff';
+                    setTimeout(() => { busClip.style.color = ''; }, 800);
+                }
+            }
+        });
+
+        // ── DIVIDER RESIZE (strip itself is the drag handle) ──
+        let dragging = false, startY = 0, startFlex = 55;
+
+        strip.addEventListener('pointerdown', e => {
+            dragging = true; startY = e.clientY;
+            const flex = engine.style.flex;
+            startFlex = flex ? parseFloat(flex.split(' ')[2]) || 55 : 55;
+            strip.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+        window.addEventListener('pointermove', e => {
+            if (!dragging) return;
+            const dy = e.clientY - startY;
+            const pct = Math.max(20, Math.min(80, startFlex + (dy / window.innerHeight) * 100));
+            engine.style.flex = `0 0 ${pct}%`;
+        });
+        window.addEventListener('pointerup', () => {
+            dragging = false;
+            strip.style.cursor = 'row-resize';
+        });
+
+        // ── FAILURE RESILIENCE ──
+
+        // 1. Heartbeat — detect stale connections
+        setInterval(() => {
+            const now = Date.now();
+            const engineStale = engineReady && (now - lastEngineMsg > 10000);
+            const tunnelStale = tunnelReady && (now - lastTunnelMsg > 15000);
+
+            if (engineStale && tunnelStale) {
+                busDot.classList.remove('live');
+                busMsg.textContent = 'STALE';
+            } else if (!engineReady && !tunnelReady && msgCount === 0) {
+                busMsg.textContent = 'WAIT';
+            }
+        }, 3000);
+
+        // 2. Iframe error handler — detect load failures
+        engine.onerror = () => {
+            busMsg.textContent = 'ENGINE ERR';
+            busMsg.classList.add('bus-error');
+        };
+        tunnel.onerror = () => {
+            busMsg.textContent = 'TUNNEL ERR';
+            busMsg.classList.add('bus-error');
+        };
+
+        // 3. Ping on load — request initial frame sync after iframes boot
+        tunnel.onload = () => {
+            const totalBoot = (performance.now() - _t0).toFixed(0);
+            console.log('[HARNESS] Tunnel loaded — total boot: ' + totalBoot + 'ms');
+            busMsg.textContent = 'BOOT ' + totalBoot + 'ms';
+            tunnelReady = false;
+            setTimeout(() => {
+                safeSend(engine, { type: 'REQUEST_SYNC' });
+            }, 500);
+        };
+        // engine.onload handled above (deferred tunnel loading)
+
+        // 4. Window visibility — re-sync when tab comes back into focus
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && framesSynced > 0) {
+                safeSend(engine, { type: 'REQUEST_SYNC' });
+            }
+        });
+
+        // 5. Global error boundary
+        window.addEventListener('error', e => {
+            console.error('[HARNESS] Uncaught:', e.message);
+        });
+
+    })();
+    </script>
+</body>
+</html>
