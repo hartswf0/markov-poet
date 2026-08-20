@@ -25,10 +25,10 @@
   body { background: var(--bg); color: #eeeeee; font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; padding: 8px; gap: 8px; user-select: none; }
 
   /* Custom Sleek Scrollbars */
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #0c0c0c; }
-  ::-webkit-scrollbar-thumb { background: #2a2a2a; }
-  ::-webkit-scrollbar-thumb:hover { background: #555555; }
+  ::-webkit-scrollbar-thumb { background: #333333; }
+  ::-webkit-scrollbar-thumb:hover { background: #666666; }
 
   /* Header */
   header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 6px; flex-shrink: 0; }
@@ -46,13 +46,14 @@
   .tab-btn { flex: 1; text-align: center; }
   .tab-btn.active-tab { background: #fff; color: #000; }
 
-  /* Main Two-Column Viewport */
-  main { flex: 1; display: grid; grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.25fr); gap: 8px; min-height: 0; overflow: hidden; }
+  /* Main Workspace: 3 Columns (14 Bins, Large Focused Preview Deck, 135 Thumbnails Pool) */
+  main { flex: 1; display: grid; grid-template-columns: minmax(320px, 1fr) minmax(340px, 1fr) minmax(380px, 1.2fr); gap: 8px; min-height: 0; overflow: hidden; }
+
+  /* Pane Bases */
+  .pane-box { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
+  .pane-head { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
 
   /* Left Pane: 14 Poem Bins */
-  #binsCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
-  .pane-head { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-  
   #binsList { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
   .bin-card { background: #0e0e0e; border: 1px solid #222; display: flex; flex-direction: column; gap: 4px; padding: 6px; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
   .bin-card:hover { border-color: #444; background: #121212; }
@@ -61,14 +62,31 @@
   .bin-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 10.5px; }
   .bin-head .runtime-tag { color: var(--green); font-size: 9.5px; }
   
-  .bin-track { display: flex; gap: 4px; overflow-x: auto; min-height: 54px; padding: 2px 0; align-items: center; }
-  .bin-chip { width: 85px; height: 50px; background: #000; border: 1px solid #333; position: relative; flex-shrink: 0; cursor: pointer; overflow: hidden; }
-  .bin-chip:hover { border-color: var(--red); }
+  .bin-track { display: flex; gap: 6px; overflow-x: auto; min-height: 64px; padding: 2px 0; align-items: center; }
+  .bin-chip { width: 100px; height: 58px; background: #000; border: 1px solid #333; position: relative; flex-shrink: 0; cursor: pointer; overflow: hidden; }
+  .bin-chip:hover { border-color: var(--blue); }
+  .bin-chip.selected-chip { border: 2px solid #fff; }
   .bin-chip img { width: 100%; height: 100%; object-fit: cover; }
-  .bin-chip .chip-time { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; }
+  .bin-chip .chip-time { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; color: var(--green); }
   .bin-chip .chip-remove { position: absolute; top: 2px; right: 2px; background: var(--red); color: #fff; font-size: 9px; width: 14px; height: 14px; display: none; align-items: center; justify-content: center; font-weight: 900; }
   .bin-chip:hover .chip-remove { display: flex; }
-  .empty-bin-hint { font-size: 9px; color: #444; text-transform: uppercase; padding: 6px; border: 1px dashed #222; width: 100%; text-align: center; }
+  .empty-bin-hint { font-size: 9px; color: #444; text-transform: uppercase; padding: 8px; border: 1px dashed #222; width: 100%; text-align: center; }
+
+  /* Center Pane: Focused Large Inspection Deck */
+  #inspectorCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow-y: auto; padding: 10px; gap: 10px; }
+  .big-preview-frame { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid #333; position: relative; overflow: hidden; }
+  .big-preview-frame img, .big-preview-frame video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .big-preview-badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.85); border: 1px solid #444; padding: 3px 6px; font-size: 9px; font-weight: 800; }
+
+  .big-meta-card { background: #111; border: 1px solid #222; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+  .big-meta-card b { font-size: 12px; color: #fff; }
+  .big-meta-card p { font-size: 10px; color: #aaa; line-height: 1.3; }
+
+  .action-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .deck-btn { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; }
+
+  .contact-strip-box { border: 1px solid #333; background: #000; }
+  .contact-strip-box img { width: 100%; display: block; object-fit: contain; }
 
   /* Right Pane: 135 Asset Pool */
   #poolCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
@@ -84,18 +102,12 @@
   .color-chip.active { background: #fff; color: #000; border-color: #fff; }
   .dot { width: 6px; height: 6px; border-radius: 50% !important; display: inline-block; }
 
-  /* Zoom Sizes */
-  .zoom-toggle { display: flex; gap: 2px; }
-  .zoom-btn { padding: 2px 6px; font-size: 8.5px; height: 22px; }
-
   /* Thumbnail Grid */
-  #thumbsGrid { flex: 1; overflow-y: auto; display: grid; gap: 6px; padding: 6px; align-content: start; }
-  #thumbsGrid.zoom-s { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); }
-  #thumbsGrid.zoom-m { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-  #thumbsGrid.zoom-l { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  #thumbsGrid { flex: 1; overflow-y: auto; display: grid; gap: 6px; padding: 6px; align-content: start; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 
   .thumb-tile { background: #000; border: 1px solid #222; aspect-ratio: 16/9; position: relative; cursor: pointer; overflow: hidden; transition: transform 0.1s, border-color 0.1s; will-change: transform; }
-  .thumb-tile:hover { border-color: var(--blue); transform: scale(1.03); z-index: 10; }
+  .thumb-tile:hover { border-color: var(--blue); transform: scale(1.04); z-index: 10; }
+  .thumb-tile.active-selected-tile { border: 2px solid #fff; }
   .thumb-tile img { width: 100%; height: 100%; object-fit: cover; }
   .thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%); opacity: 0.9; }
   
@@ -103,27 +115,13 @@
   .color-indicator { width: 5px; height: 5px; border-radius: 50% !important; }
   .tile-time { position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; color: var(--green); }
   .tile-id { position: absolute; bottom: 3px; left: 3px; font-size: 8px; color: #ccc; font-weight: 700; }
-  .tile-zoom-btn { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.7); color: #fff; font-size: 8px; padding: 1px 3px; display: none; }
-  .thumb-tile:hover .tile-zoom-btn { display: block; }
-
-  /* Lightbox / Preview Modal */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 16px; }
-  .modal-overlay.open { display: flex; }
-  .modal-card { width: 100%; max-width: 800px; max-height: 90vh; background: #111; border: 2px solid #444; display: flex; flex-direction: column; overflow: hidden; }
-  .modal-header { background: #000; padding: 8px 12px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; font-weight: 900; }
-  .modal-body { padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-  
-  .video-holder { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid #333; }
-  video { width: 100%; height: 100%; object-fit: contain; }
-  .contact-holder img { width: 100%; display: block; border: 1px solid #333; }
 
   /* Responsive Rules for Mobile */
-  @media (max-width: 768px) {
-    body { padding: 4px; gap: 4px; }
-    .mobile-tabs { display: flex; }
+  @media (max-width: 900px) {
     main { display: flex; flex-direction: column; }
-    #binsCol, #poolCol { width: 100%; height: 100%; }
-    #binsCol.hide-mobile, #poolCol.hide-mobile { display: none; }
+    .mobile-tabs { display: flex; }
+    #binsCol, #inspectorCol, #poolCol { width: 100%; height: 100%; }
+    .hide-mobile-panel { display: none !important; }
     .header-actions button { font-size: 9px; padding: 3px 6px; }
   }
 </style>
@@ -147,38 +145,60 @@
 
 <!-- Mobile Tab Bar -->
 <div class="mobile-tabs">
-  <button class="tab-btn active-tab" id="tabBinsBtn" onclick="switchMobileTab('bins')">14 POEM BINS (<span id="binCountBadge">0s</span>)</button>
+  <button class="tab-btn active-tab" id="tabBinsBtn" onclick="switchMobileTab('bins')">14 BINS (<span id="binCountBadge">0s</span>)</button>
+  <button class="tab-btn" id="tabInspectBtn" onclick="switchMobileTab('inspect')">LARGE PREVIEW</button>
   <button class="tab-btn" id="tabPoolBtn" onclick="switchMobileTab('pool')">135 ASSET POOL</button>
 </div>
 
 <main>
   <!-- Left Column: 14 Poem Bins -->
-  <section id="binsCol">
+  <section class="pane-box" id="binsCol">
     <div class="pane-head">
       <span>14 SEQUENTIAL POEM BINS</span>
-      <span style="font-size:9px; color:var(--dim);">CLICK BIN TO SELECT · CLICK CHIP TO REMOVE</span>
+      <span style="font-size:9px; color:var(--dim);">CLICK TO SELECT BIN OR CHIP</span>
     </div>
     <div id="binsList"></div>
   </section>
 
+  <!-- Center Column: Large Focused Inspection Deck -->
+  <section class="pane-box" id="inspectorCol">
+    <div class="pane-head">
+      <span>LARGE FOCUSED PREVIEW & INSPECTOR</span>
+      <span id="inspectModeTag" style="font-size:9px; color:var(--blue);">READY</span>
+    </div>
+    <div class="big-preview-frame">
+      <video id="bigVideo" controls playsinline></video>
+      <div class="big-preview-badge" id="bigBadge">NO CLIP SELECTED</div>
+    </div>
+
+    <div class="big-meta-card">
+      <b id="bigTitle">SELECT ANY THUMBNAIL TO ENLARGE</b>
+      <p id="bigDesc">Click any thumbnail in the 14 Bins or the 135 Asset Pool on the right to blow it up into high-resolution view.</p>
+    </div>
+
+    <div class="action-deck">
+      <button class="btn-accent deck-btn" onclick="plugFocusedClipToActiveBin()">+ PLUG INTO ACTIVE POEM</button>
+      <button class="deck-btn" onclick="toggleVideoPlay()">▶ PLAY / PAUSE VIDEO</button>
+    </div>
+
+    <div class="contact-strip-box">
+      <div style="font-size:8.5px; font-weight:800; color:#888; padding:4px 6px; background:#000;">4X2 TEMPORAL CONTACT SHEET</div>
+      <img id="bigContactImg" src="" alt="Contact Sheet" />
+    </div>
+  </section>
+
   <!-- Right Column: 135 Asset Pool -->
-  <section id="poolCol">
+  <section class="pane-box" id="poolCol">
     <div class="pool-toolbar">
       <div class="filter-row">
-        <input type="text" class="search-box" id="searchInput" placeholder="Search 135 clips (e.g. bedroom, subway, beach, crow, tv, leap)..." oninput="renderPool()" />
+        <input type="text" class="search-box" id="searchInput" placeholder="Search 135 clips..." oninput="renderPool()" />
         
         <select id="sortSelect" onchange="renderPool()">
-          <option value="default">Sort: Default Order</option>
+          <option value="default">Sort: Default</option>
           <option value="dur-desc">Duration (High ➔ Low)</option>
           <option value="dur-asc">Duration (Low ➔ High)</option>
           <option value="color">Color Regime</option>
         </select>
-
-        <div class="zoom-toggle">
-          <button class="zoom-btn" onclick="setZoom('zoom-s')">S</button>
-          <button class="zoom-btn active" onclick="setZoom('zoom-m')">M</button>
-          <button class="zoom-btn" onclick="setZoom('zoom-l')">L</button>
-        </div>
       </div>
 
       <div class="color-bar" id="colorBar">
@@ -194,41 +214,17 @@
       </div>
     </div>
 
-    <div id="thumbsGrid" class="zoom-m"></div>
+    <div id="thumbsGrid"></div>
   </section>
 </main>
-
-<!-- Lightbox / Preview Modal -->
-<div class="modal-overlay" id="previewModal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <span id="modalClipTitle">CLIP PREVIEW</span>
-      <button onclick="closePreviewModal()">✕ CLOSE</button>
-    </div>
-    <div class="modal-body">
-      <div class="video-holder">
-        <video id="modalVideo" controls playsinline></video>
-      </div>
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalClipMeta" style="font-size:11px; font-weight:800;">-</span>
-        <button class="btn-accent" onclick="plugModalClipToActiveBin()">+ PLUG INTO ACTIVE POEM</button>
-      </div>
-      <div class="contact-holder">
-        <div style="font-size:9px; font-weight:800; color:#888; margin-bottom:4px;">4X2 TEMPORAL CONTACT SHEET</div>
-        <img id="modalContactImg" src="" alt="Contact Sheet" />
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
 let POEMS = [];
 let ALL_RECORDS = [];
 let BINS = [];
 let activeBinIdx = 0;
+let focusedRecord = null;
 let activeColorFilter = 'ALL';
-let currentZoom = 'zoom-m';
-let modalTargetRecord = null;
 
 function getColorRegime(cat) {
   const c = (cat || "").toUpperCase();
@@ -253,7 +249,6 @@ async function init() {
   ALL_RECORDS = (await rRes.json()).records;
   const dcData = await dcRes.json();
 
-  // Color tag each record
   ALL_RECORDS.forEach(r => {
     r.colorRegime = getColorRegime(r.visual_category);
   });
@@ -277,6 +272,11 @@ async function init() {
   renderBins();
   renderPool();
   selectBin(0);
+
+  // Default focus to first clip
+  if (ALL_RECORDS.length > 0) {
+    focusClip(ALL_RECORDS[0]);
+  }
 }
 
 function selectBin(idx) {
@@ -284,6 +284,40 @@ function selectBin(idx) {
   activeBinIdx = idx;
   document.querySelectorAll(".bin-card").forEach((el, i) => el.classList.toggle("active-bin", i === idx));
   document.getElementById("activeBinName").textContent = `${BINS[idx].num} ${BINS[idx].title}`;
+}
+
+function focusClip(record) {
+  if (!record) return;
+  focusedRecord = record;
+
+  document.querySelectorAll(".thumb-tile").forEach(t => {
+    t.classList.toggle("active-selected-tile", t.dataset.id === record.id);
+  });
+  document.querySelectorAll(".bin-chip").forEach(c => {
+    c.classList.toggle("selected-chip", c.dataset.id === record.id);
+  });
+
+  document.getElementById("bigBadge").textContent = `${record.visual_category} · ${record.duration_seconds || 5}s`;
+  document.getElementById("bigTitle").textContent = `${record.visual_category} (${record.id.substring(0,8)})`;
+  document.getElementById("bigDesc").textContent = `${record.location_L || 'Scene'} | ${record.shift_S || ''} ➔ ${record.solution_U || ''} | ${record.colorRegime.label} PALETTE`;
+
+  const video = document.getElementById("bigVideo");
+  video.src = `MARKOV_POET/videos/${record.filename_stem}.mp4`;
+  document.getElementById("bigContactImg").src = `contact_sheets/${record.filename_stem}_contact.jpg`;
+  document.getElementById("inspectModeTag").textContent = `FOCUS: ${record.id.substring(0,8)}`;
+}
+
+function toggleVideoPlay() {
+  const video = document.getElementById("bigVideo");
+  if (video.paused) video.play().catch(()=>{});
+  else video.pause();
+}
+
+function plugFocusedClipToActiveBin() {
+  if (focusedRecord) {
+    BINS[activeBinIdx].clips.push(focusedRecord);
+    renderBins();
+  }
 }
 
 function renderBins() {
@@ -305,10 +339,10 @@ function renderBins() {
       chipsHtml = `<div class="empty-bin-hint">+ CLICK ANY THUMBNAIL ON RIGHT TO PLUG HERE</div>`;
     } else {
       chipsHtml = b.clips.map((c, cIdx) => `
-        <div class="bin-chip" onclick="event.stopPropagation(); removeClipFromBin(${bIdx}, ${cIdx})" title="${c.visual_category} (${c.id.substring(0,8)})">
+        <div class="bin-chip ${focusedRecord && focusedRecord.id === c.id ? 'selected-chip' : ''}" data-id="${c.id}" onclick="event.stopPropagation(); focusClipFromBin(${bIdx}, ${cIdx})" title="${c.visual_category} (${c.id.substring(0,8)})">
           <img src="contact_sheets/${c.filename_stem}_contact.jpg" loading="lazy" />
           <span class="chip-time">${c.duration_seconds || 5}s</span>
-          <div class="chip-remove">✕</div>
+          <div class="chip-remove" onclick="event.stopPropagation(); removeClipFromBin(${bIdx}, ${cIdx})">✕</div>
         </div>
       `).join('');
     }
@@ -331,6 +365,12 @@ function renderBins() {
   document.getElementById("binCountBadge").textContent = timeStr;
 }
 
+function focusClipFromBin(bIdx, cIdx) {
+  selectBin(bIdx);
+  const c = BINS[bIdx].clips[cIdx];
+  focusClip(c);
+}
+
 function renderPool() {
   const grid = document.getElementById("thumbsGrid");
   grid.innerHTML = "";
@@ -346,7 +386,6 @@ function renderPool() {
     return true;
   });
 
-  // Sorting
   if (sortMode === 'dur-desc') {
     filtered.sort((a, b) => parseFloat(b.duration_seconds || 5) - parseFloat(a.duration_seconds || 5));
   } else if (sortMode === 'dur-asc') {
@@ -357,12 +396,18 @@ function renderPool() {
 
   filtered.forEach(r => {
     const tile = document.createElement("div");
-    tile.className = "thumb-tile";
+    tile.className = "thumb-tile" + (focusedRecord && focusedRecord.id === r.id ? " active-selected-tile" : "");
+    tile.dataset.id = r.id;
     tile.style.borderLeft = `3px solid ${r.colorRegime.hex}`;
-    tile.title = `Click to plug into Poem ${BINS[activeBinIdx].num}`;
+    tile.title = `Click to inspect in Large Preview (Double-click to plug into Poem ${BINS[activeBinIdx].num})`;
     
-    // Quick click = plug directly into active bin
-    tile.onclick = (e) => {
+    // Single click = Focus in large inspector
+    tile.onclick = () => {
+      focusClip(r);
+    };
+
+    // Double click = Plug into active bin
+    tile.ondblclick = () => {
       plugClipIntoActiveBin(r);
     };
 
@@ -374,7 +419,6 @@ function renderPool() {
       </div>
       <span class="tile-id">${r.id.substring(0,8)}</span>
       <span class="tile-time">${r.duration_seconds || 5}s</span>
-      <button class="tile-zoom-btn" onclick="event.stopPropagation(); openPreviewModal('${r.id}')">🔍</button>
     `;
 
     grid.appendChild(tile);
@@ -399,61 +443,32 @@ function setColorFilter(key) {
   renderPool();
 }
 
-function setZoom(zoomClass) {
-  currentZoom = zoomClass;
-  const grid = document.getElementById("thumbsGrid");
-  grid.className = zoomClass;
-  document.querySelectorAll(".zoom-btn").forEach(b => {
-    b.classList.toggle("active", b.textContent.toLowerCase() === zoomClass.split('-')[1]);
-  });
-}
-
-// Lightbox Quickview
-function openPreviewModal(clipId) {
-  const r = ALL_RECORDS.find(x => x.id === clipId);
-  if (!r) return;
-  modalTargetRecord = r;
-
-  document.getElementById("modalClipTitle").textContent = `${r.visual_category} (${r.id.substring(0,8)})`;
-  document.getElementById("modalClipMeta").textContent = `${r.duration_seconds || 5}s · ${r.colorRegime.label} PALETTE · ${(r.has_audio_bool || r.has_audio) ? "STEREO AUDIO" : "SILENT"}`;
-  
-  const video = document.getElementById("modalVideo");
-  video.src = `MARKOV_POET/videos/${r.filename_stem}.mp4`;
-  document.getElementById("modalContactImg").src = `contact_sheets/${r.filename_stem}_contact.jpg`;
-
-  document.getElementById("previewModal").classList.add("open");
-  video.play().catch(()=>{});
-}
-
-function closePreviewModal() {
-  const video = document.getElementById("modalVideo");
-  video.pause();
-  document.getElementById("previewModal").classList.remove("open");
-}
-
-function plugModalClipToActiveBin() {
-  if (modalTargetRecord) {
-    plugClipIntoActiveBin(modalTargetRecord);
-    closePreviewModal();
-  }
-}
-
 // Mobile Tab Toggle
 function switchMobileTab(tab) {
   const binsCol = document.getElementById("binsCol");
+  const inspectCol = document.getElementById("inspectorCol");
   const poolCol = document.getElementById("poolCol");
+
   const tabBinsBtn = document.getElementById("tabBinsBtn");
+  const tabInspectBtn = document.getElementById("tabInspectBtn");
   const tabPoolBtn = document.getElementById("tabPoolBtn");
 
+  binsCol.classList.add("hide-mobile-panel");
+  inspectCol.classList.add("hide-mobile-panel");
+  poolCol.classList.add("hide-mobile-panel");
+
+  tabBinsBtn.classList.remove("active-tab");
+  tabInspectBtn.classList.remove("active-tab");
+  tabPoolBtn.classList.remove("active-tab");
+
   if (tab === 'bins') {
-    binsCol.classList.remove("hide-mobile");
-    poolCol.classList.add("hide-mobile");
+    binsCol.classList.remove("hide-mobile-panel");
     tabBinsBtn.classList.add("active-tab");
-    tabPoolBtn.classList.remove("active-tab");
+  } else if (tab === 'inspect') {
+    inspectCol.classList.remove("hide-mobile-panel");
+    tabInspectBtn.classList.add("active-tab");
   } else {
-    binsCol.classList.add("hide-mobile");
-    poolCol.classList.remove("hide-mobile");
-    tabBinsBtn.classList.remove("active-tab");
+    poolCol.classList.remove("hide-mobile-panel");
     tabPoolBtn.classList.add("active-tab");
   }
 }
@@ -523,9 +538,8 @@ function formatSMPTE(seconds) {
   return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}:${String(ff).padStart(2,'0')}`;
 }
 
-// Initial setup
 init();
-if (window.innerWidth <= 768) {
+if (window.innerWidth <= 900) {
   switchMobileTab('bins');
 }
 </script>
