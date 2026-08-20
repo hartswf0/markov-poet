@@ -2,86 +2,245 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WYGWYL LIGHT GRID — 14 POEM CELLS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>WYGWYL LIGHT GRID — 14 POEM BINS & ASSET POOL</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
-  body { background: #000; color: #fff; font: 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; padding: 8px; gap: 8px; user-select: none; }
+  :root {
+    --bg: #0a0a0a;
+    --paper: #ffffff;
+    --ink: #000000;
+    --dim: #777777;
+    --line: #222222;
+    --blue: #0066cc;
+    --green: #22c55e;
+    --red: #ef4444;
+    --teal: #00d2d3;
+    --amber: #ff9f43;
+    --crimson: #ff6b6b;
+    --gold: #feca57;
+    --purple: #a55eea;
+    --mono: #e0e0e0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: #eeeeee; font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; padding: 8px; gap: 8px; user-select: none; }
 
-  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 6px; }
-  .title { font-weight: 900; letter-spacing: 0.08em; }
-  .controls { display: flex; gap: 6px; align-items: center; }
-  button { background: #111; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-  button:hover { background: #fff; color: #000; }
-  button.active { background: #0066cc; color: #fff; border-color: #0066cc; }
+  /* Custom Sleek Scrollbars */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #0c0c0c; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; }
+  ::-webkit-scrollbar-thumb:hover { background: #555555; }
 
-  /* Main Workspace: 14 Poem Tracks on Left, 135 Thumbnails Pool on Right */
-  main { flex: 1; display: grid; grid-template-columns: minmax(360px, 1.1fr) minmax(400px, 1fr); gap: 8px; min-height: 0; }
-
-  /* Left: 14 Poem Tracks */
-  #tracksContainer { background: #080808; border: 1px solid #222; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
-  .poem-track { background: #0e0e0e; border: 1px solid #222; display: flex; flex-direction: column; gap: 4px; padding: 6px; cursor: pointer; }
-  .poem-track:hover { border-color: #444; }
-  .poem-track.active-track { border-color: #0066cc; background: #111824; }
+  /* Header */
+  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 6px; flex-shrink: 0; }
+  .brand-block { display: flex; align-items: center; gap: 8px; }
+  .brand-title { font-weight: 900; letter-spacing: 0.08em; font-size: 12px; }
   
-  .track-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 10px; }
-  .track-head .dur-badge { color: #22c55e; }
+  .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  button, select { background: #141414; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; height: 26px; }
+  button:hover, select:hover { background: #fff; color: #000; border-color: #fff; }
+  button.btn-accent { background: var(--blue); border-color: var(--blue); color: #fff; }
+  button.btn-green { background: var(--green); border-color: var(--green); color: #000; }
   
-  .track-cells { display: flex; gap: 4px; overflow-x: auto; min-height: 52px; padding: 2px 0; align-items: center; }
-  .plugged-chip { width: 80px; height: 48px; background: #000; border: 1px solid #333; position: relative; flex-shrink: 0; cursor: pointer; overflow: hidden; }
-  .plugged-chip:hover { border-color: #ef4444; }
-  .plugged-chip img { width: 100%; height: 100%; object-fit: cover; }
-  .chip-dur { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); font-size: 8px; padding: 1px 3px; font-weight: 800; }
-  .chip-del { position: absolute; top: 2px; right: 2px; background: #ef4444; color: #fff; font-size: 8px; width: 12px; height: 12px; display: none; align-items: center; justify-content: center; font-weight: 900; }
-  .plugged-chip:hover .chip-del { display: flex; }
-  .drop-hint { font-size: 9px; color: #444; text-transform: uppercase; padding: 4px; border: 1px dashed #222; width: 100%; text-align: center; }
+  /* Mobile Tab Toggle */
+  .mobile-tabs { display: none; width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 6px; gap: 6px; }
+  .tab-btn { flex: 1; text-align: center; }
+  .tab-btn.active-tab { background: #fff; color: #000; }
 
-  /* Right: 135 Thumbnails Pool */
-  #poolContainer { background: #080808; border: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; }
-  .pool-head { background: #111; padding: 6px 8px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
-  .pool-head input { background: #000; border: 1px solid #333; color: #fff; padding: 3px 6px; font: inherit; font-size: 10px; width: 180px; }
+  /* Main Two-Column Viewport */
+  main { flex: 1; display: grid; grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.25fr); gap: 8px; min-height: 0; overflow: hidden; }
+
+  /* Left Pane: 14 Poem Bins */
+  #binsCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
+  .pane-head { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   
-  #allThumbsGrid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 4px; padding: 6px; }
-  .thumb-card { background: #000; border: 1px solid #222; aspect-ratio: 16/9; position: relative; cursor: pointer; overflow: hidden; }
-  .thumb-card:hover { border-color: #0066cc; transform: scale(1.02); z-index: 10; }
-  .thumb-card img { width: 100%; height: 100%; object-fit: cover; }
-  .thumb-id { position: absolute; bottom: 2px; left: 2px; background: rgba(0,0,0,0.8); font-size: 7.5px; padding: 1px 3px; }
-  .thumb-dur { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); font-size: 7.5px; padding: 1px 3px; color: #22c55e; }
+  #binsList { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
+  .bin-card { background: #0e0e0e; border: 1px solid #222; display: flex; flex-direction: column; gap: 4px; padding: 6px; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
+  .bin-card:hover { border-color: #444; background: #121212; }
+  .bin-card.active-bin { border-color: var(--blue); background: #111a28; }
+
+  .bin-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 10.5px; }
+  .bin-head .runtime-tag { color: var(--green); font-size: 9.5px; }
+  
+  .bin-track { display: flex; gap: 4px; overflow-x: auto; min-height: 54px; padding: 2px 0; align-items: center; }
+  .bin-chip { width: 85px; height: 50px; background: #000; border: 1px solid #333; position: relative; flex-shrink: 0; cursor: pointer; overflow: hidden; }
+  .bin-chip:hover { border-color: var(--red); }
+  .bin-chip img { width: 100%; height: 100%; object-fit: cover; }
+  .bin-chip .chip-time { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; }
+  .bin-chip .chip-remove { position: absolute; top: 2px; right: 2px; background: var(--red); color: #fff; font-size: 9px; width: 14px; height: 14px; display: none; align-items: center; justify-content: center; font-weight: 900; }
+  .bin-chip:hover .chip-remove { display: flex; }
+  .empty-bin-hint { font-size: 9px; color: #444; text-transform: uppercase; padding: 6px; border: 1px dashed #222; width: 100%; text-align: center; }
+
+  /* Right Pane: 135 Asset Pool */
+  #poolCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
+  .pool-toolbar { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .filter-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .search-box { flex: 1; min-width: 140px; background: #000; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10.5px; height: 26px; }
+  .search-box:focus { border-color: var(--blue); outline: none; }
+
+  /* Color Filter Chips */
+  .color-bar { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; }
+  .color-chip { background: #161616; border: 1px solid #333; padding: 2px 6px; font-size: 8.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .color-chip:hover { border-color: #777; color: #fff; }
+  .color-chip.active { background: #fff; color: #000; border-color: #fff; }
+  .dot { width: 6px; height: 6px; border-radius: 50% !important; display: inline-block; }
+
+  /* Zoom Sizes */
+  .zoom-toggle { display: flex; gap: 2px; }
+  .zoom-btn { padding: 2px 6px; font-size: 8.5px; height: 22px; }
+
+  /* Thumbnail Grid */
+  #thumbsGrid { flex: 1; overflow-y: auto; display: grid; gap: 6px; padding: 6px; align-content: start; }
+  #thumbsGrid.zoom-s { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); }
+  #thumbsGrid.zoom-m { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  #thumbsGrid.zoom-l { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+
+  .thumb-tile { background: #000; border: 1px solid #222; aspect-ratio: 16/9; position: relative; cursor: pointer; overflow: hidden; transition: transform 0.1s, border-color 0.1s; will-change: transform; }
+  .thumb-tile:hover { border-color: var(--blue); transform: scale(1.03); z-index: 10; }
+  .thumb-tile img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%); opacity: 0.9; }
+  
+  .tile-top { position: absolute; top: 3px; left: 3px; display: flex; align-items: center; gap: 3px; }
+  .color-indicator { width: 5px; height: 5px; border-radius: 50% !important; }
+  .tile-time { position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; color: var(--green); }
+  .tile-id { position: absolute; bottom: 3px; left: 3px; font-size: 8px; color: #ccc; font-weight: 700; }
+  .tile-zoom-btn { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.7); color: #fff; font-size: 8px; padding: 1px 3px; display: none; }
+  .thumb-tile:hover .tile-zoom-btn { display: block; }
+
+  /* Lightbox / Preview Modal */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay.open { display: flex; }
+  .modal-card { width: 100%; max-width: 800px; max-height: 90vh; background: #111; border: 2px solid #444; display: flex; flex-direction: column; overflow: hidden; }
+  .modal-header { background: #000; padding: 8px 12px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; font-weight: 900; }
+  .modal-body { padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+  
+  .video-holder { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid #333; }
+  video { width: 100%; height: 100%; object-fit: contain; }
+  .contact-holder img { width: 100%; display: block; border: 1px solid #333; }
+
+  /* Responsive Rules for Mobile */
+  @media (max-width: 768px) {
+    body { padding: 4px; gap: 4px; }
+    .mobile-tabs { display: flex; }
+    main { display: flex; flex-direction: column; }
+    #binsCol, #poolCol { width: 100%; height: 100%; }
+    #binsCol.hide-mobile, #poolCol.hide-mobile { display: none; }
+    .header-actions button { font-size: 9px; padding: 3px 6px; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="title">WYGWYL LIGHT GRID — 14 POEM CELLS</div>
-  <div class="controls">
-    <span style="font-size:10px; color:#888;">ACTIVE: <b id="activeTrackLabel" style="color:#fff;">01 OUT OF LIFE</b></span>
-    <span style="font-size:10px; color:#888; margin-left:12px;">TOTAL RUNTIME: <b id="totalRuntime" style="color:#22c55e;">00:00.0</b></span>
+  <div class="brand-block">
+    <div class="dot" style="background:var(--green); animation: pulse 1.5s infinite;"></div>
+    <div class="brand-title">WYGWYL LIGHT GRID</div>
+  </div>
+  <div class="header-actions">
+    <span style="font-size:10px; color:#888;">ACTIVE: <b id="activeBinName" style="color:#fff;">01 OUT OF LIFE</b></span>
+    <span style="font-size:10px; color:#888; margin-left:8px;">RUNTIME: <b id="totalRuntime" style="color:var(--green);">00:00.0</b></span>
     <button onclick="autoFillDefault()">AUTO-FILL</button>
-    <button onclick="clearAllTracks()">CLEAR</button>
-    <button onclick="copyFFmpeg()" style="background:#0066cc;">COPY FFMPEG</button>
-    <button onclick="copyEDL()">COPY EDL</button>
+    <button onclick="clearAllBins()">CLEAR</button>
+    <button class="btn-accent" onclick="copyFFmpeg()">COPY FFMPEG</button>
+    <button class="btn-green" onclick="copyEDL()">COPY EDL</button>
   </div>
 </header>
 
-<main>
-  <!-- Left: 14 Poem Tracks -->
-  <div id="tracksContainer"></div>
+<!-- Mobile Tab Bar -->
+<div class="mobile-tabs">
+  <button class="tab-btn active-tab" id="tabBinsBtn" onclick="switchMobileTab('bins')">14 POEM BINS (<span id="binCountBadge">0s</span>)</button>
+  <button class="tab-btn" id="tabPoolBtn" onclick="switchMobileTab('pool')">135 ASSET POOL</button>
+</div>
 
-  <!-- Right: 135 Thumbnails Pool -->
-  <div id="poolContainer">
-    <div class="pool-head">
-      <span style="font-weight:800; font-size:10px;">ALL 135 THUMBNAILS (CLICK TO PLUG INTO ACTIVE POEM)</span>
-      <input type="text" id="filterInput" placeholder="Filter thumbnails..." oninput="renderThumbnailsPool()" />
+<main>
+  <!-- Left Column: 14 Poem Bins -->
+  <section id="binsCol">
+    <div class="pane-head">
+      <span>14 SEQUENTIAL POEM BINS</span>
+      <span style="font-size:9px; color:var(--dim);">CLICK BIN TO SELECT · CLICK CHIP TO REMOVE</span>
     </div>
-    <div id="allThumbsGrid"></div>
-  </div>
+    <div id="binsList"></div>
+  </section>
+
+  <!-- Right Column: 135 Asset Pool -->
+  <section id="poolCol">
+    <div class="pool-toolbar">
+      <div class="filter-row">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search 135 clips (e.g. bedroom, subway, beach, crow, tv, leap)..." oninput="renderPool()" />
+        
+        <select id="sortSelect" onchange="renderPool()">
+          <option value="default">Sort: Default Order</option>
+          <option value="dur-desc">Duration (High ➔ Low)</option>
+          <option value="dur-asc">Duration (Low ➔ High)</option>
+          <option value="color">Color Regime</option>
+        </select>
+
+        <div class="zoom-toggle">
+          <button class="zoom-btn" onclick="setZoom('zoom-s')">S</button>
+          <button class="zoom-btn active" onclick="setZoom('zoom-m')">M</button>
+          <button class="zoom-btn" onclick="setZoom('zoom-l')">L</button>
+        </div>
+      </div>
+
+      <div class="color-bar" id="colorBar">
+        <div class="color-chip active" onclick="setColorFilter('ALL')">ALL (135)</div>
+        <div class="color-chip" onclick="setColorFilter('teal')"><span class="dot" style="background:var(--teal)"></span>TEAL (79)</div>
+        <div class="color-chip" onclick="setColorFilter('blue')"><span class="dot" style="background:var(--blue)"></span>BLUE (25)</div>
+        <div class="color-chip" onclick="setColorFilter('crimson')"><span class="dot" style="background:var(--crimson)"></span>CRIMSON (13)</div>
+        <div class="color-chip" onclick="setColorFilter('purple')"><span class="dot" style="background:var(--purple)"></span>PURPLE (6)</div>
+        <div class="color-chip" onclick="setColorFilter('gold')"><span class="dot" style="background:var(--gold)"></span>GOLD (3)</div>
+        <div class="color-chip" onclick="setColorFilter('amber')"><span class="dot" style="background:var(--amber)"></span>AMBER (1)</div>
+        <div class="color-chip" onclick="setColorFilter('mono')"><span class="dot" style="background:var(--mono)"></span>MONO (4)</div>
+        <div class="color-chip" onclick="setColorFilter('cyan')"><span class="dot" style="background:#48dbfb"></span>CYAN (4)</div>
+      </div>
+    </div>
+
+    <div id="thumbsGrid" class="zoom-m"></div>
+  </section>
 </main>
+
+<!-- Lightbox / Preview Modal -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span id="modalClipTitle">CLIP PREVIEW</span>
+      <button onclick="closePreviewModal()">✕ CLOSE</button>
+    </div>
+    <div class="modal-body">
+      <div class="video-holder">
+        <video id="modalVideo" controls playsinline></video>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="modalClipMeta" style="font-size:11px; font-weight:800;">-</span>
+        <button class="btn-accent" onclick="plugModalClipToActiveBin()">+ PLUG INTO ACTIVE POEM</button>
+      </div>
+      <div class="contact-holder">
+        <div style="font-size:9px; font-weight:800; color:#888; margin-bottom:4px;">4X2 TEMPORAL CONTACT SHEET</div>
+        <img id="modalContactImg" src="" alt="Contact Sheet" />
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 let POEMS = [];
 let ALL_RECORDS = [];
-let TRACKS = [];
-let activeTrackIdx = 0;
+let BINS = [];
+let activeBinIdx = 0;
+let activeColorFilter = 'ALL';
+let currentZoom = 'zoom-m';
+let modalTargetRecord = null;
+
+function getColorRegime(cat) {
+  const c = (cat || "").toUpperCase();
+  if (c.includes("BEDROOM") || c.includes("FOG") || c.includes("RAIN")) return { key: "teal", hex: "#00d2d3", label: "TEAL" };
+  if (c.includes("SUBWAY") || c.includes("AMBER")) return { key: "amber", hex: "#ff9f43", label: "AMBER" };
+  if (c.includes("HEART") || c.includes("PLASMA") || c.includes("FLUID") || c.includes("FLARE") || c.includes("RED")) return { key: "crimson", hex: "#ff6b6b", label: "CRIMSON" };
+  if (c.includes("FLOWER") || c.includes("MONK") || c.includes("COLONNADE") || c.includes("GOLD")) return { key: "gold", hex: "#feca57", label: "GOLD" };
+  if (c.includes("TV") || c.includes("PYRAMID") || c.includes("SKELETON")) return { key: "purple", hex: "#a55eea", label: "PURPLE" };
+  if (c.includes("ISLAND") || c.includes("TITLE")) return { key: "mono", hex: "#ffffff", label: "MONO" };
+  if (c.includes("RIDE") || c.includes("COASTAL")) return { key: "cyan", hex: "#48dbfb", label: "CYAN" };
+  return { key: "blue", hex: "#54a0ff", label: "BLUE" };
+}
 
 async function init() {
   const [pRes, rRes, dcRes] = await Promise.all([
@@ -94,7 +253,12 @@ async function init() {
   ALL_RECORDS = (await rRes.json()).records;
   const dcData = await dcRes.json();
 
-  TRACKS = POEMS.map((p, idx) => {
+  // Color tag each record
+  ALL_RECORDS.forEach(r => {
+    r.colorRegime = getColorRegime(r.visual_category);
+  });
+
+  BINS = POEMS.map((p, idx) => {
     const dcSuite = dcData.suites[idx];
     const initialClips = [];
     if (dcSuite) {
@@ -110,126 +274,218 @@ async function init() {
     };
   });
 
-  renderTracks();
-  renderThumbnailsPool();
-  selectTrack(0);
+  renderBins();
+  renderPool();
+  selectBin(0);
 }
 
-function selectTrack(idx) {
-  if (idx < 0 || idx >= TRACKS.length) return;
-  activeTrackIdx = idx;
-  document.querySelectorAll(".poem-track").forEach((el, i) => el.classList.toggle("active-track", i === idx));
-  document.getElementById("activeTrackLabel").textContent = `${TRACKS[idx].num} ${TRACKS[idx].title}`;
+function selectBin(idx) {
+  if (idx < 0 || idx >= BINS.length) return;
+  activeBinIdx = idx;
+  document.querySelectorAll(".bin-card").forEach((el, i) => el.classList.toggle("active-bin", i === idx));
+  document.getElementById("activeBinName").textContent = `${BINS[idx].num} ${BINS[idx].title}`;
 }
 
-function renderTracks() {
-  const box = document.getElementById("tracksContainer");
-  box.innerHTML = "";
+function renderBins() {
+  const list = document.getElementById("binsList");
+  list.innerHTML = "";
 
   let grandTotalSeconds = 0;
 
-  TRACKS.forEach((tr, tIdx) => {
-    const trackSec = tr.clips.reduce((acc, c) => acc + parseFloat(c.duration_seconds || 5), 0);
-    grandTotalSeconds += trackSec;
+  BINS.forEach((b, bIdx) => {
+    const binSec = b.clips.reduce((acc, c) => acc + parseFloat(c.duration_seconds || 5), 0);
+    grandTotalSeconds += binSec;
 
     const el = document.createElement("div");
-    el.className = "poem-track" + (tIdx === activeTrackIdx ? " active-track" : "");
-    el.onclick = () => selectTrack(tIdx);
+    el.className = "bin-card" + (bIdx === activeBinIdx ? " active-bin" : "");
+    el.onclick = () => selectBin(bIdx);
 
     let chipsHtml = "";
-    if (tr.clips.length === 0) {
-      chipsHtml = `<div class="drop-hint">+ CLICK ANY THUMBNAIL ON RIGHT TO PLUG HERE</div>`;
+    if (b.clips.length === 0) {
+      chipsHtml = `<div class="empty-bin-hint">+ CLICK ANY THUMBNAIL ON RIGHT TO PLUG HERE</div>`;
     } else {
-      chipsHtml = tr.clips.map((c, cIdx) => `
-        <div class="plugged-chip" onclick="event.stopPropagation(); removeClipFromTrack(${tIdx}, ${cIdx})" title="${c.visual_category} (${c.id.substring(0,8)})">
-          <img src="contact_sheets/${c.filename_stem}_contact.jpg" />
-          <span class="chip-dur">${c.duration_seconds || 5}s</span>
-          <div class="chip-del">✕</div>
+      chipsHtml = b.clips.map((c, cIdx) => `
+        <div class="bin-chip" onclick="event.stopPropagation(); removeClipFromBin(${bIdx}, ${cIdx})" title="${c.visual_category} (${c.id.substring(0,8)})">
+          <img src="contact_sheets/${c.filename_stem}_contact.jpg" loading="lazy" />
+          <span class="chip-time">${c.duration_seconds || 5}s</span>
+          <div class="chip-remove">✕</div>
         </div>
       `).join('');
     }
 
     el.innerHTML = `
-      <div class="track-head">
-        <span>POEM ${tr.num} — ${tr.title}</span>
-        <span class="dur-badge">${trackSec.toFixed(1)}s (${tr.clips.length} clips)</span>
+      <div class="bin-head">
+        <span>POEM ${b.num} — ${b.title}</span>
+        <span class="runtime-tag">${binSec.toFixed(1)}s (${b.clips.length} clips)</span>
       </div>
-      <div class="track-cells">${chipsHtml}</div>
+      <div class="bin-track">${chipsHtml}</div>
     `;
 
-    box.appendChild(el);
+    list.appendChild(el);
   });
 
   const m = Math.floor(grandTotalSeconds / 60);
   const s = (grandTotalSeconds % 60).toFixed(1);
-  document.getElementById("totalRuntime").textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(4,'0')}`;
+  const timeStr = `${String(m).padStart(2,'0')}:${String(s).padStart(4,'0')}`;
+  document.getElementById("totalRuntime").textContent = timeStr;
+  document.getElementById("binCountBadge").textContent = timeStr;
 }
 
-function renderThumbnailsPool() {
-  const grid = document.getElementById("allThumbsGrid");
+function renderPool() {
+  const grid = document.getElementById("thumbsGrid");
   grid.innerHTML = "";
-  const filter = (document.getElementById("filterInput").value || "").toLowerCase();
+  const query = (document.getElementById("searchInput").value || "").toLowerCase();
+  const sortMode = document.getElementById("sortSelect").value;
 
-  const filtered = ALL_RECORDS.filter(r => {
-    if (!filter) return true;
-    const txt = `${r.filename_stem} ${r.visual_category} ${r.location_L} ${r.shift_S}`.toLowerCase();
-    return txt.includes(filter);
+  let filtered = ALL_RECORDS.filter(r => {
+    if (activeColorFilter !== 'ALL' && r.colorRegime.key !== activeColorFilter) return false;
+    if (query) {
+      const txt = `${r.filename_stem} ${r.visual_category} ${r.location_L} ${r.shift_S}`.toLowerCase();
+      if (!txt.includes(query)) return false;
+    }
+    return true;
   });
+
+  // Sorting
+  if (sortMode === 'dur-desc') {
+    filtered.sort((a, b) => parseFloat(b.duration_seconds || 5) - parseFloat(a.duration_seconds || 5));
+  } else if (sortMode === 'dur-asc') {
+    filtered.sort((a, b) => parseFloat(a.duration_seconds || 5) - parseFloat(b.duration_seconds || 5));
+  } else if (sortMode === 'color') {
+    filtered.sort((a, b) => a.colorRegime.key.localeCompare(b.colorRegime.key));
+  }
 
   filtered.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "thumb-card";
-    card.title = `${r.visual_category} | ${r.duration_seconds || 5}s (Click to plug into Poem ${TRACKS[activeTrackIdx].num})`;
-    card.onclick = () => plugClipIntoActiveTrack(r);
+    const tile = document.createElement("div");
+    tile.className = "thumb-tile";
+    tile.style.borderLeft = `3px solid ${r.colorRegime.hex}`;
+    tile.title = `Click to plug into Poem ${BINS[activeBinIdx].num}`;
+    
+    // Quick click = plug directly into active bin
+    tile.onclick = (e) => {
+      plugClipIntoActiveBin(r);
+    };
 
-    card.innerHTML = `
+    tile.innerHTML = `
       <img src="contact_sheets/${r.filename_stem}_contact.jpg" loading="lazy" />
-      <span class="thumb-id">${r.id.substring(0,8)}</span>
-      <span class="thumb-dur">${r.duration_seconds || 5}s</span>
+      <div class="thumb-overlay"></div>
+      <div class="tile-top">
+        <span class="color-indicator" style="background:${r.colorRegime.hex}"></span>
+      </div>
+      <span class="tile-id">${r.id.substring(0,8)}</span>
+      <span class="tile-time">${r.duration_seconds || 5}s</span>
+      <button class="tile-zoom-btn" onclick="event.stopPropagation(); openPreviewModal('${r.id}')">🔍</button>
     `;
 
-    grid.appendChild(card);
+    grid.appendChild(tile);
   });
 }
 
-function plugClipIntoActiveTrack(record) {
-  TRACKS[activeTrackIdx].clips.push(record);
-  renderTracks();
+function plugClipIntoActiveBin(record) {
+  BINS[activeBinIdx].clips.push(record);
+  renderBins();
 }
 
-function removeClipFromTrack(tIdx, cIdx) {
-  TRACKS[tIdx].clips.splice(cIdx, 1);
-  renderTracks();
+function removeClipFromBin(bIdx, cIdx) {
+  BINS[bIdx].clips.splice(cIdx, 1);
+  renderBins();
+}
+
+function setColorFilter(key) {
+  activeColorFilter = key;
+  document.querySelectorAll(".color-chip").forEach(c => {
+    c.classList.toggle("active", c.textContent.toLowerCase().includes(key.toLowerCase()) || (key === 'ALL' && c.textContent.startsWith('ALL')));
+  });
+  renderPool();
+}
+
+function setZoom(zoomClass) {
+  currentZoom = zoomClass;
+  const grid = document.getElementById("thumbsGrid");
+  grid.className = zoomClass;
+  document.querySelectorAll(".zoom-btn").forEach(b => {
+    b.classList.toggle("active", b.textContent.toLowerCase() === zoomClass.split('-')[1]);
+  });
+}
+
+// Lightbox Quickview
+function openPreviewModal(clipId) {
+  const r = ALL_RECORDS.find(x => x.id === clipId);
+  if (!r) return;
+  modalTargetRecord = r;
+
+  document.getElementById("modalClipTitle").textContent = `${r.visual_category} (${r.id.substring(0,8)})`;
+  document.getElementById("modalClipMeta").textContent = `${r.duration_seconds || 5}s · ${r.colorRegime.label} PALETTE · ${(r.has_audio_bool || r.has_audio) ? "STEREO AUDIO" : "SILENT"}`;
+  
+  const video = document.getElementById("modalVideo");
+  video.src = `MARKOV_POET/videos/${r.filename_stem}.mp4`;
+  document.getElementById("modalContactImg").src = `contact_sheets/${r.filename_stem}_contact.jpg`;
+
+  document.getElementById("previewModal").classList.add("open");
+  video.play().catch(()=>{});
+}
+
+function closePreviewModal() {
+  const video = document.getElementById("modalVideo");
+  video.pause();
+  document.getElementById("previewModal").classList.remove("open");
+}
+
+function plugModalClipToActiveBin() {
+  if (modalTargetRecord) {
+    plugClipIntoActiveBin(modalTargetRecord);
+    closePreviewModal();
+  }
+}
+
+// Mobile Tab Toggle
+function switchMobileTab(tab) {
+  const binsCol = document.getElementById("binsCol");
+  const poolCol = document.getElementById("poolCol");
+  const tabBinsBtn = document.getElementById("tabBinsBtn");
+  const tabPoolBtn = document.getElementById("tabPoolBtn");
+
+  if (tab === 'bins') {
+    binsCol.classList.remove("hide-mobile");
+    poolCol.classList.add("hide-mobile");
+    tabBinsBtn.classList.add("active-tab");
+    tabPoolBtn.classList.remove("active-tab");
+  } else {
+    binsCol.classList.add("hide-mobile");
+    poolCol.classList.remove("hide-mobile");
+    tabBinsBtn.classList.remove("active-tab");
+    tabPoolBtn.classList.add("active-tab");
+  }
 }
 
 function autoFillDefault() {
   init();
 }
 
-function clearAllTracks() {
-  TRACKS.forEach(t => t.clips = []);
-  renderTracks();
+function clearAllBins() {
+  BINS.forEach(b => b.clips = []);
+  renderBins();
 }
 
 function copyFFmpeg() {
   let fileList = "";
   let clipCount = 0;
-  TRACKS.forEach(t => {
-    t.clips.forEach(c => {
+  BINS.forEach(b => {
+    b.clips.forEach(c => {
       fileList += `file 'MARKOV_POET/videos/${c.filename_stem}.mp4'\n`;
       clipCount++;
     });
   });
 
   if (clipCount === 0) {
-    alert("No clips plugged into tracks!");
+    alert("No clips plugged into bins!");
     return;
   }
 
-  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${fileList}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_CUSTOM_LIGHT_CUT.mp4\n`;
+  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${fileList}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_LIGHT_GRID_CUT.mp4\n`;
 
   navigator.clipboard.writeText(cmd);
-  alert(`COPIED FFMPEG COMMAND FOR ${clipCount} PLUGGED CLIPS`);
+  alert(`COPIED FFMPEG COMMAND FOR ${clipCount} CLIPS TO CLIPBOARD`);
 }
 
 function copyEDL() {
@@ -237,15 +493,15 @@ function copyEDL() {
   let recSec = 3600;
   let eventNum = 1;
 
-  TRACKS.forEach(t => {
-    t.clips.forEach(c => {
+  BINS.forEach(b => {
+    b.clips.forEach(c => {
       const dur = Math.round(parseFloat(c.duration_seconds || 5));
       const reel = c.id.substring(0,8).toUpperCase();
       const numStr = String(eventNum).padStart(3, '0');
 
       edl += `${numStr}  ${reel} V     C        00:00:00:00 ${formatSMPTE(dur)} ${formatSMPTE(recSec)} ${formatSMPTE(recSec + dur)}\n`;
       edl += `* FROM CLIP NAME: ${c.filename_stem}.mp4\n`;
-      edl += `* POEM: ${t.num} ${t.title}\n\n`;
+      edl += `* POEM: ${b.num} ${b.title}\n\n`;
 
       recSec += dur;
       eventNum++;
@@ -267,7 +523,11 @@ function formatSMPTE(seconds) {
   return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}:${String(ff).padStart(2,'0')}`;
 }
 
+// Initial setup
 init();
+if (window.innerWidth <= 768) {
+  switchMobileTab('bins');
+}
 </script>
 </body>
 </html>
