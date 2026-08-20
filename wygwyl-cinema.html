@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WYGWYL CINEMA SCREENING ROOM</title>
+<title>WYGWYL MASTER CINEMA — DELEUZE / METZ TRILOGY</title>
 <style>
   :root {
     --bg: #000000;
@@ -13,6 +13,7 @@
     --dim: #888888;
     --accent: #0066cc;
     --green: #22c55e;
+    --gold: #feca57;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
   body { background: var(--bg); color: var(--text); font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; }
@@ -21,11 +22,11 @@
   .brand { font-size: 13px; font-weight: 900; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; }
   
   .cut-selector { display: flex; gap: 6px; flex-wrap: wrap; }
-  .cut-btn { background: #141414; border: 1px solid #333; color: #fff; padding: 4px 10px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; }
+  .cut-btn { background: #141414; border: 1px solid #333; color: #fff; padding: 5px 12px; font: inherit; font-size: 10.5px; font-weight: 800; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; }
   .cut-btn:hover { background: #fff; color: #000; border-color: #fff; }
   .cut-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  main { flex: 1; display: grid; grid-template-columns: minmax(500px, 2.5fr) minmax(320px, 1fr); min-height: 0; }
+  main { flex: 1; display: grid; grid-template-columns: minmax(540px, 2.5fr) minmax(360px, 1.1fr); min-height: 0; }
 
   .cinema-stage { background: #000; display: flex; align-items: center; justify-content: center; position: relative; border-right: 1px solid var(--border); }
   video { width: 100%; height: 100%; object-fit: contain; }
@@ -33,24 +34,26 @@
   .cinema-panel { background: var(--panel); padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
   .cut-title { font-size: 14px; font-weight: 900; letter-spacing: 0.05em; color: #fff; }
   .cut-meta { font-size: 11px; color: var(--green); font-weight: 800; }
-  .cut-desc { font-size: 11px; color: #ccc; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 10px; }
+  .cut-theory { background: #141414; border-left: 3px solid var(--gold); padding: 8px 10px; font-size: 10.5px; color: #ccc; line-height: 1.4; }
+  
+  .syntagm-deck { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border); padding-top: 10px; }
+  .syntagm-heading { font-size: 10px; font-weight: 900; color: var(--dim); letter-spacing: 0.1em; }
+  .step-row { background: #111; border: 1px solid #222; padding: 4px 8px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .step-row span { color: #aaa; }
+  .step-row b { color: #fff; }
 
-  .tracklist-card { background: #141414; border: 1px solid var(--border); padding: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
-  .tracklist-card b { font-size: 11px; color: #fff; }
-  .download-btn { background: #222; border: 1px solid #444; color: #fff; padding: 8px; text-align: center; text-decoration: none; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+  .download-btn { background: #222; border: 1px solid #444; color: #fff; padding: 8px; text-align: center; text-decoration: none; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto; }
   .download-btn:hover { background: #fff; color: #000; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">🎬 WYGWYL CINEMA SCREENING ROOM</div>
+  <div class="brand">🎬 WYGWYL MASTER CINEMA TRILOGY</div>
   <div class="cut-selector">
-    <button class="cut-btn active" id="btnCut1" onclick="switchCut('cut1')">1. CELESTIAL ASCENT</button>
-    <button class="cut-btn" id="btnCut2" onclick="switchCut('cut2')">2. CYBERPUNK RECURSION</button>
-    <button class="cut-btn" id="btnCut3" onclick="switchCut('cut3')">3. SHORELINE SEVERANCE</button>
-    <button class="cut-btn" id="btnCut4" onclick="switchCut('cut4')">4. ANCESTRAL STEPPE (14-SHOT)</button>
-    <button class="cut-btn" id="btnDC" onclick="switchCut('dc')">DIRECTOR'S CUT (24M)</button>
+    <button class="cut-btn active" id="btnFilm1" onclick="switchCut('film1')">1. CELESTIAL ASCENT (40S)</button>
+    <button class="cut-btn" id="btnFilm2" onclick="switchCut('film2')">2. SUBTERRANEAN FLESH (43S)</button>
+    <button class="cut-btn" id="btnFilm3" onclick="switchCut('film3')">3. SHORELINE ELEGY (47S)</button>
   </div>
   <div style="display:flex; gap:6px;">
     <a href="wygwyl-music-cuts.html" class="cut-btn">MUSIC MATCHER</a>
@@ -63,83 +66,115 @@
     <video id="cinemaVideo" controls playsinline></video>
   </div>
   <aside class="cinema-panel">
-    <div class="cut-title" id="cutTitle">1. THE CELESTIAL ASCENT</div>
-    <div class="cut-meta" id="cutMeta">13.1 MB · 720p 24fps · Scored to Shaolin Sunrise Pulse (Marea Memory 25)</div>
-    <div class="cut-desc" id="cutDesc">Uplifting dawn spiritual awakening: ancient stone chrysanthemum apothecary, rooftop leap into sunlit cloudscapes, seaside palm highway, and ecstatic sisterhood laughter.</div>
-
-    <div class="tracklist-card">
-      <b>VOLHOLLA SOUNDTRACK EMBED</b>
-      <p style="font-size:10px; color:var(--dim);">Master stereo audio track multiplexed via FFmpeg with zero duplicate visual setups.</p>
-      <a id="downloadLink" href="rendered_cuts/CUT_01_CELESTIAL_ASCENT.mp4" download class="download-btn">⬇ DOWNLOAD MP4</a>
+    <div class="cut-title" id="cutTitle">1. THE CELESTIAL ASCENT & THE TEMPLE RECLAIMED</div>
+    <div class="cut-meta" id="cutMeta">21.2 MB · 720p 24fps · Scored to Shaolin Sunrise Pulse (Marea Memory 25)</div>
+    <div class="cut-theory" id="cutTheory">
+      <b>Deleuzian Movement-to-Relation Image / Metz Linear Syntagm:</b> A spiritual awakening progressing through fallen stone pillars, saffron monk sanctuary, chrysanthemum floral sea, cloud glide, and sisterhood laughter with zero shot reuse.
     </div>
+
+    <div class="syntagm-deck">
+      <div class="syntagm-heading">METZIAN SPATIOTEMPORAL SYNTAGM SEQUENCE (0% SHOT REUSE)</div>
+      <div id="syntagmSteps" style="display:flex; flex-direction:column; gap:3px; margin-top:4px;"></div>
+    </div>
+
+    <a id="downloadLink" href="rendered_cuts/FILM_01_CELESTIAL_ASCENT.mp4" download class="download-btn">⬇ DOWNLOAD MASTER FILM MP4</a>
   </aside>
 </main>
 
 <script>
-const CUTS = {
-  cut1: {
-    title: "1. THE CELESTIAL ASCENT",
-    file: "rendered_cuts/CUT_01_CELESTIAL_ASCENT.mp4",
-    size: "13.1 MB",
-    meta: "13.1 MB · 720p 24fps · Scored to 'Shaolin Sunrise Pulse' (Marea Memory 25)",
-    desc: "An uplifting dawn spiritual awakening: ancient stone chrysanthemum apothecary, rooftop leap into sunlit cloudscapes, seaside palm highway, and ecstatic sisterhood laughter."
+const FILMS = {
+  film1: {
+    title: "1. THE CELESTIAL ASCENT & THE TEMPLE RECLAIMED",
+    file: "rendered_cuts/FILM_01_CELESTIAL_ASCENT.mp4",
+    size: "21.2 MB",
+    meta: "21.2 MB · 720p 24fps · 40.0s · Scored to 'Shaolin Sunrise Pulse' (Marea Memory 25)",
+    theory: "<b>Deleuzian Action-to-Relation Image:</b> A non-stop spiritual awakening crossing irreversible thresholds from ancient ruined stone colonnades, saffron monks, chrysanthemum-flooded library, rooftop celestial glide, into sisterhood communion and crimson weather.",
+    steps: [
+      { num: "01", role: "Perception: Fallen Pillars", id: "8a9e7a1e", dur: "4.5s" },
+      { num: "02", role: "Affection: Saffron Monks", id: "48a7a55a", dur: "4.5s" },
+      { num: "03", role: "Action: Chrysanthemum Flood", id: "badaf97b", dur: "4.5s" },
+      { num: "04", role: "Transformation: Celestial Leap", id: "d5abc940", dur: "5.0s" },
+      { num: "05", role: "Velocity: Coastal Twilight", id: "653ecfbe", dur: "4.0s" },
+      { num: "06", role: "Relation: Youth Butterflies", id: "1cdf9a75", dur: "4.0s" },
+      { num: "07", role: "Communion: Sisterhood Joy", id: "37235c7f", dur: "4.0s" },
+      { num: "08", role: "Ascent: Mirrored Metropolis", id: "35855d8a", dur: "4.5s" },
+      { num: "09", role: "Dissolution: Crimson Weather", id: "ce4762b5", dur: "4.5s" }
+    ]
   },
-  cut2: {
-    title: "2. THE CYBERPUNK RECURSION",
-    file: "rendered_cuts/CUT_02_CYBERPUNK_RECURSION.mp4",
-    size: "15.5 MB",
-    meta: "15.5 MB · 720p 24fps · Scored to 'Data Purge' (Cathedral of IV Drips 04)",
-    desc: "High-velocity nocturnal urban escape: frantic subway stair sprint, CRT TV pyramid broadcasting ocean in purple mist, train window neon smears, beating heart skeleton, and temporal echo walk."
+  film2: {
+    title: "2. THE SUBTERRANEAN FLESH & THE CATHODE ARCHIVE",
+    file: "rendered_cuts/FILM_02_CYBERPUNK_FLESH.mp4",
+    size: "21.7 MB",
+    meta: "21.7 MB · 720p 24fps · 43.0s · Scored to 'Data Purge' (Cathedral of IV Drips 04)",
+    theory: "<b>Metzian Alternating Syntagm / Cybernetic Flesh:</b> High-velocity nocturnal transit escape through subterranean stairs into gothic vaults, speed-blurred train carriage glass, fiber-optic plasma weaving, cathode TV ocean waves, and beating heart skeleton.",
+    steps: [
+      { num: "01", role: "Rupture: Subway Stair Sprint", id: "6750a5d1", dur: "4.0s" },
+      { num: "02", role: "Perception: Gothic Transit Vaults", id: "5bcf5bf5", dur: "4.0s" },
+      { num: "03", role: "Velocity: Speeding Train Glass", id: "8daa2ef0", dur: "4.0s" },
+      { num: "04", role: "Affection: Stylist Red Plasma", id: "63fd3f15", dur: "4.5s" },
+      { num: "05", role: "Archive: Cathode Ocean Waves", id: "84c43938", dur: "5.0s" },
+      { num: "06", role: "Action: Beating Heart Skeleton", id: "764b035a", dur: "4.5s" },
+      { num: "07", role: "Submersion: Cellular Plasma", id: "0b025dc2", dur: "4.5s" },
+      { num: "08", role: "Biological: Neon Spine Profile", id: "34051c38", dur: "4.0s" },
+      { num: "09", role: "Time-Image: Tracksuit Motion Echo", id: "222c8cca", dur: "4.0s" },
+      { num: "10", role: "Atmosphere: Rooftop Steam Plume", id: "8aff03e4", dur: "4.5s" }
+    ]
   },
-  cut3: {
-    title: "3. THE SHORELINE SEVERANCE",
-    file: "rendered_cuts/CUT_03_SHORELINE_SEVERANCE.mp4",
-    size: "11.1 MB",
-    meta: "11.1 MB · 720p 24fps · Scored to 'Lost in the Sun' (Marea Memory 14)",
-    desc: "Melancholic romantic dissolution: domestic stasis by rain-streaked glass, releasing swirling red heart ribbons into twilight surf, parched cathedral ravens, and boy witnessing rain outside diner."
-  },
-  cut4: {
-    title: "4. THE ANCESTRAL STEPPE (14-SHOT MASTER CUT)",
-    file: "rendered_cuts/CUT_04_ANCESTRAL_STEPPE.mp4",
-    size: "37.9 MB",
-    meta: "37.9 MB · 720p 24fps · Scored to 'When the Soul Becomes People' (Midnight Over the Steppe 17)",
-    desc: "The complete 14-movement epic across all archetypes, tightly edited on Spanish radio vocals and driving percussion with zero repeated shots."
-  },
-  dc: {
-    title: "WYGWYL 14-POEM DEFINITIVE DIRECTOR'S CUT",
-    file: "rendered_cuts/WYGWYL_14POEM_DIRECTORS_CUT.mp4",
-    size: "94.0 MB",
-    meta: "94.0 MB · 720p 24fps · 14 Poems Master Sequence",
-    desc: "The definitive storyboard-aligned 14-poem film sequence. Curated with the highest-fidelity visual assets, normalized to 1280x720 24fps with synchronized stereo audio design across 24 minutes."
+  film3: {
+    title: "3. THE SHORELINE ELEGY & THE RAIN WITNESS",
+    file: "rendered_cuts/FILM_03_SHORELINE_ELEGY.mp4",
+    size: "22.6 MB",
+    meta: "22.6 MB · 720p 24fps · 47.0s · Scored to 'When the Soul Becomes People' (Midnight Over the Steppe 17)",
+    theory: "<b>Deleuzian Crystal-Image / Episodic Syntagm:</b> A journey through memory, isolation, and ancestral transfiguration: single window stasis, vapor gesture, diner rain witness, ocean heart ribbons, parched cathedral ravens, floating roses, and ancestral communion.",
+    steps: [
+      { num: "01", role: "Stasis: Dim Teal Bedroom Window", id: "2474f1b5", dur: "4.5s" },
+      { num: "02", role: "Perception: Hands in Room Vapor", id: "a8922cd9", dur: "4.0s" },
+      { num: "03", role: "Witness: Boy at Rain Diner Pane", id: "e9c18d8d", dur: "4.5s" },
+      { num: "04", role: "Severance: Beach Heart Ribbons", id: "d847a1b8", dur: "5.0s" },
+      { num: "05", role: "Prophetic: Immovable with Crows", id: "63d387a4", dur: "4.5s" },
+      { num: "06", role: "Sacred: Floating Red Rose Petals", id: "2b779f89", dur: "4.5s" },
+      { num: "07", role: "Communion: Radiant Warmth", id: "0107df88", dur: "4.0s" },
+      { num: "08", role: "Laughter: Chandelier Bokeh Close", id: "6ac81cae", dur: "4.0s" },
+      { num: "09", role: "Transit: Seaside Palm Horizon", id: "474a21a0", dur: "4.0s" },
+      { num: "10", role: "Echo: Train Car Neon Blur", id: "4d3fc262", dur: "4.0s" },
+      { num: "11", role: "Closure: Mirrored Dusk Skyline", id: "92cc2431", dur: "4.5s" }
+    ]
   }
 };
 
 const video = document.getElementById("cinemaVideo");
 
 function switchCut(key) {
-  const cut = CUTS[key];
-  if (!cut) return;
+  const film = FILMS[key];
+  if (!film) return;
 
   document.querySelectorAll(".cut-btn").forEach(b => b.classList.remove("active"));
-  if (key === 'cut1') document.getElementById("btnCut1").classList.add("active");
-  if (key === 'cut2') document.getElementById("btnCut2").classList.add("active");
-  if (key === 'cut3') document.getElementById("btnCut3").classList.add("active");
-  if (key === 'cut4') document.getElementById("btnCut4").classList.add("active");
-  if (key === 'dc') document.getElementById("btnDC").classList.add("active");
+  if (key === 'film1') document.getElementById("btnFilm1").classList.add("active");
+  if (key === 'film2') document.getElementById("btnFilm2").classList.add("active");
+  if (key === 'film3') document.getElementById("btnFilm3").classList.add("active");
 
-  document.getElementById("cutTitle").textContent = cut.title;
-  document.getElementById("cutMeta").textContent = cut.meta;
-  document.getElementById("cutDesc").textContent = cut.desc;
+  document.getElementById("cutTitle").textContent = film.title;
+  document.getElementById("cutMeta").textContent = film.meta;
+  document.getElementById("cutTheory").innerHTML = film.theory;
+
+  const stepsBox = document.getElementById("syntagmSteps");
+  stepsBox.innerHTML = "";
+  film.steps.forEach(st => {
+    const row = document.createElement("div");
+    row.className = "step-row";
+    row.innerHTML = `<span>[${st.num}] ${st.role}</span><b>${st.id} · ${st.dur}</b>`;
+    stepsBox.appendChild(row);
+  });
   
   const dl = document.getElementById("downloadLink");
-  dl.href = cut.file;
-  dl.textContent = `⬇ DOWNLOAD MP4 (${cut.size})`;
+  dl.href = film.file;
+  dl.textContent = `⬇ DOWNLOAD MASTER FILM MP4 (${film.size})`;
 
-  video.src = cut.file;
+  video.src = film.file;
   video.play().catch(()=>{});
 }
 
-switchCut('cut1');
+switchCut('film1');
 </script>
 </body>
 </html>
