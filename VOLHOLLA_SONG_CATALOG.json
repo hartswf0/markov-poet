@@ -6,306 +6,387 @@
       "title": "Flashing Lights (Roadside Omen)",
       "album": "AEOLIAN DRIFT",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-aeolian-02.html",
-      "audio_url": "",
+      "audio_url": "audio/song-aeolian-02.mp3",
       "duration_str": "",
-      "user_curation_note": "Good for making something that matters, surreal song."
+      "user_curation_note": "Good for making something that matters, surreal song.",
+      "local_exists": true,
+      "size_bytes": 5508333
     },
     {
       "slug": "song-aeolian-03",
       "title": "How to Break Off an Engagement",
       "album": "AEOLIAN DRIFT",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-aeolian-03.html",
-      "audio_url": "",
+      "audio_url": "audio/song-aeolian-03.mp3",
       "duration_str": "",
-      "user_curation_note": "Triumphant, a little dark."
+      "user_curation_note": "Triumphant, a little dark.",
+      "local_exists": true,
+      "size_bytes": 2532717
     },
     {
       "slug": "song-aeolian-05",
       "title": "Pine Floor Orbit",
       "album": "AEOLIAN DRIFT",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-aeolian-05.html",
-      "audio_url": "",
+      "audio_url": "audio/song-aeolian-05.mp3",
       "duration_str": "",
-      "user_curation_note": "Cool dark night, a little like an alarm."
+      "user_curation_note": "Cool dark night, a little like an alarm.",
+      "local_exists": true,
+      "size_bytes": 3139821
     },
     {
       "slug": "song-aeolian-09",
       "title": "Dial Tone Echoes",
       "album": "AEOLIAN DRIFT",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-aeolian-09.html",
-      "audio_url": "",
+      "audio_url": "audio/song-aeolian-09.mp3",
       "duration_str": "",
-      "user_curation_note": "Best for editing, drops at 120s, pitch down and drop into distant room echo."
+      "user_curation_note": "Best for editing, drops at 120s, pitch down and drop into distant room echo.",
+      "local_exists": true,
+      "size_bytes": 4328109
     },
     {
       "slug": "song-aeolian-13",
       "title": "How to Win My Heart (Dial-Tone)",
       "album": "AEOLIAN DRIFT",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-aeolian-13.html",
-      "audio_url": "",
+      "audio_url": "audio/song-aeolian-13.mp3",
       "duration_str": "",
-      "user_curation_note": "A lot of soul, beautiful, sounds a little lovey but dope."
+      "user_curation_note": "A lot of soul, beautiful, sounds a little lovey but dope.",
+      "local_exists": true,
+      "size_bytes": 6556077
     },
     {
       "slug": "song-midnightsteppe-17",
       "title": "When the Soul Becomes People",
       "album": "MIDNIGHT OVER THE STEPPE",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-midnightsteppe-17.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MIDNIGHT%20OVER%20THE%20STEPPE/Midnight%20Over%20the%20Steppe%20-%20When%20the%20Soul%20Becomes%20People%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-midnightsteppe-17.mp3",
       "duration_str": "",
-      "user_curation_note": "Spanish radio vibe, dope energy, good as background."
+      "user_curation_note": "Spanish radio vibe, dope energy, good as background.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MIDNIGHT OVER THE STEPPE/Midnight Over the Steppe - When the Soul Becomes People - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 4035857
     },
     {
       "slug": "song-inthemiddle-10",
       "title": "Dust and Dawn",
       "album": "IN THE MIDDLE",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-inthemiddle-10.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/IN%20THE%20MIDDLE/In%20The%20Middle%20-%20Dust%20and%20Dawn%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-inthemiddle-10.mp3",
       "duration_str": "",
-      "user_curation_note": "Low key, pretty good."
+      "user_curation_note": "Low key, pretty good.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/IN THE MIDDLE/In The Middle - Dust and Dawn - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 2588883
     },
     {
       "slug": "song-inthemiddle-38",
       "title": "Vinyl Incense Ritual",
       "album": "IN THE MIDDLE",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-inthemiddle-38.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/IN%20THE%20MIDDLE/In%20The%20Middle%20-%20Vinyl%20Incense%20Ritual%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-inthemiddle-38.mp3",
       "duration_str": "",
-      "user_curation_note": "Sort of funk."
+      "user_curation_note": "Sort of funk.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/IN THE MIDDLE/In The Middle - Vinyl Incense Ritual - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 2725973
     },
     {
       "slug": "song-mareamemory-30",
       "title": "Submerged Afrofuturist Ignition",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-30.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Submerged%20Afrofuturist%20Ignition%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-30.mp3",
       "duration_str": "",
-      "user_curation_note": "Like this one a lot for the vibe."
+      "user_curation_note": "Like this one a lot for the vibe.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Submerged Afrofuturist Ignition - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 2906532
     },
     {
       "slug": "song-mareamemory-25",
       "title": "Shaolin Sunrise Pulse",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-25.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Shaolin%20Sunrise%20Pulse%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-25.mp3",
       "duration_str": "",
-      "user_curation_note": "A little upbeat but kinda soulful."
+      "user_curation_note": "A little upbeat but kinda soulful.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Shaolin Sunrise Pulse - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 1268132
     },
     {
       "slug": "song-mareamemory-20",
       "title": "Radiant Lockdown Ritual",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-20.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Radiant%20Lockdown%20Ritual%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-20.mp3",
       "duration_str": "",
-      "user_curation_note": "Like this one a lot for the vibe."
+      "user_curation_note": "Like this one a lot for the vibe.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Radiant Lockdown Ritual - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 3490421
     },
     {
       "slug": "song-mareamemory-18",
       "title": "Prime Foundation \u2014 The Actual Life Engine",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-18.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Prime%20Foundation%20%E2%80%94%20The%20Actual%20Life%20Engine%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-18.mp3",
       "duration_str": "",
-      "user_curation_note": "Nice for an ending song near the beach."
+      "user_curation_note": "Nice for an ending song near the beach.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Prime Foundation \u2014 The Actual Life Engine - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 1250995
     },
     {
       "slug": "song-mareamemory-14",
       "title": "Lost in the Sun",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-14.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Lost%20in%20the%20Sun%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-14.mp3",
       "duration_str": "",
-      "user_curation_note": "Very hopeful."
+      "user_curation_note": "Very hopeful.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Lost in the Sun - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 1652236
     },
     {
       "slug": "song-mareamemory-06",
       "title": "Ecstatic Dawn",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-06.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Ecstatic%20Dawn%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-06.mp3",
       "duration_str": "",
-      "user_curation_note": "With lyrics, gives shivers, nice pacing."
+      "user_curation_note": "With lyrics, gives shivers, nice pacing.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Ecstatic Dawn - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 3522186
     },
     {
       "slug": "song-mareamemory-02",
       "title": "Aten Rising (Voice Memo 1)",
       "album": "MAREA MEMORY",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mareamemory-02.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Aten%20Rising%20(Voice%20Memo%201)%20-%20Treblo--stream.mp3",
+      "audio_url": "audio/song-mareamemory-02.mp3",
       "duration_str": "",
-      "user_curation_note": "Mesmerizing returning."
+      "user_curation_note": "Mesmerizing returning.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/MAREA MEMORY/Marea Memory - Aten Rising (Voice Memo 1) - Treblo--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 1546075
     },
     {
       "slug": "song-dustrest-10",
       "title": "Non-Abiding Flow",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-10.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-10.mp3",
       "duration_str": "",
-      "user_curation_note": "Deep solemnness."
+      "user_curation_note": "Deep solemnness.",
+      "local_exists": true,
+      "size_bytes": 4950189
     },
     {
       "slug": "song-dustrest-11",
       "title": "Not a Mote of Dust",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-11.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-11.mp3",
       "duration_str": "",
-      "user_curation_note": "Good length and spirit."
+      "user_curation_note": "Good length and spirit.",
+      "local_exists": true,
+      "size_bytes": 5325741
     },
     {
       "slug": "song-dustrest-12",
       "title": "Non-Abiding Flow (1)",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-12.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-12.mp3",
       "duration_str": "",
-      "user_curation_note": "Charming sound noises, hard to overstate."
+      "user_curation_note": "Charming sound noises, hard to overstate.",
+      "local_exists": true,
+      "size_bytes": 4673709
     },
     {
       "slug": "song-dustrest-16",
       "title": "Frictionless Void",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-16.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-16.mp3",
       "duration_str": "",
-      "user_curation_note": "High-pitched magical."
+      "user_curation_note": "High-pitched magical.",
+      "local_exists": true,
+      "size_bytes": 4107501
     },
     {
       "slug": "song-dustrest-19",
       "title": "Ontological Collapse (The Unstainable)",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-19.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-19.mp3",
       "duration_str": "",
-      "user_curation_note": "Bright computerness."
+      "user_curation_note": "Bright computerness.",
+      "local_exists": true,
+      "size_bytes": 4726125
     },
     {
       "slug": "song-dustrest-20",
       "title": "Polishing the Data Mirror",
       "album": "WHERE CAN DUST REST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-dustrest-20.html",
-      "audio_url": "",
+      "audio_url": "audio/song-dustrest-20.mp3",
       "duration_str": "",
-      "user_curation_note": "Rain noise and tone setting."
+      "user_curation_note": "Rain noise and tone setting.",
+      "local_exists": true,
+      "size_bytes": 5537709
     },
     {
       "slug": "song-blackwater-10",
       "title": "Gray Alley Slow Drag",
       "album": "BLACK WATER RUN",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-blackwater-10.html",
-      "audio_url": "",
+      "audio_url": "audio/song-blackwater-10.mp3",
       "duration_str": "",
-      "user_curation_note": "Quite sad and slow."
+      "user_curation_note": "Quite sad and slow.",
+      "local_exists": true,
+      "size_bytes": 4780845
     },
     {
       "slug": "song-congregation-13",
       "title": "The Master&#39;s Zenith",
       "album": "THE GREAT CONGREGATION",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-congregation-13.html",
-      "audio_url": "",
+      "audio_url": "audio/song-congregation-13.mp3",
       "duration_str": "",
-      "user_curation_note": "Powerful movement, short."
+      "user_curation_note": "Powerful movement, short.",
+      "local_exists": true,
+      "size_bytes": 1130733
     },
     {
       "slug": "song-glass-06",
       "title": "Cathedral of Glass",
       "album": "CATHEDRAL OF GLASS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-glass-06.html",
-      "audio_url": "",
+      "audio_url": "audio/song-glass-06.mp3",
       "duration_str": "",
-      "user_curation_note": "Pretty good."
+      "user_curation_note": "Pretty good.",
+      "local_exists": true,
+      "size_bytes": 1414701
     },
     {
       "slug": "song-glass-11",
       "title": "London Hiss",
       "album": "CATHEDRAL OF GLASS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-glass-11.html",
-      "audio_url": "",
+      "audio_url": "audio/song-glass-11.mp3",
       "duration_str": "",
-      "user_curation_note": "Surreal, could make a great edit."
+      "user_curation_note": "Surreal, could make a great edit.",
+      "local_exists": true,
+      "size_bytes": 2859309
     },
     {
       "slug": "song-glass-15",
       "title": "Tunnel Lights &amp; Dirty Money",
       "album": "CATHEDRAL OF GLASS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-glass-15.html",
-      "audio_url": "",
+      "audio_url": "audio/song-glass-15.mp3",
       "duration_str": "",
-      "user_curation_note": "Powerful, a bit dark cyberpunk."
+      "user_curation_note": "Powerful, a bit dark cyberpunk.",
+      "local_exists": true,
+      "size_bytes": 4345965
     },
     {
       "slug": "song-cathedral-04",
       "title": "Data Purge",
       "album": "CATHEDRAL OF IV DRIPS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-cathedral-04.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/CATHEDRAL%20OF%20IV%20DRIPS/The%20Cathedral%20of%20IV%20Drips%20-%20Data%20Purge%20-%20Sonauto--stream.mp3",
+      "audio_url": "audio/song-cathedral-04.mp3",
       "duration_str": "",
-      "user_curation_note": "Beautiful, has a beat, has some swag."
+      "user_curation_note": "Beautiful, has a beat, has some swag.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/CATHEDRAL OF IV DRIPS/The Cathedral of IV Drips - Data Purge - Sonauto--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 2017533
     },
     {
       "slug": "song-cathedral-11",
       "title": "Stained Glass Rims",
       "album": "CATHEDRAL OF IV DRIPS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-cathedral-11.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/CATHEDRAL%20OF%20IV%20DRIPS/The%20Cathedral%20of%20IV%20Drips%20-%20Stained%20Glass%20Rims%20-%20Sonauto--stream.mp3",
+      "audio_url": "audio/song-cathedral-11.mp3",
       "duration_str": "",
-      "user_curation_note": "Nice atmosphere moment."
+      "user_curation_note": "Nice atmosphere moment.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/CATHEDRAL OF IV DRIPS/The Cathedral of IV Drips - Stained Glass Rims - Sonauto--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 1628413
     },
     {
       "slug": "song-cathedral-14",
       "title": "Vatican Vigil",
       "album": "CATHEDRAL OF IV DRIPS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-cathedral-14.html",
-      "audio_url": "https://hartswf0.github.io/moto/VOLHOLLA/../MEDIA_DERIVATIVES/audio/CATHEDRAL%20OF%20IV%20DRIPS/The%20Cathedral%20of%20IV%20Drips%20-%20Vatican%20Vigil%20-%20Sonauto--stream.mp3",
+      "audio_url": "audio/song-cathedral-14.mp3",
       "duration_str": "",
-      "user_curation_note": "Deep soul, quick bite."
+      "user_curation_note": "Deep soul, quick bite.",
+      "repo_path": "MEDIA_DERIVATIVES/audio/CATHEDRAL OF IV DRIPS/The Cathedral of IV Drips - Vatican Vigil - Sonauto--fallback.mp3",
+      "local_exists": true,
+      "size_bytes": 528762
     },
     {
       "slug": "song-mallground-18",
       "title": "Hidden Systems (Infra-Bass Edit)",
       "album": "MALL PATCHWORLD INGEST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mallground-18.html",
-      "audio_url": "",
+      "audio_url": "audio/song-mallground-18.mp3",
       "duration_str": "",
-      "user_curation_note": "Glitch bounce, kinda annoying."
+      "user_curation_note": "Glitch bounce, kinda annoying.",
+      "local_exists": true,
+      "size_bytes": 5036013
     },
     {
       "slug": "song-mallground-19",
       "title": "INDEXED EVIDENCE 120",
       "album": "MALL PATCHWORLD INGEST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mallground-19.html",
-      "audio_url": "",
+      "audio_url": "audio/song-mallground-19.mp3",
       "duration_str": "",
-      "user_curation_note": "Beautiful, could be a winner."
+      "user_curation_note": "Beautiful, could be a winner.",
+      "local_exists": true,
+      "size_bytes": 4987053
     },
     {
       "slug": "song-mallground-27",
       "title": "MallNet Paradise System",
       "album": "MALL PATCHWORLD INGEST",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-mallground-27.html",
-      "audio_url": "",
+      "audio_url": "audio/song-mallground-27.mp3",
       "duration_str": "",
-      "user_curation_note": "Falls forward to somewhere delightful."
+      "user_curation_note": "Falls forward to somewhere delightful.",
+      "local_exists": true,
+      "size_bytes": 3994029
     },
     {
       "slug": "song-nightbus-08",
       "title": "Saltwater Static (The Last Shanty)",
       "album": "NIGHT BUS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-nightbus-08.html",
-      "audio_url": "",
+      "audio_url": "audio/song-nightbus-08.mp3",
       "duration_str": "",
-      "user_curation_note": "Not bad for a last song."
+      "user_curation_note": "Not bad for a last song.",
+      "local_exists": true,
+      "size_bytes": 4163373
     },
     {
       "slug": "song-nightbus-03",
       "title": "Command Decent",
       "album": "NIGHT BUS",
       "url": "https://hartswf0.github.io/moto/VOLHOLLA/song-nightbus-03.html",
-      "audio_url": "",
+      "audio_url": "audio/song-nightbus-03.mp3",
       "duration_str": "",
-      "user_curation_note": "Pretty good."
+      "user_curation_note": "Pretty good.",
+      "local_exists": true,
+      "size_bytes": 5198445
     }
   ]
 }
