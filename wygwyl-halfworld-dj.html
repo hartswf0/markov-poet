@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WYGWYL HALFWORLD DJ — LIVE BLEND & DITHER INSTRUMENT</title>
+<style>
+  :root {
+    --paper: #0a0a0a;
+    --paper2: #141414;
+    --rule: #2a2a2a;
+    --ink: #ffffff;
+    --ink2: #cccccc;
+    --dim: #777777;
+    --accent: #0066cc;
+    --green: #22c55e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--paper); color: var(--ink); font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
+
+  header { height: 36px; background: #000; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-weight: 900; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.08em; }
+  .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50% !important; }
+
+  #djmain { flex: 1; display: flex; min-height: 0; }
+  
+  /* Canvas Stage on Left */
+  #stagewrap { flex: 1; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+  
+  #hudChip { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.85); border: 1px solid var(--rule); padding: 4px 8px; font-size: 10px; letter-spacing: 0.1em; color: var(--dim); }
+  #hudChip b { color: #fff; }
+
+  /* Control Panel on Right */
+  #panel { width: 340px; background: var(--paper2); border-left: 1px solid var(--rule); overflow-y: auto; display: flex; flex-direction: column; }
+  
+  .grp { border-bottom: 1px solid var(--rule); }
+  .grp-head { background: #0e0e0e; padding: 6px 10px; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: var(--ink2); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
+  .grp-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 10px; }
+  .row label { width: 90px; color: var(--dim); }
+  .row input[type=range] { flex: 1; accent-color: #fff; }
+  .row select { flex: 1; background: #000; border: 1px solid var(--rule); color: #fff; padding: 2px 4px; font: inherit; font-size: 10px; }
+  .val { width: 32px; text-align: right; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+  /* Video Source (Hidden from DOM render, decoded to Canvas) */
+  video { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
+
+  .transport { background: #000; border-top: 1px solid var(--rule); padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .transport-btn { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 4px 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+  .transport-btn:hover { background: #fff; color: #000; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="dot"></span>WYGWYL · BEFLIX / HALFWORLD LIVE BLENDER</div>
+  <div style="font-size:10px; color:var(--dim);">14 DEDUPLICATED NARRATIVE SHOTS · 8-SHADE DOT LAW</div>
+  <div style="display:flex; gap:6px;">
+    <a href="wygwyl-slot-organizer.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:2px 6px;">CONFORM</a>
+    <a href="wygwyl-cinema.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:2px 6px;">CINEMA</a>
+  </div>
+</header>
+
+<main id="djmain">
+  <div id="stagewrap">
+    <canvas id="stage" width="256" height="192"></canvas>
+    <div id="hudChip">SOURCE: <b id="clipTitle">POEM 01 · OUT OF LIFE</b> · BLEND: <b id="blendModeLabel">BAYER 8-LEVEL</b></div>
+  </div>
+
+  <aside id="panel">
+    <div class="grp">
+      <div class="grp-head"><span>ACTIVE 14-SHOT REEL</span><span id="timecode">01:00:00:00</span></div>
+      <div class="grp-body">
+        <select id="clipSelect" onchange="jumpToClip(this.value)">
+          <option value="0">01 OUT OF LIFE — Dim Bedroom Window</option>
+          <option value="1">02 FLASHING LIGHTS — Subway Stair Sprint</option>
+          <option value="2">03 HOW TO BREAK OFF — Beach Heart Ribbons</option>
+          <option value="3">04 NEVERMORE — Cathedral Circling Crows</option>
+          <option value="4">05 BLOODLINES — Beating Heart Skeleton</option>
+          <option value="5">06 RESURRECTING ATLANTIS — CRT TV Pyramid</option>
+          <option value="6">07 DJ TURN ME UP — Boy Rain Diner Window</option>
+          <option value="7">08 NEWLY SINGLE — Speeding Train Refraction</option>
+          <option value="8">09 YET, HEARD — Rooftop Steam Skydiving</option>
+          <option value="9">10 MAGIC RIDE — Coastal Palm Light Trails</option>
+          <option value="10">11 NEW DAY — Yellow Chrysanthemums</option>
+          <option value="11">12 REUNION — Two Kin Women Laughter</option>
+          <option value="12">13 HOW TO WIN MY HEART — Temporal Echo</option>
+          <option value="13">14 HOT MINUTE — Balcony Red Flare Smoke</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-head">INGEST · DOT LAW DITHER</div>
+      <div class="grp-body">
+        <div class="row"><label>Dither Mode</label>
+          <select id="ditherMode">
+            <option value="bayer">Bayer 8-Shade</option>
+            <option value="halftone">Radial Dot Halftone</option>
+            <option value="threshold">High-Contrast Luma</option>
+            <option value="raw">Native RGB</option>
+          </select>
+        </div>
+        <div class="row"><label>Dot Scale</label><input type="range" id="dotScale" min="1" max="6" value="2"><span class="val" id="dotScaleVal">2</span></div>
+        <div class="row"><label>Contrast</label><input type="range" id="contrast" min="50" max="250" value="120"><span class="val" id="contrastVal">120</span></div>
+        <div class="row"><label>Brightness</label><input type="range" id="brightness" min="-50" max="50" value="0"><span class="val" id="brightnessVal">0</span></div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-head">CHROMINANCE &amp; INVERSION</div>
+      <div class="grp-body">
+        <div class="row"><label>Tone Invert</label>
+          <select id="invertMode">
+            <option value="normal">Normal</option>
+            <option value="invert">Invert (White on Black)</option>
+            <option value="solarize">Solarize</option>
+          </select>
+        </div>
+        <div class="row"><label>Luma Threshold</label><input type="range" id="lumaThresh" min="0" max="255" value="128"><span class="val" id="lumaThreshVal">128</span></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="transport">
+  <button class="transport-btn" onclick="prevShot()">◀ PREV POEM</button>
+  <button class="transport-btn" id="playBtn" onclick="togglePlay()">PLAY NARRATIVE CUT</button>
+  <button class="transport-btn" onclick="nextShot()">NEXT POEM ▶</button>
+  <span style="font-size:10px; color:var(--dim);">256x192 8-SHADE REALTIME ARITHMETIC CANVAS</span>
+</div>
+
+<video id="vidSource" playsinline muted loop></video>
+
+<script>
+const CLIPS = [
+  { n: "01", t: "OUT OF LIFE", file: "20250719_054051_98f0499c_720p_5s_silent_dim_bedroom_wide_shot_medium_push_in_poe.mp4" },
+  { n: "02", t: "FLASHING LIGHTS", file: "20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs.mp4" },
+  { n: "03", t: "HOW TO BREAK OFF", file: "20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone.mp4" },
+  { n: "04", t: "NEVERMORE", file: "20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light.mp4" },
+  { n: "05", t: "BLOODLINES", file: "20251019_233913_764b035a_720p_5s_audio_interpolated_sequence.mp4" },
+  { n: "06", t: "RESURRECTING ATLANTIS", file: "20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city.mp4" },
+  { n: "07", t: "DJ TURN ME UP", file: "20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio.mp4" },
+  { n: "08", t: "NEWLY SINGLE", file: "20251020_033310_13fee118_720p_5s_audio_interpolated_sequence.mp4" },
+  { n: "09", t: "YET, HEARD", file: "20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p.mp4" },
+  { n: "10", t: "MAGIC RIDE", file: "20251020_032459_eaea9d0a_720p_5s_audio_interpolated_sequence.mp4" },
+  { n: "11", t: "NEW DAY", file: "20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water.mp4" },
+  { n: "12", t: "REUNION", file: "20251020_014513_02185971_720p_5s_audio_interpolated_sequence.mp4" },
+  { n: "13", t: "HOW TO WIN MY HEART", file: "20251019_231956_53666716_720p_5s_silent_interpolated_sequence.mp4" },
+  { n: "14", t: "HOT MINUTE", file: "20251020_015442_ce4762b5_draft_5s_audio_interpolated_sequence.mp4" }
+];
+
+const bayer4x4 = [
+  [ 0,  8,  2, 10],
+  [12,  4, 14,  6],
+  [ 3, 11,  1,  9],
+  [15,  7, 13,  5]
+];
+
+let currentClipIdx = 0;
+const canvas = document.getElementById("stage");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const video = document.getElementById("vidSource");
+
+function jumpToClip(idx) {
+  currentClipIdx = parseInt(idx, 10);
+  const clip = CLIPS[currentClipIdx];
+  document.getElementById("clipSelect").value = currentClipIdx;
+  document.getElementById("clipTitle").textContent = `POEM ${clip.n} · ${clip.t}`;
+  video.src = `MARKOV_POET/videos/${clip.file}`;
+  video.play().catch(()=>{});
+}
+
+function prevShot() {
+  if (currentClipIdx > 0) jumpToClip(currentClipIdx - 1);
+}
+
+function nextShot() {
+  if (currentClipIdx < CLIPS.length - 1) jumpToClip(currentClipIdx + 1);
+}
+
+function togglePlay() {
+  if (video.paused) {
+    video.play();
+    document.getElementById("playBtn").textContent = "PAUSE NARRATIVE CUT";
+  } else {
+    video.pause();
+    document.getElementById("playBtn").textContent = "PLAY NARRATIVE CUT";
+  }
+}
+
+// Real-Time Halfworld Render Loop
+function renderFrame() {
+  if (video.readyState >= 2) {
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.drawImage(video, 0, 0, w, h);
+
+    const mode = document.getElementById("ditherMode").value;
+    const invert = document.getElementById("invertMode").value;
+    const scale = parseInt(document.getElementById("dotScale").value, 10);
+    const contrast = parseInt(document.getElementById("contrast").value, 10) / 100;
+    const brightness = parseInt(document.getElementById("brightness").value, 10);
+
+    if (mode !== 'raw') {
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const data = imgData.data;
+
+      for (let y = 0; y < h; y += scale) {
+        for (let x = 0; x < w; x += scale) {
+          const idx = (y * w + x) * 4;
+          let r = data[idx];
+          let g = data[idx + 1];
+          let b = data[idx + 2];
+
+          // Luma
+          let luma = 0.299 * r + 0.587 * g + 0.114 * b;
+          luma = (luma - 128) * contrast + 128 + brightness;
+          luma = Math.max(0, Math.min(255, luma));
+
+          if (invert === 'invert') luma = 255 - luma;
+          else if (invert === 'solarize' && luma < 128) luma = 255 - luma;
+
+          let outVal = 0;
+          if (mode === 'bayer') {
+            const bVal = (bayer4x4[(y / scale) % 4][(x / scale) % 4] / 16) * 255;
+            outVal = luma > bVal ? 255 : (luma > bVal * 0.5 ? 128 : 0);
+          } else if (mode === 'threshold') {
+            outVal = luma > 128 ? 255 : 0;
+          } else {
+            outVal = luma;
+          }
+
+          for (let dy = 0; dy < scale && y + dy < h; dy++) {
+            for (let dx = 0; dx < scale && x + dx < w; dx++) {
+              const pix = ((y + dy) * w + (x + dx)) * 4;
+              data[pix] = outVal;
+              data[pix + 1] = outVal;
+              data[pix + 2] = outVal;
+            }
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+    }
+  }
+  requestAnimationFrame(renderFrame);
+}
+
+// Hook sliders
+["dotScale", "contrast", "brightness", "lumaThresh"].forEach(id => {
+  document.getElementById(id).oninput = (e) => {
+    document.getElementById(id + "Val").textContent = e.target.value;
+  };
+});
+
+jumpToClip(0);
+renderFrame();
+</script>
+</body>
+</html>

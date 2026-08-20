@@ -51,9 +51,10 @@
 <header>
   <div class="brand">🎬 WYGWYL CINEMA SCREENING ROOM</div>
   <div class="cut-selector">
-    <button class="cut-btn active" id="btnDC" onclick="switchCut('dc')">14-POEM DIRECTOR'S CUT (94 MB)</button>
-    <button class="cut-btn" id="btnHDR" onclick="switchCut('hdr')">HDR MASTER CUT (74 MB)</button>
-    <button class="cut-btn" id="btn135" onclick="switchCut('135')">135-SHOT COMPLETE MASTER (402 MB)</button>
+    <button class="cut-btn active" id="btnNarrative" onclick="switchCut('narrative')">14-SHOT NARRATIVE CUT (38 MB)</button>
+    <button class="cut-btn" id="btnDC" onclick="switchCut('dc')">DIRECTOR'S CUT (94 MB)</button>
+    <button class="cut-btn" id="btnHDR" onclick="switchCut('hdr')">KINETIC HDR (49 MB)</button>
+    <button class="cut-btn" id="btn135" onclick="switchCut('135')">135-SHOT COMPLETE (402 MB)</button>
   </div>
   <div style="display:flex; gap:6px;">
     <a href="wygwyl-suite-player.html" class="cut-btn" target="_blank">SUITE PLAYER</a>
@@ -88,6 +89,12 @@
 
 <script>
 const CUTS = {
+  narrative: {
+    title: "WYGWYL 14-SHOT DEDUPLICATED NARRATIVE CUT (ZERO REPEATS)",
+    file: "rendered_cuts/WYGWYL_14SHOT_NARRATIVE_CUT.mp4",
+    size: "37.6 MB",
+    desc: "CUTBASTARD-1 strict narrative cut: exactly 1 distinct visual archetype per poem (14 shots total, 61s). Zero duplicate setups, maximum kinetic contrast and relentless pacing."
+  },
   dc: {
     title: "WYGWYL 14-POEM DEFINITIVE DIRECTOR'S CUT",
     file: "rendered_cuts/WYGWYL_14POEM_DIRECTORS_CUT.mp4",
