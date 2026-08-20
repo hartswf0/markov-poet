@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WYGWYL × VOLHOLLA MUSIC SCORE MATCHER</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --border: #262626;
+    --text: #ffffff;
+    --dim: #888888;
+    --accent: #0066cc;
+    --green: #22c55e;
+    --gold: #feca57;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--bg); color: var(--text); font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; overflow: hidden; padding: 8px; gap: 8px; user-select: none; }
+
+  /* Custom Sleek Scrollbars */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #0c0c0c; }
+  ::-webkit-scrollbar-thumb { background: #333333; }
+
+  /* Header */
+  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 6px; flex-shrink: 0; }
+  .title { font-weight: 900; letter-spacing: 0.08em; font-size: 13px; }
+  .controls { display: flex; gap: 6px; align-items: center; }
+  button, select { background: #161616; border: 1px solid #333; color: #fff; padding: 4px 10px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+  button:hover, select:hover { background: #fff; color: #000; border-color: #fff; }
+  .btn-accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn-green { background: var(--green); border-color: var(--green); color: #000; font-weight: 900; }
+
+  /* Main Two-Column Viewport */
+  main { flex: 1; display: grid; grid-template-columns: minmax(440px, 1.2fr) minmax(380px, 1fr); gap: 8px; min-height: 0; }
+
+  /* Left Pane: Film Video Cinema */
+  #videoPane { background: #080808; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .pane-head { background: #111; padding: 6px 10px; border-bottom: 1px solid var(--border); font-size: 10.5px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
+  
+  .video-stage { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  video { width: 100%; height: 100%; object-fit: contain; }
+
+  .video-bar { background: #111; padding: 8px 12px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+
+  /* Right Pane: VOLHOLLA Music Tracks List */
+  #musicPane { background: #080808; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  
+  .music-search-bar { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; }
+  .music-search { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10.5px; }
+
+  #trackList { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
+  .track-item { background: #121212; border: 1px solid #222; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
+  .track-item:hover { border-color: #555; background: #181818; }
+  .track-item.active-track { border-color: var(--accent); background: #111c2e; }
+
+  .track-row-top { display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+  .track-title { font-size: 11.5px; color: #fff; }
+  .track-album { font-size: 9px; color: var(--gold); }
+  
+  .track-note { font-size: 10px; color: #aaa; font-style: italic; }
+  .track-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 4px; border-top: 1px solid #1f1f1f; }
+  .track-slug { font-size: 9px; color: #555; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title">WYGWYL × VOLHOLLA MUSIC SCORE MATCHER</div>
+  <div class="controls">
+    <button onclick="syncPlayBoth()" class="btn-green">▶ SYNC PLAY FILM + SCORE</button>
+    <button onclick="pauseBoth()">⏸ PAUSE</button>
+    <button class="btn-accent" onclick="copyMuxCommand()">📋 COPY FFMPEG MUX</button>
+  </div>
+</header>
+
+<main>
+  <!-- Left: Film Screening Stage -->
+  <section id="videoPane">
+    <div class="pane-head">
+      <span>FILM CUT STAGE</span>
+      <select id="cutSelect" onchange="switchVideoCut(this.value)">
+        <option value="rendered_cuts/WYGWYL_14SHOT_NARRATIVE_CUT.mp4">14-Shot Deduplicated Narrative Cut (61s)</option>
+        <option value="rendered_cuts/WYGWYL_14POEM_DIRECTORS_CUT.mp4">14-Poem Definitive Director's Cut (24m)</option>
+        <option value="rendered_cuts/WYGWYL_HDR_MASTER_CUT.mp4">Kinetic HDR Master Cut (84s)</option>
+      </select>
+    </div>
+    <div class="video-stage">
+      <video id="mainVideo" controls playsinline></video>
+    </div>
+    <div class="video-bar">
+      <span style="font-size:10px; color:#888;">NOW PLAYING: <b id="nowPlayingText" style="color:#fff;">14-Shot Narrative Cut</b></span>
+      <audio id="mainAudio" controls style="height:28px; width:220px;"></audio>
+    </div>
+  </section>
+
+  <!-- Right: 34 VOLHOLLA Tracks Pool -->
+  <section id="musicPane">
+    <div class="pane-head">
+      <span>34 VOLHOLLA TRACKS (CLICK TO TEST SCORE)</span>
+      <span id="trackCountBadge" style="font-size:9px; color:var(--dim);">34 TRACKS</span>
+    </div>
+    <div class="music-search-bar">
+      <input type="text" class="music-search" id="musicSearchInput" placeholder="Filter by mood, title, album (e.g. soul, funk, beach, dark)..." oninput="renderTracks()" />
+    </div>
+    <div id="trackList"></div>
+  </section>
+</main>
+
+<script>
+let SONGS = [];
+let activeSong = null;
+
+const videoEl = document.getElementById("mainVideo");
+const audioEl = document.getElementById("mainAudio");
+
+async function init() {
+  const res = await fetch("VOLHOLLA_SONG_CATALOG.json");
+  const data = await res.json();
+  SONGS = data.songs;
+
+  renderTracks();
+  
+  // Default to first cut & first audio track
+  switchVideoCut(document.getElementById("cutSelect").value);
+  if (SONGS.length > 0) {
+    selectTrack(SONGS[0].slug);
+  }
+}
+
+function renderTracks() {
+  const list = document.getElementById("trackList");
+  list.innerHTML = "";
+  const query = (document.getElementById("musicSearchInput").value || "").toLowerCase();
+
+  const filtered = SONGS.filter(s => {
+    if (!query) return true;
+    const txt = `${s.title} ${s.album} ${s.user_curation_note} ${s.slug}`.toLowerCase();
+    return txt.includes(query);
+  });
+
+  document.getElementById("trackCountBadge").textContent = `${filtered.length} TRACKS`;
+
+  filtered.forEach(s => {
+    const el = document.createElement("div");
+    el.className = "track-item" + (activeSong && activeSong.slug === s.slug ? " active-track" : "");
+    el.onclick = () => selectTrack(s.slug);
+
+    el.innerHTML = `
+      <div class="track-row-top">
+        <span class="track-title">${s.title}</span>
+        <span class="track-album">${s.album || 'VOLHOLLA'}</span>
+      </div>
+      <div class="track-note">“${s.user_curation_note}”</div>
+      <div class="track-actions">
+        <span class="track-slug">${s.slug}</span>
+        <span style="font-size:9.5px; color:${s.audio_url ? 'var(--green)' : '#666'}; font-weight:800;">
+          ${s.audio_url ? 'STREAM READY' : 'HTML EMBED'}
+        </span>
+      </div>
+    `;
+
+    list.appendChild(el);
+  });
+}
+
+function selectTrack(slug) {
+  const found = SONGS.find(s => s.slug === slug);
+  if (!found) return;
+  activeSong = found;
+
+  document.querySelectorAll(".track-item").forEach(el => {
+    el.classList.toggle("active-track", el.querySelector(".track-slug").textContent === slug);
+  });
+
+  if (found.audio_url) {
+    audioEl.src = found.audio_url;
+  } else {
+    audioEl.src = "";
+  }
+
+  document.getElementById("nowPlayingText").textContent = `${found.title} (${found.album || 'VOLHOLLA'})`;
+}
+
+function switchVideoCut(filePath) {
+  videoEl.src = filePath;
+}
+
+function syncPlayBoth() {
+  videoEl.currentTime = 0;
+  audioEl.currentTime = 0;
+  videoEl.play().catch(()=>{});
+  audioEl.play().catch(()=>{});
+}
+
+function pauseBoth() {
+  videoEl.pause();
+  audioEl.pause();
+}
+
+function copyMuxCommand() {
+  const cutPath = document.getElementById("cutSelect").value;
+  const audioUrl = activeSong && activeSong.audio_url ? activeSong.audio_url : "https://hartswf0.github.io/moto/MEDIA_DERIVATIVES/audio/MAREA%20MEMORY/Marea%20Memory%20-%20Shaolin%20Sunrise%20Pulse%20-%20Treblo--stream.mp3";
+  const slug = activeSong ? activeSong.slug : "score";
+
+  const cmd = `ffmpeg -y -i "downloads/MARKOV_POET_ARCHIVE/${cutPath}" -i "${audioUrl}" -c:v copy -c:a aac -b:a 192k -shortest "downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_SCORED_${slug.toUpperCase()}.mp4"\n`;
+
+  navigator.clipboard.writeText(cmd);
+  alert("COPIED FFMPEG AUDIO MUX COMMAND TO CLIPBOARD");
+}
+
+init();
+</script>
+</body>
+</html>
