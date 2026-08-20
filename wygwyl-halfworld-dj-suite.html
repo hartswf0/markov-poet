@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WYGWYL HALFWORLD DJ SUITE — REALTIME DEDUP BLENDER</title>
+<link rel="stylesheet" href="halfworld/halfworld.css">
+<style>
+  :root {
+    --paper: #080808;
+    --paper2: #121212;
+    --rule: #262626;
+    --ink: #ffffff;
+    --ink2: #cccccc;
+    --dim: #777777;
+    --accent: #0077ff;
+    --green: #22c55e;
+    --gold: #feca57;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--paper); color: var(--ink); font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; user-select: none; }
+
+  /* Header */
+  header { height: 38px; background: #000; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-weight: 900; flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.08em; }
+  .dot-live { width: 6px; height: 6px; background: var(--green); border-radius: 50% !important; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+  .header-actions { display: flex; gap: 6px; align-items: center; }
+  button, select { background: #161616; border: 1px solid #333; color: #fff; padding: 4px 10px; font: inherit; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+  button:hover, select:hover { background: #fff; color: #000; }
+  button.btn-accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.btn-green { background: var(--green); border-color: var(--green); color: #000; font-weight: 900; }
+
+  /* Main Workspace: 3 Panes (14 Halfworld Tracks, Central Halftone Canvas Stage, Live DJ Dither Controls) */
+  #djmain { flex: 1; display: grid; grid-template-columns: minmax(260px, 1fr) minmax(500px, 2.3fr) minmax(320px, 1.2fr); min-height: 0; }
+
+  /* Left Pane: 14 Halfworlds Selector */
+  #worldsPane { background: var(--paper2); border-right: 1px solid var(--rule); display: flex; flex-direction: column; overflow: hidden; }
+  .pane-head { background: #0a0a0a; padding: 8px 10px; font-size: 10.5px; font-weight: 900; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  
+  #worldsList { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; padding: 4px; }
+  .world-row { background: #0f0f0f; border: 1px solid #1c1c1c; padding: 6px 8px; display: flex; flex-direction: column; gap: 2px; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
+  .world-row:hover { border-color: #444; background: #171717; }
+  .world-row.active-world { border-color: var(--accent); background: #0b172a; }
+  .world-row-top { display: flex; justify-content: space-between; font-weight: 800; font-size: 11px; }
+  .world-title { color: #fff; }
+  .world-status { font-size: 9px; color: var(--gold); }
+  .world-desc { font-size: 9.5px; color: var(--dim); }
+
+  /* Center Pane: Canvas Stage & Video Ingest Deck */
+  #stageWrap { background: #000; display: flex; flex-direction: column; position: relative; overflow: hidden; border-right: 1px solid var(--rule); }
+  
+  .canvas-stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; background: #050505; }
+  canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+  
+  #hudChip { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.85); border: 1px solid var(--rule); padding: 5px 10px; font-size: 10px; letter-spacing: 0.1em; color: var(--dim); }
+  #hudChip b { color: #fff; }
+  #blendModeTag { color: var(--green); font-weight: 800; }
+
+  /* Crossfader Bar */
+  .crossfader-bar { background: #0d0d0d; border-top: 1px solid var(--rule); padding: 8px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-shrink: 0; }
+  .xfader-label { font-size: 10px; font-weight: 800; color: var(--dim); }
+  .xfader-slider { flex: 1; accent-color: var(--accent); }
+
+  /* Right Pane: Live Beflix DJ Controls */
+  #panel { background: var(--paper2); overflow-y: auto; display: flex; flex-direction: column; }
+  .grp { border-bottom: 1px solid var(--rule); }
+  .grp-title { background: #0e0e0e; padding: 7px 10px; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: var(--ink2); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
+  .grp-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+
+  .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 10px; }
+  .ctrl-row label { width: 100px; color: var(--dim); }
+  .ctrl-row input[type=range] { flex: 1; accent-color: #fff; }
+  .ctrl-row select { flex: 1; background: #000; border: 1px solid var(--rule); color: #fff; padding: 2px 4px; }
+  .ctrl-val { width: 34px; text-align: right; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+  /* Video Source (Hidden decoded DOM node) */
+  video { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="dot-live"></span>
+    <span>WYGWYL HALFWORLD DJ SUITE · PROCEDURAL DEDUP BLENDER</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-green" id="masterPlayBtn" onclick="togglePlay()">▶ PLAY LIVE BLEND</button>
+    <button class="btn-accent" onclick="toggleDedupMode()" id="dedupModeBtn">HALFWORLD DEDUP: ON</button>
+    <a href="wygwyl-radio.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">RADIO</a>
+    <a href="wygwyl-cinema.html" style="color:#aaa; text-decoration:none; border:1px solid #333; padding:4px 8px; font-size:10px; font-weight:800;">CINEMA</a>
+  </div>
+</header>
+
+<main id="djmain">
+  <!-- Left Column: 14 Halfworlds -->
+  <section id="worldsPane">
+    <div class="pane-head">
+      <span>14 HALFWORLD PROCEDURAL WORLDS</span>
+      <span style="color:var(--gold);">8-SHADE DOT LAW</span>
+    </div>
+    <div id="worldsList"></div>
+  </section>
+
+  <!-- Center Column: Halftone Canvas & Crossfader -->
+  <section id="stageWrap">
+    <div class="canvas-stage">
+      <canvas id="stage" width="256" height="192"></canvas>
+      <div id="hudChip">
+        WORLD: <b id="activeWorldName">01 OUT OF LIFE</b> · 
+        SOURCE: <b id="activeSourceName">BEDROOM FOG STASIS</b> · 
+        MODE: <span id="blendModeTag">8-LEVEL HALFWORLD</span>
+      </div>
+    </div>
+
+    <div class="crossfader-bar">
+      <span class="xfader-label">A: RAW FOOTAGE</span>
+      <input type="range" class="xfader-slider" id="crossfader" min="0" max="100" value="50" oninput="updateCrossfade(this.value)" />
+      <span class="xfader-label">B: ARITHMETIC HALFWORLD (<span id="xfadeVal">50%</span>)</span>
+    </div>
+  </section>
+
+  <!-- Right Column: Live DJ Shader Controls -->
+  <aside id="panel">
+    <div class="grp">
+      <div class="grp-title"><span>INGEST · LUMINANCE &amp; CHROMA</span></div>
+      <div class="grp-body">
+        <div class="ctrl-row"><label>Channel</label>
+          <select id="channelSelect" onchange="updateShaderParams()">
+            <option value="luma">Luminance</option>
+            <option value="chroma">Chroma Key (Streetlight)</option>
+            <option value="red">Red Plasma Channel</option>
+            <option value="blue">CRT Phosphor Channel</option>
+          </select>
+        </div>
+        <div class="ctrl-row"><label>Chroma Hue</label><input type="range" id="chromaHue" min="0" max="360" value="165" oninput="updateShaderParams()"><span class="ctrl-val" id="chromaHueVal">165°</span></div>
+        <div class="ctrl-row"><label>Tolerance</label><input type="range" id="chromaTol" min="5" max="180" value="55" oninput="updateShaderParams()"><span class="ctrl-val" id="chromaTolVal">55</span></div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-title"><span>BEFLIX · 8-SHADE BAYER DITHER</span></div>
+      <div class="grp-body">
+        <div class="ctrl-row"><label>Dither Mode</label>
+          <select id="ditherSelect" onchange="updateShaderParams()">
+            <option value="bayer" selected>Bayer 4x4 (8 Ink Levels)</option>
+            <option value="halftone">Radial Dot Halftone</option>
+            <option value="threshold">High-Contrast Luma</option>
+            <option value="raw">Pass-Through RGB</option>
+          </select>
+        </div>
+        <div class="ctrl-row"><label>Dot Scale</label><input type="range" id="dotScale" min="1" max="6" value="2" oninput="updateShaderParams()"><span class="ctrl-val" id="dotScaleVal">2px</span></div>
+        <div class="ctrl-row"><label>Contrast</label><input type="range" id="contrast" min="50" max="250" value="130" oninput="updateShaderParams()"><span class="ctrl-val" id="contrastVal">130</span></div>
+        <div class="ctrl-row"><label>Brightness</label><input type="range" id="brightness" min="-50" max="50" value="0" oninput="updateShaderParams()"><span class="ctrl-val" id="brightnessVal">0</span></div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-title"><span>TONE &amp; WARP REVERSAL</span></div>
+      <div class="grp-body">
+        <div class="ctrl-row"><label>Tone Invert</label>
+          <select id="invertSelect" onchange="updateShaderParams()">
+            <option value="normal">Normal Dark Mode</option>
+            <option value="invert" selected>Invert (White on Black)</option>
+            <option value="solarize">Solarize</option>
+          </select>
+        </div>
+        <div class="ctrl-row"><label>Kaleidoscope</label>
+          <select id="kaleidoSelect" onchange="updateShaderParams()">
+            <option value="none" selected>None</option>
+            <option value="mirror-x">Mirror X</option>
+            <option value="mirror-y">Mirror Y</option>
+            <option value="quad">Quad Symmetric</option>
+          </select>
+        </div>
+        <div class="ctrl-row"><label>Edge Accent</label><input type="range" id="edgeMix" min="0" max="100" value="25" oninput="updateShaderParams()"><span class="ctrl-val" id="edgeMixVal">25%</span></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<video id="videoSource" playsinline muted loop></video>
+
+<script>
+const HALFWORLDS = [
+  { n: "01", t: "OUT OF LIFE", leadVideo: "halfworld/footage/01-out-of-life-lead.mp4", altVideo: "MARKOV_POET/videos/20250719_054051_98f0499c_720p_5s_silent_dim_bedroom_wide_shot_medium_push_in_poe.mp4", desc: "Room stasis, vapor gesture, window gaze", isReplica: true },
+  { n: "02", t: "FLASHING LIGHTS", leadVideo: "MARKOV_POET/videos/20251020_033922_6750a5d1_720p_5s_audio_sound_train_arrives_man_runs_down_stairs.mp4", desc: "Amber subway staircase sprint", isReplica: false },
+  { n: "03", t: "HOW TO BREAK OFF AN ENGAGEMENT", leadVideo: "MARKOV_POET/videos/20251020_072308_447a4780_720p_9s_audio_ocean_light_heartbreak_heart_soul_drone.mp4", desc: "Beach heart ribbons in ocean wind", isReplica: false },
+  { n: "04", t: "NEVERMORE", leadVideo: "MARKOV_POET/videos/20251020_032828_63d387a4_draft_5s_audio_sound_drone_sound_of_morph_vocoder_light.mp4", desc: "Prophetic ravens circling cathedral", isReplica: false },
+  { n: "05", t: "BLOODLINES", leadVideo: "MARKOV_POET/videos/20251019_233913_764b035a_720p_5s_audio_interpolated_sequence.mp4", desc: "Open jacket beating heart skeleton", isReplica: false },
+  { n: "06", t: "RESURRECTING ATLANTIS", leadVideo: "MARKOV_POET/videos/20251020_064257_84c43938_720p_9s_audio_tvs_play_water_ocean_atlantis_lost_city.mp4", desc: "Cathode TV pyramid ocean in mist", isReplica: false },
+  { n: "07", t: "DJ TURN ME UP", leadVideo: "MARKOV_POET/videos/20251019_230530_e9c18d8d_720p_5s_audio_sound_rain_distant_sounds_echo_of_radio.mp4", desc: "Boy in red hoodie at rain diner window", isReplica: false },
+  { n: "08", t: "NEWLY SINGLE", leadVideo: "MARKOV_POET/videos/20251020_033310_13fee118_720p_5s_audio_interpolated_sequence.mp4", desc: "Speeding train neon refraction", isReplica: true },
+  { n: "09", t: "YET, HEARD", leadVideo: "MARKOV_POET/videos/20250719_075124_d5abc940_720p_9s_silent_pov_shot_through_a_glitching_filter_of_p.mp4", desc: "Rooftop plunge into celestial cloud glide", isReplica: false },
+  { n: "10", t: "MAGIC RIDE", leadVideo: "MARKOV_POET/videos/20251020_032459_eaea9d0a_720p_5s_audio_interpolated_sequence.mp4", desc: "Coastal palm highway golden light trails", isReplica: false },
+  { n: "11", t: "NEW DAY", leadVideo: "MARKOV_POET/videos/20251020_032021_badaf97b_720p_5s_audio_sound_dream_surreal_drone_water.mp4", desc: "Wading in yellow chrysanthemums sea", isReplica: false },
+  { n: "12", t: "REUNION", leadVideo: "MARKOV_POET/videos/20251020_014513_02185971_720p_5s_audio_interpolated_sequence.mp4", desc: "Two kin women sharing radiant laughter", isReplica: false },
+  { n: "13", t: "HOW TO WIN MY HEART", leadVideo: "MARKOV_POET/videos/20251019_231956_53666716_720p_5s_silent_interpolated_sequence.mp4", desc: "Tracksuit plastic sleeves echo walk", isReplica: true },
+  { n: "14", t: "HOT MINUTE", leadVideo: "MARKOV_POET/videos/20251020_015442_ce4762b5_draft_5s_audio_interpolated_sequence.mp4", desc: "Balcony crimson stadium flare smoke", isReplica: false }
+];
+
+const bayer4x4 = [
+  [ 0,  8,  2, 10],
+  [12,  4, 14,  6],
+  [ 3, 11,  1,  9],
+  [15,  7, 13,  5]
+];
+
+let activeWorldIdx = 0;
+let isPlaying = false;
+let dedupHalfworldActive = true;
+let crossfadeAmount = 0.5;
+
+const canvas = document.getElementById("stage");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const video = document.getElementById("videoSource");
+
+function init() {
+  renderWorldsList();
+  selectWorld(0);
+  requestAnimationFrame(renderLoop);
+}
+
+function renderWorldsList() {
+  const list = document.getElementById("worldsList");
+  list.innerHTML = "";
+
+  HALFWORLDS.forEach((w, idx) => {
+    const card = document.createElement("div");
+    card.className = "world-row" + (idx === activeWorldIdx ? " active-world" : "");
+    card.onclick = () => selectWorld(idx);
+
+    card.innerHTML = `
+      <div class="world-row-top">
+        <span class="world-title">${w.n} · ${w.t}</span>
+        <span class="world-status">${w.isReplica ? "DEDUP BLEND" : "HERO CUT"}</span>
+      </div>
+      <div class="world-desc">${w.desc}</div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+function selectWorld(idx) {
+  activeWorldIdx = idx;
+  const w = HALFWORLDS[idx];
+
+  document.querySelectorAll(".world-row").forEach((el, i) => {
+    el.classList.toggle("active-world", i === idx);
+  });
+
+  document.getElementById("activeWorldName").textContent = `${w.n} ${w.t}`;
+  document.getElementById("activeSourceName").textContent = w.desc.toUpperCase();
+
+  // If Dedup Mode is ON and this is a replica shot -> Automatically apply 8-shade halfworld dither!
+  if (dedupHalfworldActive && w.isReplica) {
+    document.getElementById("blendModeTag").textContent = "HALFWORLD DEDUP SHADER ACTIVE";
+    document.getElementById("crossfader").value = 75;
+    crossfadeAmount = 0.75;
+    document.getElementById("xfadeVal").textContent = "75%";
+  } else {
+    document.getElementById("blendModeTag").textContent = "HERO PASS-THROUGH";
+    document.getElementById("crossfader").value = 25;
+    crossfadeAmount = 0.25;
+    document.getElementById("xfadeVal").textContent = "25%";
+  }
+
+  video.src = w.leadVideo;
+  if (isPlaying) {
+    video.play().catch(()=>{});
+  }
+}
+
+function togglePlay() {
+  if (video.paused) {
+    video.play().catch(()=>{});
+    isPlaying = true;
+    document.getElementById("masterPlayBtn").textContent = "⏸ PAUSE LIVE BLEND";
+    document.getElementById("masterPlayBtn").classList.remove("btn-green");
+  } else {
+    video.pause();
+    isPlaying = false;
+    document.getElementById("masterPlayBtn").textContent = "▶ PLAY LIVE BLEND";
+    document.getElementById("masterPlayBtn").classList.add("btn-green");
+  }
+}
+
+function toggleDedupMode() {
+  dedupHalfworldActive = !dedupHalfworldActive;
+  const btn = document.getElementById("dedupModeBtn");
+  if (dedupHalfworldActive) {
+    btn.textContent = "HALFWORLD DEDUP: ON";
+    btn.classList.add("btn-accent");
+  } else {
+    btn.textContent = "HALFWORLD DEDUP: OFF";
+    btn.classList.remove("btn-accent");
+  }
+  selectWorld(activeWorldIdx);
+}
+
+function updateCrossfade(val) {
+  crossfadeAmount = parseFloat(val) / 100;
+  document.getElementById("xfadeVal").textContent = `${val}%`;
+}
+
+function updateShaderParams() {
+  document.getElementById("chromaHueVal").textContent = `${document.getElementById("chromaHue").value}°`;
+  document.getElementById("chromaTolVal").textContent = document.getElementById("chromaTol").value;
+  document.getElementById("dotScaleVal").textContent = `${document.getElementById("dotScale").value}px`;
+  document.getElementById("contrastVal").textContent = document.getElementById("contrast").value;
+  document.getElementById("brightnessVal").textContent = document.getElementById("brightness").value;
+  document.getElementById("edgeMixVal").textContent = `${document.getElementById("edgeMix").value}%`;
+}
+
+// Real-Time Halfworld Render Loop
+function renderLoop() {
+  if (video.readyState >= 2) {
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.drawImage(video, 0, 0, w, h);
+
+    if (crossfadeAmount > 0.05) {
+      const mode = document.getElementById("ditherSelect").value;
+      const invert = document.getElementById("invertSelect").value;
+      const channel = document.getElementById("channelSelect").value;
+      const scale = parseInt(document.getElementById("dotScale").value, 10);
+      const contrast = parseInt(document.getElementById("contrast").value, 10) / 100;
+      const brightness = parseInt(document.getElementById("brightness").value, 10);
+
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const data = imgData.data;
+
+      for (let y = 0; y < h; y += scale) {
+        for (let x = 0; x < w; x += scale) {
+          const idx = (y * w + x) * 4;
+          let r = data[idx];
+          let g = data[idx + 1];
+          let b = data[idx + 2];
+
+          let val = 0;
+          if (channel === 'red') val = r;
+          else if (channel === 'blue') val = b;
+          else if (channel === 'chroma') {
+            // Chroma difference from street green-cyan
+            const diff = Math.abs(g - 140) + Math.abs(b - 120);
+            val = diff < 60 ? 0 : 255;
+          } else {
+            val = 0.299 * r + 0.587 * g + 0.114 * b;
+          }
+
+          val = (val - 128) * contrast + 128 + brightness;
+          val = Math.max(0, Math.min(255, val));
+
+          if (invert === 'invert') val = 255 - val;
+          else if (invert === 'solarize' && val < 128) val = 255 - val;
+
+          let outVal = val;
+          if (mode === 'bayer') {
+            const bVal = (bayer4x4[(y / scale) % 4][(x / scale) % 4] / 16) * 255;
+            outVal = val > bVal ? 255 : (val > bVal * 0.5 ? 128 : 0);
+          } else if (mode === 'threshold') {
+            outVal = val > 128 ? 255 : 0;
+          }
+
+          // Blend with raw video based on crossfadeAmount
+          for (let dy = 0; dy < scale && y + dy < h; dy++) {
+            for (let dx = 0; dx < scale && x + dx < w; dx++) {
+              const pix = ((y + dy) * w + (x + dx)) * 4;
+              data[pix] = Math.round(data[pix] * (1 - crossfadeAmount) + outVal * crossfadeAmount);
+              data[pix + 1] = Math.round(data[pix + 1] * (1 - crossfadeAmount) + outVal * crossfadeAmount);
+              data[pix + 2] = Math.round(data[pix + 2] * (1 - crossfadeAmount) + outVal * crossfadeAmount);
+            }
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+    }
+  }
+  requestAnimationFrame(renderLoop);
+}
+
+init();
+</script>
+</body>
+</html>
