@@ -509,8 +509,11 @@ $("blendMode").addEventListener("change", () => {
   refreshReadouts();
 });
 
-// Render Loop
-let lastTime = performance.now();
+// Optimized Render Loop (15 FPS Dot-Law Timing for Authentic Beflix Motion & Silky Smooth Performance)
+let lastSampleTime = 0;
+const SAMPLE_INTERVAL = 1000 / 15; // 15 FPS Beflix clock (~66ms)
+let cachedBlended = fieldA;
+
 function loop(now) {
   const dt = Math.min(0.1, (now - lastTime) / 1000);
   lastTime = now;
@@ -528,20 +531,26 @@ function loop(now) {
     $("dclock").textContent = `${fmt(dT)} / ${fmt(R.total)}`;
   }
 
-  // Draw Source A (Video Ingest)
-  if (video.readyState >= 2) {
-    ingest.sample(fieldA, readIngestOpts(), now / 1000);
-  }
+  // Sample at 15 FPS (Beflix Dot-Law Standard) to eliminate CPU lag
+  if (now - lastSampleTime >= SAMPLE_INTERVAL) {
+    lastSampleTime = now;
 
-  // Draw Source B (Procedural Halfworld)
-  let blended = fieldA;
-  if (R) {
-    const fieldB = R.render(dT);
-    blended = applyBlend(fieldA, fieldB, readBlend());
-  }
+    // Sample Source A (Video Ingest)
+    if (video.readyState >= 2) {
+      ingest.sample(fieldA, readIngestOpts(), now / 1000);
+    }
 
-  if (post) {
-    post.render(blended);
+    // Sample Source B (Procedural Halfworld)
+    if (R) {
+      const fieldB = R.render(dT);
+      cachedBlended = applyBlend(fieldA, fieldB, readBlend());
+    } else {
+      cachedBlended = fieldA;
+    }
+
+    if (post) {
+      post.render(cachedBlended);
+    }
   }
 
   requestAnimationFrame(loop);
@@ -553,11 +562,13 @@ function toggleMainPlay() {
     dPlaying = true;
     $("playBtnHeader").textContent = "⏸ PAUSE LIVE BLEND";
     $("playBtnHeader").classList.remove("btn-green");
+    $("play").textContent = "Ⅱ";
   } else {
     video.pause();
     dPlaying = false;
     $("playBtnHeader").textContent = "▶ PLAY LIVE BLEND";
     $("playBtnHeader").classList.add("btn-green");
+    $("play").textContent = "▶";
   }
 }
 window.toggleMainPlay = toggleMainPlay;
