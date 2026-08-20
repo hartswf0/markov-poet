@@ -1,0 +1,52 @@
+{
+  "id": "BF-19",
+  "mod": "scenes/BF-19.mjs",
+  "ok": true,
+  "t": "2026-08-05T05:32:11.557Z",
+  "motion": "HOLD",
+  "seconds": 4,
+  "loopClosed": false,
+  "beats": null,
+  "declaredBreak": null,
+  "frames": {
+    "declared": 48,
+    "rendered": 48,
+    "fps": 12
+  },
+  "duration": {
+    "nominalSec": 4,
+    "webmSec": 4,
+    "gifSec": 4,
+    "renderWallSec": 4
+  },
+  "size": {
+    "w": 1120,
+    "h": 760,
+    "pipeline": "MESH",
+    "card": false
+  },
+  "loop": {
+    "wrapChangedPct": 6.1414,
+    "wrapMeanAbs": 9.0065,
+    "meanStepChangedPct": 1.0176,
+    "maxStepChangedPct": 4.0475,
+    "meanStepMeanAbs": 1.3915,
+    "ratio": 6.035,
+    "verdict": "n/a (not a CYCLE)"
+  },
+  "files": {
+    "webm": {
+      "path": "renders/motion/BF-19.webm",
+      "bytes": 650308
+    },
+    "gif": {
+      "path": "renders/motion/BF-19.gif",
+      "bytes": 531915
+    },
+    "contact": null,
+    "frames": null
+  },
+  "encodeErrors": [],
+  "ffmpeg": "/opt/homebrew/bin/ffmpeg",
+  "warnings": []
+}
