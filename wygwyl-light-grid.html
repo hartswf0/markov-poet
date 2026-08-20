@@ -2,241 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>WYGWYL LIGHT GRID — 14 POEM BINS & ASSET POOL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WYGWYL 14-POEM BIN ORGANIZER</title>
 <style>
   :root {
-    --bg: #0a0a0a;
-    --paper: #ffffff;
-    --ink: #000000;
-    --dim: #777777;
-    --line: #222222;
+    --bg: #0d0d0d;
+    --card: #161616;
+    --border: #282828;
+    --text: #ffffff;
+    --dim: #888888;
     --blue: #0066cc;
     --green: #22c55e;
     --red: #ef4444;
-    --teal: #00d2d3;
-    --amber: #ff9f43;
-    --crimson: #ff6b6b;
-    --gold: #feca57;
-    --purple: #a55eea;
-    --mono: #e0e0e0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: #eeeeee; font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; padding: 8px; gap: 8px; user-select: none; }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--bg); color: var(--text); font: 12px/1.4 -apple-system, BlinkMacSystemFont, ui-monospace, monospace; padding: 0 0 60px 0; }
 
-  /* Custom Sleek Scrollbars */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: #0c0c0c; }
-  ::-webkit-scrollbar-thumb { background: #333333; }
-  ::-webkit-scrollbar-thumb:hover { background: #666666; }
-
-  /* Header */
-  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 6px; flex-shrink: 0; }
-  .brand-block { display: flex; align-items: center; gap: 8px; }
-  .brand-title { font-weight: 900; letter-spacing: 0.08em; font-size: 12px; }
-  
-  .header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-  button, select { background: #141414; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; height: 26px; }
+  /* Sticky Top Bar */
+  header { position: sticky; top: 0; z-index: 100; background: #000; border-bottom: 2px solid var(--border); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .title { font-size: 14px; font-weight: 900; letter-spacing: 0.05em; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  button, select { background: #1a1a1a; border: 1px solid #444; color: #fff; padding: 6px 12px; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
   button:hover, select:hover { background: #fff; color: #000; border-color: #fff; }
-  button.btn-accent { background: var(--blue); border-color: var(--blue); color: #fff; }
-  button.btn-green { background: var(--green); border-color: var(--green); color: #000; }
+  .btn-accent { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .btn-green { background: var(--green); border-color: var(--green); color: #000; font-weight: 900; }
+
+  /* Navigation Anchors */
+  .sub-bar { background: #111; padding: 8px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .jump-links { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0; }
+  .jump-btn { background: #222; border: 1px solid #333; color: #aaa; padding: 2px 8px; font-size: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .jump-btn:hover { background: #fff; color: #000; }
+
+  /* Main Container */
+  .container { max-width: 1400px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 24px; }
+
+  /* Section Titles */
+  .section-heading { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 2px solid #333; padding-bottom: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+
+  /* 14 Poem Bins Stack */
+  .bins-grid { display: flex; flex-direction: column; gap: 16px; }
+  .bin-box { background: var(--card); border: 1px solid var(--border); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .bin-box:hover { border-color: #555; }
   
-  /* Mobile Tab Toggle */
-  .mobile-tabs { display: none; width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 6px; gap: 6px; }
-  .tab-btn { flex: 1; text-align: center; }
-  .tab-btn.active-tab { background: #fff; color: #000; }
+  .bin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 6px; }
+  .bin-title { font-size: 13px; font-weight: 900; }
+  .bin-meta { font-size: 11px; color: var(--green); font-weight: 800; }
 
-  /* Main Workspace: 3 Columns (14 Bins, Large Focused Preview Deck, 135 Thumbnails Pool) */
-  main { flex: 1; display: grid; grid-template-columns: minmax(320px, 1fr) minmax(340px, 1fr) minmax(380px, 1.2fr); gap: 8px; min-height: 0; overflow: hidden; }
-
-  /* Pane Bases */
-  .pane-box { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
-  .pane-head { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-
-  /* Left Pane: 14 Poem Bins */
-  #binsList { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
-  .bin-card { background: #0e0e0e; border: 1px solid #222; display: flex; flex-direction: column; gap: 4px; padding: 6px; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
-  .bin-card:hover { border-color: #444; background: #121212; }
-  .bin-card.active-bin { border-color: var(--blue); background: #111a28; }
-
-  .bin-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 10.5px; }
-  .bin-head .runtime-tag { color: var(--green); font-size: 9.5px; }
+  /* Large Assigned Clips Row */
+  .assigned-clips-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
   
-  .bin-track { display: flex; gap: 6px; overflow-x: auto; min-height: 64px; padding: 2px 0; align-items: center; }
-  .bin-chip { width: 100px; height: 58px; background: #000; border: 1px solid #333; position: relative; flex-shrink: 0; cursor: pointer; overflow: hidden; }
-  .bin-chip:hover { border-color: var(--blue); }
-  .bin-chip.selected-chip { border: 2px solid #fff; }
-  .bin-chip img { width: 100%; height: 100%; object-fit: cover; }
-  .bin-chip .chip-time { position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; color: var(--green); }
-  .bin-chip .chip-remove { position: absolute; top: 2px; right: 2px; background: var(--red); color: #fff; font-size: 9px; width: 14px; height: 14px; display: none; align-items: center; justify-content: center; font-weight: 900; }
-  .bin-chip:hover .chip-remove { display: flex; }
-  .empty-bin-hint { font-size: 9px; color: #444; text-transform: uppercase; padding: 8px; border: 1px dashed #222; width: 100%; text-align: center; }
-
-  /* Center Pane: Focused Large Inspection Deck */
-  #inspectorCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow-y: auto; padding: 10px; gap: 10px; }
-  .big-preview-frame { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid #333; position: relative; overflow: hidden; }
-  .big-preview-frame img, .big-preview-frame video { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .big-preview-badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.85); border: 1px solid #444; padding: 3px 6px; font-size: 9px; font-weight: 800; }
-
-  .big-meta-card { background: #111; border: 1px solid #222; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
-  .big-meta-card b { font-size: 12px; color: #fff; }
-  .big-meta-card p { font-size: 10px; color: #aaa; line-height: 1.3; }
-
-  .action-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .deck-btn { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; }
-
-  .contact-strip-box { border: 1px solid #333; background: #000; }
-  .contact-strip-box img { width: 100%; display: block; object-fit: contain; }
-
-  /* Right Pane: 135 Asset Pool */
-  #poolCol { background: #080808; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
-  .pool-toolbar { background: #111; padding: 6px 8px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
-  .filter-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-  .search-box { flex: 1; min-width: 140px; background: #000; border: 1px solid #333; color: #fff; padding: 4px 8px; font: inherit; font-size: 10.5px; height: 26px; }
-  .search-box:focus { border-color: var(--blue); outline: none; }
-
-  /* Color Filter Chips */
-  .color-bar { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; }
-  .color-chip { background: #161616; border: 1px solid #333; padding: 2px 6px; font-size: 8.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-  .color-chip:hover { border-color: #777; color: #fff; }
-  .color-chip.active { background: #fff; color: #000; border-color: #fff; }
-  .dot { width: 6px; height: 6px; border-radius: 50% !important; display: inline-block; }
-
-  /* Thumbnail Grid */
-  #thumbsGrid { flex: 1; overflow-y: auto; display: grid; gap: 6px; padding: 6px; align-content: start; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-
-  .thumb-tile { background: #000; border: 1px solid #222; aspect-ratio: 16/9; position: relative; cursor: pointer; overflow: hidden; transition: transform 0.1s, border-color 0.1s; will-change: transform; }
-  .thumb-tile:hover { border-color: var(--blue); transform: scale(1.04); z-index: 10; }
-  .thumb-tile.active-selected-tile { border: 2px solid #fff; }
-  .thumb-tile img { width: 100%; height: 100%; object-fit: cover; }
-  .thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%); opacity: 0.9; }
+  .big-clip-card { background: #080808; border: 1px solid #333; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+  .big-clip-card:hover { border-color: #fff; }
+  .big-clip-thumb { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; position: relative; }
+  .big-clip-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .clip-overlay-time { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.85); padding: 2px 6px; font-size: 10px; font-weight: 800; color: var(--green); }
   
-  .tile-top { position: absolute; top: 3px; left: 3px; display: flex; align-items: center; gap: 3px; }
-  .color-indicator { width: 5px; height: 5px; border-radius: 50% !important; }
-  .tile-time { position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.85); font-size: 8px; font-weight: 800; padding: 1px 3px; color: var(--green); }
-  .tile-id { position: absolute; bottom: 3px; left: 3px; font-size: 8px; color: #ccc; font-weight: 700; }
+  .big-clip-details { padding: 8px; display: flex; flex-direction: column; gap: 4px; font-size: 11px; }
+  .big-clip-details b { font-size: 12px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .big-clip-details span { color: var(--dim); font-size: 10px; }
+  
+  .remove-clip-btn { background: #222; border: none; border-top: 1px solid #333; color: var(--red); padding: 6px 0; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+  .remove-clip-btn:hover { background: var(--red); color: #fff; }
 
-  /* Responsive Rules for Mobile */
-  @media (max-width: 900px) {
-    main { display: flex; flex-direction: column; }
-    .mobile-tabs { display: flex; }
-    #binsCol, #inspectorCol, #poolCol { width: 100%; height: 100%; }
-    .hide-mobile-panel { display: none !important; }
-    .header-actions button { font-size: 9px; padding: 3px 6px; }
-  }
+  .empty-bin-placeholder { border: 2px dashed #333; padding: 20px; text-align: center; color: #555; font-weight: 800; font-size: 11px; text-transform: uppercase; }
+
+  /* Master Asset Pool */
+  .pool-controls { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .pool-search { flex: 1; min-width: 240px; background: #111; border: 1px solid #333; color: #fff; padding: 8px 12px; font: inherit; font-size: 12px; }
+  
+  .master-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  
+  .pool-card { background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .pool-card:hover { border-color: var(--blue); }
+  .pool-thumb { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; overflow: hidden; }
+  .pool-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pool-tag { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.85); border: 1px solid #444; font-size: 9px; font-weight: 800; padding: 2px 6px; }
+  .pool-dur { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.85); font-size: 10px; font-weight: 800; padding: 2px 6px; color: var(--green); }
+
+  .pool-body { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .pool-body b { font-size: 12px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pool-body p { font-size: 10px; color: var(--dim); line-height: 1.3; height: 26px; overflow: hidden; }
+
+  .assign-dropdown-row { display: flex; gap: 4px; margin-top: 6px; }
+  .bin-select { flex: 1; padding: 4px 6px; font-size: 10px; font-weight: 800; }
+  .add-btn { padding: 4px 10px; font-size: 10px; font-weight: 800; background: var(--blue); border-color: var(--blue); color: #fff; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand-block">
-    <div class="dot" style="background:var(--green); animation: pulse 1.5s infinite;"></div>
-    <div class="brand-title">WYGWYL LIGHT GRID</div>
-  </div>
+  <div class="title">WYGWYL 14-POEM BIN ORGANIZER</div>
   <div class="header-actions">
-    <span style="font-size:10px; color:#888;">ACTIVE: <b id="activeBinName" style="color:#fff;">01 OUT OF LIFE</b></span>
-    <span style="font-size:10px; color:#888; margin-left:8px;">RUNTIME: <b id="totalRuntime" style="color:var(--green);">00:00.0</b></span>
-    <button onclick="autoFillDefault()">AUTO-FILL</button>
-    <button onclick="clearAllBins()">CLEAR</button>
+    <span style="font-size:11px; color:#aaa;">TOTAL RUNTIME: <b id="totalRuntimeDisplay" style="color:var(--green);">00:00.0</b></span>
+    <button onclick="autoFillDefault()">AUTO-FILL DEFAULT</button>
+    <button onclick="clearAllBins()">CLEAR ALL</button>
     <button class="btn-accent" onclick="copyFFmpeg()">COPY FFMPEG</button>
     <button class="btn-green" onclick="copyEDL()">COPY EDL</button>
   </div>
 </header>
 
-<!-- Mobile Tab Bar -->
-<div class="mobile-tabs">
-  <button class="tab-btn active-tab" id="tabBinsBtn" onclick="switchMobileTab('bins')">14 BINS (<span id="binCountBadge">0s</span>)</button>
-  <button class="tab-btn" id="tabInspectBtn" onclick="switchMobileTab('inspect')">LARGE PREVIEW</button>
-  <button class="tab-btn" id="tabPoolBtn" onclick="switchMobileTab('pool')">135 ASSET POOL</button>
+<div class="sub-bar">
+  <span>JUMP TO POEM BIN:</span>
+  <div class="jump-links" id="jumpLinks"></div>
 </div>
 
-<main>
-  <!-- Left Column: 14 Poem Bins -->
-  <section class="pane-box" id="binsCol">
-    <div class="pane-head">
-      <span>14 SEQUENTIAL POEM BINS</span>
-      <span style="font-size:9px; color:var(--dim);">CLICK TO SELECT BIN OR CHIP</span>
+<div class="container">
+  <!-- Section 1: The 14 Bins -->
+  <div>
+    <div class="section-heading">
+      <span>1. The 14 Poem Bins (Assigned Large Clips)</span>
+      <span style="font-size:11px; color:var(--dim); font-weight:400;">Scroll down to Pool to add clips</span>
     </div>
-    <div id="binsList"></div>
-  </section>
+    <div class="bins-grid" id="binsContainer"></div>
+  </div>
 
-  <!-- Center Column: Large Focused Inspection Deck -->
-  <section class="pane-box" id="inspectorCol">
-    <div class="pane-head">
-      <span>LARGE FOCUSED PREVIEW & INSPECTOR</span>
-      <span id="inspectModeTag" style="font-size:9px; color:var(--blue);">READY</span>
-    </div>
-    <div class="big-preview-frame">
-      <video id="bigVideo" controls playsinline></video>
-      <div class="big-preview-badge" id="bigBadge">NO CLIP SELECTED</div>
+  <!-- Section 2: The Master Pool of 135 Clips -->
+  <div id="poolSection">
+    <div class="section-heading">
+      <span>2. Master Asset Pool (All 135 Clips — Choose Bin & Add)</span>
+      <span id="poolCountBadge" style="font-size:11px; color:var(--dim);">135 Clips Available</span>
     </div>
 
-    <div class="big-meta-card">
-      <b id="bigTitle">SELECT ANY THUMBNAIL TO ENLARGE</b>
-      <p id="bigDesc">Click any thumbnail in the 14 Bins or the 135 Asset Pool on the right to blow it up into high-resolution view.</p>
+    <div class="pool-controls">
+      <input type="text" class="pool-search" id="poolSearchInput" placeholder="Search 135 clips by keyword, archetype, prompt, location..." oninput="renderMasterPool()" />
+      <select id="poolSortSelect" onchange="renderMasterPool()">
+        <option value="default">Sort: Default Order</option>
+        <option value="dur-desc">Duration (High ➔ Low)</option>
+        <option value="dur-asc">Duration (Low ➔ High)</option>
+        <option value="cat">Visual Archetype</option>
+      </select>
     </div>
 
-    <div class="action-deck">
-      <button class="btn-accent deck-btn" onclick="plugFocusedClipToActiveBin()">+ PLUG INTO ACTIVE POEM</button>
-      <button class="deck-btn" onclick="toggleVideoPlay()">▶ PLAY / PAUSE VIDEO</button>
-    </div>
-
-    <div class="contact-strip-box">
-      <div style="font-size:8.5px; font-weight:800; color:#888; padding:4px 6px; background:#000;">4X2 TEMPORAL CONTACT SHEET</div>
-      <img id="bigContactImg" src="" alt="Contact Sheet" />
-    </div>
-  </section>
-
-  <!-- Right Column: 135 Asset Pool -->
-  <section class="pane-box" id="poolCol">
-    <div class="pool-toolbar">
-      <div class="filter-row">
-        <input type="text" class="search-box" id="searchInput" placeholder="Search 135 clips..." oninput="renderPool()" />
-        
-        <select id="sortSelect" onchange="renderPool()">
-          <option value="default">Sort: Default</option>
-          <option value="dur-desc">Duration (High ➔ Low)</option>
-          <option value="dur-asc">Duration (Low ➔ High)</option>
-          <option value="color">Color Regime</option>
-        </select>
-      </div>
-
-      <div class="color-bar" id="colorBar">
-        <div class="color-chip active" onclick="setColorFilter('ALL')">ALL (135)</div>
-        <div class="color-chip" onclick="setColorFilter('teal')"><span class="dot" style="background:var(--teal)"></span>TEAL (79)</div>
-        <div class="color-chip" onclick="setColorFilter('blue')"><span class="dot" style="background:var(--blue)"></span>BLUE (25)</div>
-        <div class="color-chip" onclick="setColorFilter('crimson')"><span class="dot" style="background:var(--crimson)"></span>CRIMSON (13)</div>
-        <div class="color-chip" onclick="setColorFilter('purple')"><span class="dot" style="background:var(--purple)"></span>PURPLE (6)</div>
-        <div class="color-chip" onclick="setColorFilter('gold')"><span class="dot" style="background:var(--gold)"></span>GOLD (3)</div>
-        <div class="color-chip" onclick="setColorFilter('amber')"><span class="dot" style="background:var(--amber)"></span>AMBER (1)</div>
-        <div class="color-chip" onclick="setColorFilter('mono')"><span class="dot" style="background:var(--mono)"></span>MONO (4)</div>
-        <div class="color-chip" onclick="setColorFilter('cyan')"><span class="dot" style="background:#48dbfb"></span>CYAN (4)</div>
-      </div>
-    </div>
-
-    <div id="thumbsGrid"></div>
-  </section>
-</main>
+    <div class="master-grid" id="masterPoolGrid"></div>
+  </div>
+</div>
 
 <script>
 let POEMS = [];
 let ALL_RECORDS = [];
 let BINS = [];
-let activeBinIdx = 0;
-let focusedRecord = null;
-let activeColorFilter = 'ALL';
-
-function getColorRegime(cat) {
-  const c = (cat || "").toUpperCase();
-  if (c.includes("BEDROOM") || c.includes("FOG") || c.includes("RAIN")) return { key: "teal", hex: "#00d2d3", label: "TEAL" };
-  if (c.includes("SUBWAY") || c.includes("AMBER")) return { key: "amber", hex: "#ff9f43", label: "AMBER" };
-  if (c.includes("HEART") || c.includes("PLASMA") || c.includes("FLUID") || c.includes("FLARE") || c.includes("RED")) return { key: "crimson", hex: "#ff6b6b", label: "CRIMSON" };
-  if (c.includes("FLOWER") || c.includes("MONK") || c.includes("COLONNADE") || c.includes("GOLD")) return { key: "gold", hex: "#feca57", label: "GOLD" };
-  if (c.includes("TV") || c.includes("PYRAMID") || c.includes("SKELETON")) return { key: "purple", hex: "#a55eea", label: "PURPLE" };
-  if (c.includes("ISLAND") || c.includes("TITLE")) return { key: "mono", hex: "#ffffff", label: "MONO" };
-  if (c.includes("RIDE") || c.includes("COASTAL")) return { key: "cyan", hex: "#48dbfb", label: "CYAN" };
-  return { key: "blue", hex: "#54a0ff", label: "BLUE" };
-}
 
 async function init() {
   const [pRes, rRes, dcRes] = await Promise.all([
@@ -248,10 +152,6 @@ async function init() {
   POEMS = (await pRes.json()).poems;
   ALL_RECORDS = (await rRes.json()).records;
   const dcData = await dcRes.json();
-
-  ALL_RECORDS.forEach(r => {
-    r.colorRegime = getColorRegime(r.visual_category);
-  });
 
   BINS = POEMS.map((p, idx) => {
     const dcSuite = dcData.suites[idx];
@@ -265,64 +165,31 @@ async function init() {
     return {
       num: p.number,
       title: p.title,
+      verse: p.full_verse,
       clips: initialClips
     };
   });
 
+  renderJumpLinks();
   renderBins();
-  renderPool();
-  selectBin(0);
-
-  // Default focus to first clip
-  if (ALL_RECORDS.length > 0) {
-    focusClip(ALL_RECORDS[0]);
-  }
+  renderMasterPool();
 }
 
-function selectBin(idx) {
-  if (idx < 0 || idx >= BINS.length) return;
-  activeBinIdx = idx;
-  document.querySelectorAll(".bin-card").forEach((el, i) => el.classList.toggle("active-bin", i === idx));
-  document.getElementById("activeBinName").textContent = `${BINS[idx].num} ${BINS[idx].title}`;
-}
-
-function focusClip(record) {
-  if (!record) return;
-  focusedRecord = record;
-
-  document.querySelectorAll(".thumb-tile").forEach(t => {
-    t.classList.toggle("active-selected-tile", t.dataset.id === record.id);
+function renderJumpLinks() {
+  const jumpBox = document.getElementById("jumpLinks");
+  jumpBox.innerHTML = "";
+  POEMS.forEach(p => {
+    const a = document.createElement("a");
+    a.className = "jump-btn";
+    a.href = `#bin_${p.number}`;
+    a.textContent = `${p.number} ${p.title}`;
+    jumpBox.appendChild(a);
   });
-  document.querySelectorAll(".bin-chip").forEach(c => {
-    c.classList.toggle("selected-chip", c.dataset.id === record.id);
-  });
-
-  document.getElementById("bigBadge").textContent = `${record.visual_category} · ${record.duration_seconds || 5}s`;
-  document.getElementById("bigTitle").textContent = `${record.visual_category} (${record.id.substring(0,8)})`;
-  document.getElementById("bigDesc").textContent = `${record.location_L || 'Scene'} | ${record.shift_S || ''} ➔ ${record.solution_U || ''} | ${record.colorRegime.label} PALETTE`;
-
-  const video = document.getElementById("bigVideo");
-  video.src = `MARKOV_POET/videos/${record.filename_stem}.mp4`;
-  document.getElementById("bigContactImg").src = `contact_sheets/${record.filename_stem}_contact.jpg`;
-  document.getElementById("inspectModeTag").textContent = `FOCUS: ${record.id.substring(0,8)}`;
-}
-
-function toggleVideoPlay() {
-  const video = document.getElementById("bigVideo");
-  if (video.paused) video.play().catch(()=>{});
-  else video.pause();
-}
-
-function plugFocusedClipToActiveBin() {
-  if (focusedRecord) {
-    BINS[activeBinIdx].clips.push(focusedRecord);
-    renderBins();
-  }
 }
 
 function renderBins() {
-  const list = document.getElementById("binsList");
-  list.innerHTML = "";
+  const box = document.getElementById("binsContainer");
+  box.innerHTML = "";
 
   let grandTotalSeconds = 0;
 
@@ -330,147 +197,117 @@ function renderBins() {
     const binSec = b.clips.reduce((acc, c) => acc + parseFloat(c.duration_seconds || 5), 0);
     grandTotalSeconds += binSec;
 
-    const el = document.createElement("div");
-    el.className = "bin-card" + (bIdx === activeBinIdx ? " active-bin" : "");
-    el.onclick = () => selectBin(bIdx);
+    const binCard = document.createElement("div");
+    binCard.className = "bin-box";
+    binCard.id = `bin_${b.num}`;
 
-    let chipsHtml = "";
+    let clipsHtml = "";
     if (b.clips.length === 0) {
-      chipsHtml = `<div class="empty-bin-hint">+ CLICK ANY THUMBNAIL ON RIGHT TO PLUG HERE</div>`;
+      clipsHtml = `<div class="empty-bin-placeholder">Empty Bin · Select a clip below and assign to Poem ${b.num}</div>`;
     } else {
-      chipsHtml = b.clips.map((c, cIdx) => `
-        <div class="bin-chip ${focusedRecord && focusedRecord.id === c.id ? 'selected-chip' : ''}" data-id="${c.id}" onclick="event.stopPropagation(); focusClipFromBin(${bIdx}, ${cIdx})" title="${c.visual_category} (${c.id.substring(0,8)})">
-          <img src="contact_sheets/${c.filename_stem}_contact.jpg" loading="lazy" />
-          <span class="chip-time">${c.duration_seconds || 5}s</span>
-          <div class="chip-remove" onclick="event.stopPropagation(); removeClipFromBin(${bIdx}, ${cIdx})">✕</div>
+      clipsHtml = `
+        <div class="assigned-clips-row">
+          ${b.clips.map((c, cIdx) => `
+            <div class="big-clip-card">
+              <div class="big-clip-thumb">
+                <img src="contact_sheets/${c.filename_stem}_contact.jpg" loading="lazy" />
+                <div class="clip-overlay-time">${c.duration_seconds || 5}s</div>
+              </div>
+              <div class="big-clip-details">
+                <b>${c.visual_category}</b>
+                <span>ID: ${c.id.substring(0,8)} · ${(c.has_audio_bool || c.has_audio) ? 'AUDIO' : 'SILENT'}</span>
+              </div>
+              <button class="remove-clip-btn" onclick="removeClipFromBin(${bIdx}, ${cIdx})">✕ Remove from Bin</button>
+            </div>
+          `).join('')}
         </div>
-      `).join('');
+      `;
     }
 
-    el.innerHTML = `
-      <div class="bin-head">
-        <span>POEM ${b.num} — ${b.title}</span>
-        <span class="runtime-tag">${binSec.toFixed(1)}s (${b.clips.length} clips)</span>
+    binCard.innerHTML = `
+      <div class="bin-header">
+        <div class="bin-title">POEM ${b.num} — ${b.title}</div>
+        <div class="bin-meta">${binSec.toFixed(1)}s (${b.clips.length} clips assigned)</div>
       </div>
-      <div class="bin-track">${chipsHtml}</div>
+      <div style="font-size:11px; color:#aaa; font-style:italic; margin-bottom:4px;">“${b.verse}”</div>
+      ${clipsHtml}
     `;
 
-    list.appendChild(el);
+    box.appendChild(binCard);
   });
 
   const m = Math.floor(grandTotalSeconds / 60);
   const s = (grandTotalSeconds % 60).toFixed(1);
-  const timeStr = `${String(m).padStart(2,'0')}:${String(s).padStart(4,'0')}`;
-  document.getElementById("totalRuntime").textContent = timeStr;
-  document.getElementById("binCountBadge").textContent = timeStr;
+  document.getElementById("totalRuntimeDisplay").textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(4,'0')}`;
 }
 
-function focusClipFromBin(bIdx, cIdx) {
-  selectBin(bIdx);
-  const c = BINS[bIdx].clips[cIdx];
-  focusClip(c);
-}
-
-function renderPool() {
-  const grid = document.getElementById("thumbsGrid");
+function renderMasterPool() {
+  const grid = document.getElementById("masterPoolGrid");
   grid.innerHTML = "";
-  const query = (document.getElementById("searchInput").value || "").toLowerCase();
-  const sortMode = document.getElementById("sortSelect").value;
+  const query = (document.getElementById("poolSearchInput").value || "").toLowerCase();
+  const sortMode = document.getElementById("poolSortSelect").value;
 
   let filtered = ALL_RECORDS.filter(r => {
-    if (activeColorFilter !== 'ALL' && r.colorRegime.key !== activeColorFilter) return false;
-    if (query) {
-      const txt = `${r.filename_stem} ${r.visual_category} ${r.location_L} ${r.shift_S}`.toLowerCase();
-      if (!txt.includes(query)) return false;
-    }
-    return true;
+    if (!query) return true;
+    const txt = `${r.filename_stem} ${r.visual_category} ${r.location_L} ${r.shift_S}`.toLowerCase();
+    return txt.includes(query);
   });
 
   if (sortMode === 'dur-desc') {
     filtered.sort((a, b) => parseFloat(b.duration_seconds || 5) - parseFloat(a.duration_seconds || 5));
   } else if (sortMode === 'dur-asc') {
     filtered.sort((a, b) => parseFloat(a.duration_seconds || 5) - parseFloat(b.duration_seconds || 5));
-  } else if (sortMode === 'color') {
-    filtered.sort((a, b) => a.colorRegime.key.localeCompare(b.colorRegime.key));
+  } else if (sortMode === 'cat') {
+    filtered.sort((a, b) => (a.visual_category || '').localeCompare(b.visual_category || ''));
   }
+
+  document.getElementById("poolCountBadge").textContent = `${filtered.length} Clips Available`;
 
   filtered.forEach(r => {
-    const tile = document.createElement("div");
-    tile.className = "thumb-tile" + (focusedRecord && focusedRecord.id === r.id ? " active-selected-tile" : "");
-    tile.dataset.id = r.id;
-    tile.style.borderLeft = `3px solid ${r.colorRegime.hex}`;
-    tile.title = `Click to inspect in Large Preview (Double-click to plug into Poem ${BINS[activeBinIdx].num})`;
-    
-    // Single click = Focus in large inspector
-    tile.onclick = () => {
-      focusClip(r);
-    };
+    const card = document.createElement("div");
+    card.className = "pool-card";
 
-    // Double click = Plug into active bin
-    tile.ondblclick = () => {
-      plugClipIntoActiveBin(r);
-    };
+    let binOptionsHtml = BINS.map((b, idx) => `<option value="${idx}">Poem ${b.num} — ${b.title}</option>`).join('');
 
-    tile.innerHTML = `
-      <img src="contact_sheets/${r.filename_stem}_contact.jpg" loading="lazy" />
-      <div class="thumb-overlay"></div>
-      <div class="tile-top">
-        <span class="color-indicator" style="background:${r.colorRegime.hex}"></span>
+    card.innerHTML = `
+      <div class="pool-thumb">
+        <img src="contact_sheets/${r.filename_stem}_contact.jpg" loading="lazy" />
+        <div class="pool-tag">${r.visual_category}</div>
+        <div class="pool-dur">${r.duration_seconds || 5}s</div>
       </div>
-      <span class="tile-id">${r.id.substring(0,8)}</span>
-      <span class="tile-time">${r.duration_seconds || 5}s</span>
+      <div class="pool-body">
+        <b>${r.visual_category}</b>
+        <p>${r.location_L || 'Location'} · ${r.shift_S || ''}</p>
+        <div class="assign-dropdown-row">
+          <select class="bin-select" id="select_${r.id}">
+            ${binOptionsHtml}
+          </select>
+          <button class="add-btn" onclick="addClipToSelectedBin('${r.id}')">+ ADD</button>
+        </div>
+      </div>
     `;
 
-    grid.appendChild(tile);
+    grid.appendChild(card);
   });
 }
 
-function plugClipIntoActiveBin(record) {
-  BINS[activeBinIdx].clips.push(record);
-  renderBins();
-}
+function addClipToSelectedBin(clipId) {
+  const sel = document.getElementById(`select_${clipId}`);
+  const binIdx = parseInt(sel.value, 10);
+  const rec = ALL_RECORDS.find(r => r.id === clipId);
 
-function removeClipFromBin(bIdx, cIdx) {
-  BINS[bIdx].clips.splice(cIdx, 1);
-  renderBins();
-}
-
-function setColorFilter(key) {
-  activeColorFilter = key;
-  document.querySelectorAll(".color-chip").forEach(c => {
-    c.classList.toggle("active", c.textContent.toLowerCase().includes(key.toLowerCase()) || (key === 'ALL' && c.textContent.startsWith('ALL')));
-  });
-  renderPool();
-}
-
-// Mobile Tab Toggle
-function switchMobileTab(tab) {
-  const binsCol = document.getElementById("binsCol");
-  const inspectCol = document.getElementById("inspectorCol");
-  const poolCol = document.getElementById("poolCol");
-
-  const tabBinsBtn = document.getElementById("tabBinsBtn");
-  const tabInspectBtn = document.getElementById("tabInspectBtn");
-  const tabPoolBtn = document.getElementById("tabPoolBtn");
-
-  binsCol.classList.add("hide-mobile-panel");
-  inspectCol.classList.add("hide-mobile-panel");
-  poolCol.classList.add("hide-mobile-panel");
-
-  tabBinsBtn.classList.remove("active-tab");
-  tabInspectBtn.classList.remove("active-tab");
-  tabPoolBtn.classList.remove("active-tab");
-
-  if (tab === 'bins') {
-    binsCol.classList.remove("hide-mobile-panel");
-    tabBinsBtn.classList.add("active-tab");
-  } else if (tab === 'inspect') {
-    inspectCol.classList.remove("hide-mobile-panel");
-    tabInspectBtn.classList.add("active-tab");
-  } else {
-    poolCol.classList.remove("hide-mobile-panel");
-    tabPoolBtn.classList.add("active-tab");
+  if (rec && BINS[binIdx]) {
+    BINS[binIdx].clips.push(rec);
+    renderBins();
+    // Scroll smoothly to the updated bin
+    const binEl = document.getElementById(`bin_${BINS[binIdx].num}`);
+    if (binEl) binEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
+}
+
+function removeClipFromBin(binIdx, clipIdx) {
+  BINS[binIdx].clips.splice(clipIdx, 1);
+  renderBins();
 }
 
 function autoFillDefault() {
@@ -493,18 +330,18 @@ function copyFFmpeg() {
   });
 
   if (clipCount === 0) {
-    alert("No clips plugged into bins!");
+    alert("No clips in bins!");
     return;
   }
 
-  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${fileList}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_LIGHT_GRID_CUT.mp4\n`;
+  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${fileList}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_BIN_CUT.mp4\n`;
 
   navigator.clipboard.writeText(cmd);
   alert(`COPIED FFMPEG COMMAND FOR ${clipCount} CLIPS TO CLIPBOARD`);
 }
 
 function copyEDL() {
-  let edl = `TITLE: WYGWYL_LIGHT_GRID_CUT\nFCM: NON-DROP FRAME\n\n`;
+  let edl = `TITLE: WYGWYL_BIN_CONFORM_CUT\nFCM: NON-DROP FRAME\n\n`;
   let recSec = 3600;
   let eventNum = 1;
 
@@ -539,9 +376,6 @@ function formatSMPTE(seconds) {
 }
 
 init();
-if (window.innerWidth <= 900) {
-  switchMobileTab('bins');
-}
 </script>
 </body>
 </html>
