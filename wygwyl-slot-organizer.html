@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WYGWYL 14-Slot Minimal Organizer</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --paper: #ffffff;
+    --ink: #000000;
+    --dim: #777777;
+    --line: #222222;
+    --blue: #0066cc;
+    --green: #22c55e;
+    --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+  body { background: var(--bg); color: #fff; font: 12px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 16px; height: 100vh; display: flex; flex-direction: column; gap: 14px; user-select: none; }
+
+  /* Header */
+  header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+  h1 { font-size: 13px; font-weight: 900; letter-spacing: 0.08em; }
+  .actions { display: flex; gap: 8px; }
+  .btn { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 5px 10px; font-weight: 800; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+  .btn:hover { background: #fff; color: #000; border-color: #fff; }
+  .btn-green { background: var(--green); color: #000; border-color: var(--green); }
+  .btn-green:hover { background: #16a34a; color: #fff; }
+
+  /* 14 Slots Row */
+  #slotsStrip { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; height: 160px; }
+  .slot { background: #141414; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; position: relative; }
+  .slot:hover { border-color: #555; }
+  .slot.active { border: 2px solid var(--blue); background: #1a2333; }
+  
+  .slot-head { background: #000; padding: 4px 6px; font-size: 9px; font-weight: 800; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); }
+  .slot.active .slot-head { background: var(--blue); }
+  
+  .slot-thumb { flex: 1; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
+  .slot-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .slot-thumb .empty-text { font-size: 9px; font-weight: 800; color: #444; text-transform: uppercase; }
+  
+  .slot-foot { padding: 4px; font-size: 9px; display: flex; justify-content: space-between; align-items: center; background: #0a0a0a; border-top: 1px solid #1a1a1a; }
+  .slot-foot b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px; color: #ccc; }
+  .clear-btn { color: #666; font-weight: 900; font-size: 10px; cursor: pointer; padding: 0 2px; }
+  .clear-btn:hover { color: var(--red); }
+
+  /* Active Verse Banner */
+  #activeBanner { background: #141414; border: 1px solid var(--line); border-left: 3px solid var(--blue); padding: 10px 14px; }
+  #activeBanner b { font-size: 12px; color: #fff; display: block; margin-bottom: 2px; }
+  #activeBanner p { font-size: 11px; color: #aaa; font-style: italic; }
+
+  /* Candidates Grid */
+  #candidatesSection { flex: 1; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--dim); letter-spacing: 0.05em; }
+  #candidatesGrid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; overflow-y: auto; }
+
+  .candidate-card { background: #141414; border: 1px solid var(--line); display: flex; flex-direction: column; cursor: pointer; position: relative; }
+  .candidate-card:hover { border-color: var(--blue); background: #182230; }
+  .candidate-thumb { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; position: relative; }
+  .candidate-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .prob-badge { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.8); border: 1px solid #333; color: var(--green); font-weight: 900; font-size: 10px; padding: 2px 6px; }
+  
+  .candidate-info { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .candidate-info b { font-size: 11px; color: #fff; }
+  .candidate-info span { font-size: 9.5px; color: var(--dim); }
+  .assign-bar { background: #222; border-top: 1px solid #333; text-align: center; padding: 5px 0; font-size: 10px; font-weight: 800; color: #ccc; text-transform: uppercase; }
+  .candidate-card:hover .assign-bar { background: var(--blue); color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>WYGWYL 14-SLOT ORGANIZER</h1>
+  <div class="actions">
+    <button class="btn" onclick="autoFillOptimal()">⚡ AUTO-FILL BEST MATCHES</button>
+    <button class="btn" onclick="clearAll()">CLEAR ALL</button>
+    <button class="btn btn-green" onclick="copyFFmpegConform()">📋 COPY FFMPEG CONFORM</button>
+  </div>
+</header>
+
+<!-- 14 Slots Row -->
+<div id="slotsStrip"></div>
+
+<!-- Active Verse & Details -->
+<div id="activeBanner">
+  <b id="activeTitle">SLOT #01 — OUT OF LIFE</b>
+  <p id="activeVerse">"The vape gathers, inside and out. My vision blurs. I move toward the window — and you only get further away."</p>
+</div>
+
+<!-- Candidate Picker for Active Slot -->
+<div id="candidatesSection">
+  <div class="section-label">Top Probabilistic Candidates for Active Slot (Click to Assign)</div>
+  <div id="candidatesGrid"></div>
+</div>
+
+<script>
+let POEMS = [];
+let ALL_RECORDS = [];
+let COVERAGE_MAP = [];
+let SLOTS = [];
+let activeSlotIdx = 0;
+
+async function init() {
+  const [pRes, rRes, cRes] = await Promise.all([
+    fetch("WYGWYL_POEMS_MASTER.json"),
+    fetch("LEGOS_MASTER_FRAMEWORK.json"),
+    fetch("WYGWYL_COVERAGE_MAP.json")
+  ]);
+
+  POEMS = (await pRes.json()).poems;
+  ALL_RECORDS = (await rRes.json()).records;
+  COVERAGE_MAP = (await cRes.json()).stanza_coverage_matrix;
+
+  SLOTS = POEMS.map((p, idx) => ({
+    slotNum: p.number,
+    title: p.title,
+    verse: p.full_verse,
+    assignedRecord: null
+  }));
+
+  autoFillOptimal();
+}
+
+function autoFillOptimal() {
+  SLOTS.forEach((s, idx) => {
+    const pNum = s.slotNum;
+    const candidates = getCandidatesForSuite(pNum);
+    if (candidates.length > 0) {
+      s.assignedRecord = candidates[0].record;
+    }
+  });
+  renderSlots();
+  selectSlot(0);
+}
+
+function clearAll() {
+  SLOTS.forEach(s => s.assignedRecord = null);
+  renderSlots();
+  selectSlot(0);
+}
+
+function renderSlots() {
+  const strip = document.getElementById("slotsStrip");
+  strip.innerHTML = "";
+
+  SLOTS.forEach((s, idx) => {
+    const card = document.createElement("div");
+    card.className = "slot" + (idx === activeSlotIdx ? " active" : "");
+    card.onclick = () => selectSlot(idx);
+
+    const rec = s.assignedRecord;
+    const thumb = rec ? `contact_sheets/${rec.filename_stem}_contact.jpg` : "";
+
+    card.innerHTML = `
+      <div class="slot-head">
+        <span>#${s.slotNum}</span>
+        <span>${rec ? (rec.duration_seconds || 5) + 's' : '-'}</span>
+      </div>
+      <div class="slot-thumb">
+        ${rec ? `<img src="${thumb}" alt="thumb" />` : `<div class="empty-text">EMPTY</div>`}
+      </div>
+      <div class="slot-foot">
+        <b>${rec ? rec.visual_category : s.title}</b>
+        ${rec ? `<span class="clear-btn" onclick="event.stopPropagation(); clearSlot(${idx})">✕</span>` : ''}
+      </div>
+    `;
+    strip.appendChild(card);
+  });
+}
+
+function selectSlot(idx) {
+  if (idx < 0 || idx >= SLOTS.length) return;
+  activeSlotIdx = idx;
+  const s = SLOTS[idx];
+
+  document.querySelectorAll(".slot").forEach((el, i) => el.classList.toggle("active", i === idx));
+  document.getElementById("activeTitle").textContent = `SLOT #${s.slotNum} — ${s.title}`;
+  document.getElementById("activeVerse").textContent = `“${s.verse}”`;
+
+  renderCandidates(s.slotNum);
+}
+
+function clearSlot(idx) {
+  SLOTS[idx].assignedRecord = null;
+  renderSlots();
+  selectSlot(idx);
+}
+
+function assignCandidate(record) {
+  SLOTS[activeSlotIdx].assignedRecord = record;
+  renderSlots();
+  if (activeSlotIdx < SLOTS.length - 1) {
+    selectSlot(activeSlotIdx + 1);
+  } else {
+    selectSlot(activeSlotIdx);
+  }
+}
+
+function getCandidatesForSuite(suiteNum) {
+  // Find stanzas belonging to this suite in coverage map
+  const matchingStanzas = COVERAGE_MAP.filter(st => st.suite_number === suiteNum);
+  const candidates = [];
+  const seenIds = new Set();
+
+  matchingStanzas.forEach(st => {
+    st.allocated_shots.forEach(sh => {
+      if (!seenIds.has(sh.shot_id)) {
+        const fullRec = ALL_RECORDS.find(r => r.id === sh.shot_id || r.id.startsWith(sh.shot_id.substring(0,8)));
+        if (fullRec) {
+          candidates.push({
+            record: fullRec,
+            prob: sh.match_probability || 85,
+            reason: sh.match_reason || "Direct thematic match"
+          });
+          seenIds.add(sh.shot_id);
+        }
+      }
+    });
+  });
+
+  // If few candidates, pull related category shots
+  if (candidates.length < 3) {
+    const fallback = ALL_RECORDS.filter(r => !seenIds.has(r.id)).slice(0, 4);
+    fallback.forEach(r => {
+      candidates.push({
+        record: r,
+        prob: 60,
+        reason: "Alternative visual resonance"
+      });
+      seenIds.add(r.id);
+    });
+  }
+
+  candidates.sort((a, b) => b.prob - a.prob);
+  return candidates;
+}
+
+function renderCandidates(suiteNum) {
+  const grid = document.getElementById("candidatesGrid");
+  grid.innerHTML = "";
+
+  const candidates = getCandidatesForSuite(suiteNum);
+
+  candidates.forEach(c => {
+    const rec = c.record;
+    const thumb = `contact_sheets/${rec.filename_stem}_contact.jpg`;
+    const card = document.createElement("div");
+    card.className = "candidate-card";
+    card.onclick = () => assignCandidate(rec);
+
+    card.innerHTML = `
+      <div class="candidate-thumb">
+        <img src="${thumb}" alt="thumb" loading="lazy" />
+        <div class="prob-badge">${c.prob}% MATCH</div>
+      </div>
+      <div class="candidate-info">
+        <b>${rec.visual_category}</b>
+        <span>${rec.duration_seconds || 5}s · ${c.reason}</span>
+      </div>
+      <div class="assign-bar">+ ASSIGN TO SLOT #${SLOTS[activeSlotIdx].slotNum}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function copyFFmpegConform() {
+  let list = "";
+  SLOTS.forEach(s => {
+    if (s.assignedRecord) {
+      list += `file 'MARKOV_POET/videos/${s.assignedRecord.filename_stem}.mp4'\n`;
+    }
+  });
+
+  const cmd = `cat << 'EOF' > /tmp/wygwyl_cut.txt\n${list}EOF\n\nffmpeg -y -f concat -safe 0 -i /tmp/wygwyl_cut.txt -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 downloads/MARKOV_POET_ARCHIVE/rendered_cuts/WYGWYL_CUSTOM_CUT.mp4\n`;
+
+  navigator.clipboard.writeText(cmd);
+  alert("✓ Copied 1-Click FFmpeg Conform Command to clipboard!");
+}
+
+init();
+</script>
+</body>
+</html>
